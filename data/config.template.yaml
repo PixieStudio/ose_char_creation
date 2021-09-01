@@ -1,0 +1,28 @@
+---
+# Database
+db_user:
+db_password:
+database_url:
+
+# Discord API client ID
+client_id:
+
+# Discord API bot user token
+token:
+
+# Command prefix
+prefix:
+
+# ID of bot owner
+owner:
+
+# game the bot is playing
+game: Name of the Game
+
+# Game tutorial that's printed in new game channels
+tutorial:
+  - 🗳 **__How to Play__**
+  -
+  - 🛠 **Game Setup**
+  -
+  - "***Have fun!***"

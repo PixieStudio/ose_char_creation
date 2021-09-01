@@ -1,0 +1,6 @@
+# Config file
+/Gemfile.lock
+/data/config.yaml
+**/.DS_Store
+
+/dbdump
