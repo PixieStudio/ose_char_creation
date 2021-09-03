@@ -1,0 +1,40 @@
+---
+cle: gnome
+
+name: Gnome
+
+main_attributes: DEX|INT
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d4
+
+max_lvl: 8
+
+armors: "Cuir, bouclier"
+
+weapon: "Toute arme adaptée à la taille"
+
+spells: "1 sort d'illusionniste"
+
+languages: "Langue d'alignement, commun, gnome, kobold, nain, le langage secret des mammifères fouisseurs"
+
+save_mp: 8
+
+save_b: 9
+
+save_pp: 10
+
+save_s: 14
+
+save_ssb: 11

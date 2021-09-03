@@ -20,13 +20,13 @@ main_attributes: ATT1|ATT2
 
 # max_lvl: 10
 
-# armors: all
+# armors: "Toutes, boucliers compris"
 
-# weapon: all
+# weapon: "Toutes"
 
 # spells: empty
 
-# languages: all
+# languages: "Langue d'alignement, commun"
 
 # save_mp: 0
 

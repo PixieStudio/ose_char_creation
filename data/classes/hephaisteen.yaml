@@ -1,0 +1,40 @@
+---
+cle: hephaisteen
+
+name: "Héphaïstéen"
+
+main_attributes: INT|SAG
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 9
+
+dv: 1d6
+
+max_lvl: 10
+
+armors: "Cuir, cotte de mailles, boucliers"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, Héphaïstéen"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 13
+
+save_s: 15
+
+save_ssb: 15

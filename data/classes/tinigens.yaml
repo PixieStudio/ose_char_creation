@@ -1,0 +1,40 @@
+---
+cle: tinigens
+
+name: Tinigens
+
+main_attributes: DEX|FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 9
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 8
+
+armors: "Toutes (de taille appropriée), boucliers compris"
+
+weapon: "Toutes (de taille appropriée)"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, tinigens"
+
+save_mp: 8
+
+save_b: 9
+
+save_pp: 10
+
+save_s: 13
+
+save_ssb: 12

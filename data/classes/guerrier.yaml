@@ -1,0 +1,40 @@
+---
+cle: guerrier
+
+name: "Guerrier"
+
+main_attributes: FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d8
+
+max_lvl: 14
+
+armors: "Toutes, boucliers compris"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 14
+
+save_s: 15
+
+save_ssb: 16

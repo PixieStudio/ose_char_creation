@@ -1,0 +1,40 @@
+---
+cle: changeling
+
+name: Changeling
+
+main_attributes: CHA|DEX
+
+force: 0
+
+intelligence: 9
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 10
+
+armors: "Cuir, boucliers"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, Doppelgänger"
+
+save_mp: 11
+
+save_b: 12
+
+save_pp: 12
+
+save_s: 15
+
+save_ssb: 12

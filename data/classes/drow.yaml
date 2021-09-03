@@ -1,0 +1,40 @@
+---
+cle: drow
+
+name: Drow
+
+main_attributes: FOR|SAG
+
+force: 0
+
+intelligence: 9
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 10
+
+armors: "Toutes, boucliers compris"
+
+weapon: "Toutes"
+
+spells: "Prier : Lumière (ténèbres)"
+
+languages: "Langue d'alignement, commun, commun des profondeurs, elfe, gnome, langue secrète des araignées"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 13
+
+save_s: 15
+
+save_ssb: 12

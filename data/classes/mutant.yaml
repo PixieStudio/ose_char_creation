@@ -1,0 +1,40 @@
+---
+cle: mutant
+
+name: Mutant
+
+main_attributes: DEX
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 8
+
+armors: "Cuir, boucliers"
+
+weapon: "Toutes les armes à projectiles, armes de mêlée à une main"
+
+spells: empty
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 10
+
+save_b: 11
+
+save_pp: 12
+
+save_s: 13
+
+save_ssb: 14

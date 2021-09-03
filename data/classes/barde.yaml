@@ -1,0 +1,40 @@
+---
+cle: barde
+
+name: Barde
+
+main_attributes: CHA
+
+force: 0
+
+intelligence: 9
+
+constitution: 0
+
+dexterite: 9
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 14
+
+armors: "Cuir, cotte de mailles, pas de bouclier"
+
+weapon: "Armes à projectiles, armes de mélée à une main"
+
+spells: Aucun
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 13
+
+save_b: 14
+
+save_pp: 13
+
+save_s: 16
+
+save_ssb: 15

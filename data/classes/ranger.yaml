@@ -1,0 +1,40 @@
+---
+cle: ranger
+
+name: Ranger
+
+main_attributes: FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 9
+
+charisme: 0
+
+dv: 1d8
+
+max_lvl: 14
+
+armors: "Cuir, cotte de mailles, boucliers"
+
+weapon: "Toutes"
+
+spells: Aucun
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 14
+
+save_s: 15
+
+save_ssb: 16

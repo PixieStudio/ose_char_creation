@@ -1,0 +1,40 @@
+---
+cle: svirfneblin
+
+name: Svirfneblin
+
+main_attributes: FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 8
+
+armors: "Toutes celles adaptées à la taille, y compris les boucliers"
+
+weapon: "Toutes celles adaptées à la taille"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, commun des profondeurs, gnome, nain, kobold, le langage des élémentaires de Terre."
+
+save_mp: 8
+
+save_b: 9
+
+save_pp: 10
+
+save_s: 14
+
+save_ssb: 11

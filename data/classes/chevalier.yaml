@@ -1,0 +1,40 @@
+---
+cle: chevalier
+
+name: Chevalier
+
+main_attributes: FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 9
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d8
+
+max_lvl: 14
+
+armors: "Cotte de mailles, armure de plaques, boucliers"
+
+weapon: "Armes de mêlée"
+
+spells: empty
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 14
+
+save_s: 15
+
+save_ssb: 16

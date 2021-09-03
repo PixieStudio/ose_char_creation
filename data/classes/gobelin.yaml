@@ -1,0 +1,40 @@
+---
+cle: gobelin
+
+name: Gobelin
+
+main_attributes: DEX|FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 9
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 8
+
+armors: "Toutes les armures adaptées à sa taille, boucliers compris"
+
+weapon: "Toutes les armes adaptées à sa taille"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, gobelin, langage des loups"
+
+save_mp: 8
+
+save_b: 9
+
+save_pp: 10
+
+save_s: 13
+
+save_ssb: 12

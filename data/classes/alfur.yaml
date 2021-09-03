@@ -1,0 +1,40 @@
+---
+cle: alfur
+
+name: Alfur
+
+main_attributes: CON|SAG
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 9
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 8
+
+armors: "Toutes celles adaptées à sa taille, boucliers compris"
+
+weapon: "Petites ou normales uniquement"
+
+spells: "1 sort de druide"
+
+languages: "Langue d'alignement, commun, sylvanien, alfur"
+
+save_mp: 11
+
+save_b: 12
+
+save_pp: 14
+
+save_s: 16
+
+save_ssb: 15

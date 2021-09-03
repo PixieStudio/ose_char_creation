@@ -1,0 +1,40 @@
+---
+cle: clerc
+
+name: "Clerc"
+
+main_attributes: SAG
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 14
+
+armors: "Toutes, boucliers compris"
+
+weapon: "Toutes les armes contondantes"
+
+spells: Aucun
+
+languages: "Lange d'alignement, commun"
+
+save_mp: 11
+
+save_b: 12
+
+save_pp: 14
+
+save_s: 16
+
+save_ssb: 15

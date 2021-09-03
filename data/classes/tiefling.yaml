@@ -1,0 +1,40 @@
+---
+cle: tiefling
+
+name: Tiefling
+
+main_attributes: CHA
+
+force: 0
+
+intelligence: 9
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 9
+
+dv: 1d6
+
+max_lvl: 10
+
+armors: "Cuir, boucliers"
+
+weapon: "Armes à distance à une main"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, infernal"
+
+save_mp: 11
+
+save_b: 12
+
+save_pp: 14
+
+save_s: 16
+
+save_ssb: 15

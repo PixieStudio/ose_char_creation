@@ -1,0 +1,40 @@
+---
+cle: bariaur
+
+name: Bariaur
+
+main_attributes: FOR
+
+force: 0
+
+intelligence: 9
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 12
+
+armors: "Toutes, boucliers compris"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, planaire"
+
+save_mp: 10
+
+save_b: 13
+
+save_pp: 14
+
+save_s: 15
+
+save_ssb: 11

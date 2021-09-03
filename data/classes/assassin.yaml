@@ -1,0 +1,40 @@
+---
+cle: assassin
+
+name: Assassin
+
+main_attributes: DEX
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d4
+
+max_lvl: 14
+
+armors: "Cuir, tous les boucliers"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 13
+
+save_b: 14
+
+save_pp: 15
+
+save_s: 16
+
+save_ssb: 15

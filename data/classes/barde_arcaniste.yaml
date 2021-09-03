@@ -1,0 +1,40 @@
+---
+cle: bardearcaniste
+
+name: "Barde Arcaniste"
+
+main_attributes: CHA|DEX
+
+force: 0
+
+intelligence: 9
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 14
+
+armors: "Cuir, cotte de mailles, pas de bouclier"
+
+weapon: "Toutes"
+
+spells: Aucun
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 13
+
+save_b: 14
+
+save_pp: 13
+
+save_s: 16
+
+save_ssb: 15

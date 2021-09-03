@@ -1,0 +1,40 @@
+---
+cle: mycelien
+
+name: "Mycélien"
+
+main_attributes: STR
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d8
+
+max_lvl: 6
+
+armors: "Boucliers uniquement"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, commun des profondeurs"
+
+save_mp: 9
+
+save_b: 11
+
+save_pp: 9
+
+save_s: 13
+
+save_ssb: 12

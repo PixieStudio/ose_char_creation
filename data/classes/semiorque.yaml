@@ -1,0 +1,40 @@
+---
+cle: semiorque
+
+name: "Semi-Orque"
+
+main_attributes: DEX|FOR
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 8
+
+armors: "Cuir, cotte de mailles, boucliers"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun, orque"
+
+save_mp: 13
+
+save_b: 14
+
+save_pp: 13
+
+save_s: 16
+
+save_ssb: 15

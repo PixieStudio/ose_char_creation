@@ -21,6 +21,7 @@ module Bot
           data.keys.each do |k|
             new_class[k] = data[k]
           end
+          new_class.save
         end
         'Synchronisation terminée'
       end

@@ -1,0 +1,40 @@
+---
+cle: mage
+
+name: Mage
+
+main_attributes: INT|SAG
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 14
+
+armors: "Aucune"
+
+weapon: "Dague, épée courte, bâton, épée"
+
+spells: empty
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 12
+
+save_s: 15
+
+save_ssb: 14

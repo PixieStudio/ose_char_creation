@@ -1,0 +1,40 @@
+---
+cle: illusionniste
+
+name: Illusionniste
+
+main_attributes: INT
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 9
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d4
+
+max_lvl: 14
+
+armors: "Aucune"
+
+weapon: "Dague"
+
+spells: "1 sort d'illusionniste"
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 13
+
+save_b: 14
+
+save_pp: 13
+
+save_s: 16
+
+save_ssb: 15

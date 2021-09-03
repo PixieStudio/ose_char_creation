@@ -1,0 +1,40 @@
+---
+cle: maitredesbetes
+
+name: "Maître des Bêtes"
+
+main_attributes: FOR|SAG
+
+force: 0
+
+intelligence: 0
+
+constitution: 0
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 0
+
+dv: 1d6
+
+max_lvl: 14
+
+armors: "Cuir, cotte de mailles, boucliers"
+
+weapon: "Toutes"
+
+spells: empty
+
+languages: "Langue d'alignement, commun"
+
+save_mp: 11
+
+save_b: 12
+
+save_pp: 12
+
+save_s: 15
+
+save_ssb: 16

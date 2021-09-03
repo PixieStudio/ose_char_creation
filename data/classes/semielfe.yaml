@@ -1,0 +1,40 @@
+---
+cle: semielfe
+
+name: "Semi-Elfe"
+
+main_attributes: FOR|INT
+
+force: 0
+
+intelligence: 0
+
+constitution: 9
+
+dexterite: 0
+
+sagesse: 0
+
+charisme: 9
+
+dv: 1d6
+
+max_lvl: 12
+
+armors: "Toutes, boucliers compris"
+
+weapon: "Toutes"
+
+spells: Aucun
+
+languages: "Langue d'alignement, commun, elfe"
+
+save_mp: 12
+
+save_b: 13
+
+save_pp: 13
+
+save_s: 15
+
+save_ssb: 15
