@@ -3,7 +3,7 @@ module Bot
     # Character Model
     class Character < Sequel::Model
       #   many_to_one :game, class: '::Bot::Database::Game'
-      #   many_to_one :livret, class: '::Bot::Database::Livret'
+      many_to_one :classe, class: '::Bot::Database::Classe'
       #   one_to_many :equipements
       #   one_to_many :wounds
 
@@ -25,33 +25,35 @@ module Bot
         where(id: id).first
       end
 
-      #   def text_channel
-      #     BOT.channel(text_channel_id)
-      #   end
+      def text_channel
+        BOT.channel(text_channel_id)
+      end
 
-      #   def message
-      #     text_channel.message(fiche_msg_id)
-      #   end
+      def message
+        text_channel.message(fiche_msg_id)
+      end
 
-      #   def update_message!
-      #     message.edit('', generate_embed(id))
-      #   end
+      def update_message!
+        message.edit('', generate_embed(id))
+      end
 
       # Generates an embedded charsheet
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
         # livret = char.livret
 
-        perso = "Nom ` #{char.char_name} `  Niveau ` #{char.level} `\n"\
-        "Genre : #{char.genre}\n"\
+        perso = "Nom ` #{char.char_name} ` \n"\
+        "Pronoms : #{char.genre}\n"\
+        "Classe : #{char.classe.name}\n"\
         "Apparence : #{char.apparence}\n"\
-        "Personnalité : #{char.personnalite}\n"
+        "Personnalité : #{char.personnalite}\n"\
+        "Histoire : #{char.histoire}"
 
         stats = "FOR  ` #{char.force} `  "\
-        "CON  ` #{char.constitution} `  "\
-        "DEX  ` #{char.dexterite} `  "\
         "INT  ` #{char.intelligence} `"\
         "SAG  ` #{char.sagesse} `  "\
+        "DEX  ` #{char.dexterite} `  "\
+        "CON  ` #{char.constitution} `  "\
         "CHA  ` #{char.charisme} `  "
 
         # wounds = "Première blessure : #{char.first_wound}\n"\
@@ -72,9 +74,9 @@ module Bot
         embed = Discordrb::Webhooks::Embed.new
         embed.title = 'Fiche Personnage'
         embed.color = 44_783
-        embed.description = "Joueur : **#{BOT.user(char.discord_id).username}**"
-        embed.add_field name: '**Personnage :** ', value: perso
+        embed.description = "Joueur.euse : **#{BOT.user(char.user_discord_id).username}**"
         embed.add_field name: '**Statistiques :** ', value: stats
+        embed.add_field name: '**Personnage :** ', value: perso
         # embed.add_field name: '**Blessures :** ', value: wounds.join("\n") unless wounds.empty?
         # embed.add_field name: '**Rumeur :** ', value: char.rumeur
         # embed.add_field name: '**Equipement :** ', value: equipements.join("\n") unless equipements.empty?

@@ -1,0 +1,39 @@
+---
+cle: base
+
+name: "Choisir une classe : !classes"
+
+main_attributes: ATT1|ATT2
+# force: 0
+
+# intelligence: 0
+
+# constitution: 0
+
+# dexterite: 0
+
+# sagesse: 0
+
+# charisme: 0
+
+# dv: 1d6
+
+# max_lvl: 10
+
+# armors: all
+
+# weapon: all
+
+# spells: empty
+
+# languages: all
+
+# save_mp: 0
+
+# save_b: 0
+
+# save_pp: 0
+
+# save_s: 0
+
+# save_ssb: 0
