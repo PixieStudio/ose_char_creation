@@ -14,26 +14,12 @@ module Bot
 
         classe = Database::Classe.find(cle: 'base')
 
-        attributes = []
-
-        6.times do
-          roll_dice = []
-          3.times do
-            roll_dice << rand(1..6)
-          end
-          attributes << roll_dice.sum
-        end
-
         new_player = Database::Character.create(
           user_discord_id: event.user.id,
-          classe: classe,
-          force: attributes[0],
-          intelligence: attributes[1],
-          sagesse: attributes[2],
-          dexterite: attributes[3],
-          constitution: attributes[4],
-          charisme: attributes[5]
+          server_id: event.server.id,
+          classe: classe
         )
+
         new_player.save
 
         fiche = BOT.channel(settings.sheet_channel_id)
@@ -45,8 +31,8 @@ module Bot
         msg.delete
 
         msg = "#{BOT.user(event.user.id).mention}, la fiche de ton personnage a bien été crée dans le salon #{BOT.channel(settings.sheet_channel_id).mention}\n"
-        msg += "Pour continuer la création de ton personnage, tape la commande :\n"
-        msg += '`!classes`'
+        msg += "Pour tirer tes caractéristiques, lance les commandes suivantes au fur et à mesure :\n"
+        msg += '`!FOR` `!INT` `!SAG` `!DEX` `!CON` `!CHA`'
 
         event.respond msg
       end

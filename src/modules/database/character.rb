@@ -9,7 +9,7 @@ module Bot
 
       # Fetches Discord user from bot cache
       def discord_user
-        BOT.user(discord_id)
+        BOT.user(user_discord_id)
       end
 
       #   def self.find_active(id, channel)
@@ -17,20 +17,22 @@ module Bot
       #     where(discord_id: id, game_id: game[:id]).first
       #   end
 
-      #   def self.find_sheet(id, channel)
-      #     where(discord_id: id, text_channel_id: channel).first
-      #   end
+      def self.find_sheet(id)
+        where(user_discord_id: id).order(:id).reverse.first
+      end
 
       def self.search(id)
         where(id: id).first
       end
 
-      def text_channel
-        BOT.channel(text_channel_id)
+      def sheet_channel
+        settings = Database::Settings.find(server_id: server_id)
+
+        BOT.channel(settings.sheet_channel_id)
       end
 
       def message
-        text_channel.message(fiche_msg_id)
+        sheet_channel.message(message_id)
       end
 
       def update_message!
@@ -40,7 +42,6 @@ module Bot
       # Generates an embedded charsheet
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
-        # livret = char.livret
 
         perso = "Nom ` #{char.char_name} ` \n"\
         "Pronoms : #{char.genre}\n"\
@@ -55,21 +56,6 @@ module Bot
         "DEX  ` #{char.dexterite} `  "\
         "CON  ` #{char.constitution} `  "\
         "CHA  ` #{char.charisme} `  "
-
-        # wounds = "Première blessure : #{char.first_wound}\n"\
-        # "Seconde blessure : #{char.second_wound}"
-
-        # equipements = []
-        # char.equipements.each do |e|
-        #   equipements << (e.available ? "- #{e.name}" : "- ~~#{e.name}~~")
-        # end
-
-        # wounds = []
-        # char.wounds.each do |w|
-        #   wounds << "- #{w.name}"
-        # end
-
-        # wounds << '**HORS JEU**' if wounds.length == 2
 
         embed = Discordrb::Webhooks::Embed.new
         embed.title = 'Fiche Personnage'
