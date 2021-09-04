@@ -8,14 +8,13 @@ Sequel.migration do
       String :char_name, default: 'A définir'
       String :genre, default: 'A définir'
       foreign_key :classe_id, :classes, on_delete: :cascade
-      # Or ?
-      # Integer :classe, default: 0
       Integer :dexterite, default: 0
       Integer :force, default: 0
       Integer :sagesse, default: 0
       Integer :intelligence, default: 0
       Integer :constitution, default: 0
       Integer :charisme, default: 0
+      Integer :pv_max, default: 0
       String :personnalite, default: 'A définir'
       String :apparence, default: 'A définir'
       String :histoire, text: true, default: 'A définir'

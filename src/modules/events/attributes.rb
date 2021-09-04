@@ -39,6 +39,11 @@ module Bot
 
       caracs.each do |c|
         message(content: /^#{c[:cmd]}$/) do |event|
+          event.message.delete
+
+          settings = Database::Settings.where(server_id: event.server.id)&.first
+          next unless event.channel.id == settings.creation_channel_id
+
           charsheet = Database::Character.find_sheet(event.user.id)
 
           unless charsheet[c[:column].to_sym].zero?
@@ -58,13 +63,37 @@ module Bot
           charsheet.update(c[:column].to_sym => attribute)
           charsheet.update_message!
 
+          attributes_pattern = {
+            force: 'FOR',
+            intelligence: 'INT',
+            dexterite: 'DEX',
+            sagesse: 'SAG',
+            constitution: 'CON',
+            charisme: 'CHA'
+          }
+
+          att_remain = []
+
+          attributes_pattern.keys.each do |k|
+            att_remain << attributes_pattern[k] if (charsheet[k.to_sym]).zero?
+          end
+
           msg = event.user.mention
           msg += "```md\n"
           msg += "#{c[:message]}#{attribute}\n"
           msg += "------\n"
           msg += "Dés : #{roll_dice}\n"
           msg += "Résultat : #{attribute}"
-          msg += '```'
+          msg += "```\n"
+          if att_remain.length.zero?
+            msg += "Lance la commande `!classes` pour choisir la classe de ton personnage. \n"
+            msg += '*Seules les classes qui te sont accessibles seront proposées.*'
+          else
+            msg += "Tu peux continuer à tirer tes caractéristiques restantes :\n"
+            att_remain.each do |att|
+              msg += " ` !#{att} ` "
+            end
+          end
 
           event.respond msg
         end

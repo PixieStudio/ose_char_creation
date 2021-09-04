@@ -2,7 +2,6 @@ module Bot
   module Database
     # Character Model
     class Character < Sequel::Model
-      #   many_to_one :game, class: '::Bot::Database::Game'
       many_to_one :classe, class: '::Bot::Database::Classe'
       #   one_to_many :equipements
       #   one_to_many :wounds
@@ -55,7 +54,9 @@ module Bot
         "SAG  ` #{char.sagesse} `  "\
         "DEX  ` #{char.dexterite} `  "\
         "CON  ` #{char.constitution} `  "\
-        "CHA  ` #{char.charisme} `  "
+        "CHA  ` #{char.charisme} `  \n"\
+        "DV ` #{char.classe.dv} ` "\
+        "PV Max ` #{char.pv_max} ` "
 
         embed = Discordrb::Webhooks::Embed.new
         embed.title = 'Fiche Personnage'

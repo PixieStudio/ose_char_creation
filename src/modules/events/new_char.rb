@@ -32,7 +32,7 @@ module Bot
 
         msg = "#{BOT.user(event.user.id).mention}, la fiche de ton personnage a bien été crée dans le salon #{BOT.channel(settings.sheet_channel_id).mention}\n"
         msg += "Pour tirer tes caractéristiques, lance les commandes suivantes au fur et à mesure :\n"
-        msg += '`!FOR` `!INT` `!SAG` `!DEX` `!CON` `!CHA`'
+        msg += '` !FOR ` ` !INT ` ` !SAG ` ` !DEX ` ` !CON ` ` !CHA `'
 
         event.respond msg
       end

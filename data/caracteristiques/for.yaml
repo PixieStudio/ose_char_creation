@@ -1,0 +1,7 @@
+cle: FOR
+
+name: force
+
+cmd: "!FOR"
+
+roll: "La FORce de ton personnage est de : "
