@@ -3,18 +3,11 @@ module Bot
     # Character Model
     class Character < Sequel::Model
       many_to_one :classe, class: '::Bot::Database::Classe'
-      #   one_to_many :equipements
-      #   one_to_many :wounds
 
       # Fetches Discord user from bot cache
       def discord_user
         BOT.user(user_discord_id)
       end
-
-      #   def self.find_active(id, channel)
-      #     game = Database::Game.where(text_channel_id: channel).first
-      #     where(discord_id: id, game_id: game[:id]).first
-      #   end
 
       def self.find_sheet(id)
         where(user_discord_id: id).order(:id).reverse.first
@@ -38,13 +31,32 @@ module Bot
         message.edit('', generate_embed(id))
       end
 
+      def const_mod
+        if constitution == 3
+          -3
+        elsif constitution.between?(4, 5)
+          -2
+        elsif constitution.between?(6, 8)
+          -1
+        elsif constitution.between?(9, 12)
+          0
+        elsif constitution.between?(13, 15)
+          1
+        elsif constitution.between?(16, 17)
+          2
+        else
+          3
+        end
+      end
+
       # Generates an embedded charsheet
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
 
         perso = "Nom ` #{char.char_name} ` \n"\
-        "Pronoms : #{char.genre}\n"\
-        "Classe : #{char.classe.name}\n"\
+        "Pronoms : ` #{char.genre} ` \n"\
+        "Classe : ` #{char.classe.name} ` \n"\
+        "Rumeur : ` A définir ` \n"\
         "Apparence : #{char.apparence}\n"\
         "Personnalité : #{char.personnalite}\n"\
         "Histoire : #{char.histoire}"
@@ -54,8 +66,9 @@ module Bot
         "SAG  ` #{char.sagesse} `  "\
         "DEX  ` #{char.dexterite} `  "\
         "CON  ` #{char.constitution} `  "\
-        "CHA  ` #{char.charisme} `  \n"\
-        "DV ` #{char.classe.dv} ` "\
+        "CHA  ` #{char.charisme} `  \n"
+
+        sante = "DV ` #{char.classe.dv} ` "\
         "PV Max ` #{char.pv_max} ` "
 
         embed = Discordrb::Webhooks::Embed.new
@@ -63,11 +76,8 @@ module Bot
         embed.color = 44_783
         embed.description = "Joueur.euse : **#{BOT.user(char.user_discord_id).username}**"
         embed.add_field name: '**Statistiques :** ', value: stats
+        embed.add_field name: '**Santé :** ', value: sante
         embed.add_field name: '**Personnage :** ', value: perso
-        # embed.add_field name: '**Blessures :** ', value: wounds.join("\n") unless wounds.empty?
-        # embed.add_field name: '**Rumeur :** ', value: char.rumeur
-        # embed.add_field name: '**Equipement :** ', value: equipements.join("\n") unless equipements.empty?
-        # embed.add_field name: '**Histoires :** ', value: char.histoire unless char.histoire == 'Empty'
         embed
       end
     end

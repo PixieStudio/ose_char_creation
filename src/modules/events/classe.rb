@@ -12,7 +12,6 @@ module Bot
 
         charsheet = Database::Character.find_sheet(event.user.id)
 
-        # attributes_pattern = %w[force intelligence dexterite sagesse constitution charisme]
         attributes_pattern = {
           force: 'FOR',
           intelligence: 'INT',
