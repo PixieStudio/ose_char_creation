@@ -6,6 +6,8 @@ module Bot
       message(content: /^!settings.*$/i) do |event|
         event.message.delete
 
+        next unless event.user.owner?
+
         channels =  event.server.text_channels
 
         msg = ':pen_ballpoint: Dans quel salon les joueurs doivent-ils créer leur fiche ? :pen_ballpoint:'

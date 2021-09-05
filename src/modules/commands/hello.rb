@@ -6,7 +6,7 @@ module Bot
         'Hello ' + event.user.username
       end
 
-      command :tutorial do |event|
+      command :help do |event|
         tutorial = event.send_message CONFIG.tutorial.join("\n")
         tutorial.pin
       end

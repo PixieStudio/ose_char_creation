@@ -19,8 +19,6 @@ module Bot
           true
         end
 
-        puts @rumeurs
-
         @rumeurs.each do |r|
           rumeur = Database::Rumeur.create(
             server_id: event.server.id,
