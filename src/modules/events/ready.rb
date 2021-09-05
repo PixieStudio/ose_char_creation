@@ -10,6 +10,11 @@ module Bot
           data = YAML.load_file(f)
 
           find_cle = Database::Classe.find(cle: data['cle'])
+          unless find_cle.nil?
+            data.keys.each do |k|
+              find_cle.update(k => data[k]) unless find_cle[k] == data[k]
+            end
+          end
           next unless find_cle.nil?
 
           new_class = Database::Classe.new

@@ -73,11 +73,23 @@ module Bot
 
         event.respond msg
 
+        attributes_pattern = {
+          force: 'FOR',
+          intelligence: 'INT',
+          dexterite: 'DEX',
+          sagesse: 'SAG',
+          constitution: 'CON',
+          charisme: 'CHA'
+        }
+
+        main_att = charsheet.classe.main_attributes.split('|')
+
         msg = event.user.mention
         msg = "\nQuelle caractéristique souhaites-tu augmenter de 1 point ?\n"
         msg += "```md\n"
-        caracs.each.with_index(1) do |c, index|
-          msg += "#{index}. #{c} (#{charsheet[c.to_sym]} -> #{charsheet[c.to_sym] + 1})\n"
+        main_att.each.with_index(1) do |c, index|
+          msg += "#{index}. #{c} "\
+          "(#{charsheet[attributes_pattern.key(c).to_sym]} -> #{charsheet[attributes_pattern.key(c).to_sym] + 1})\n"
         end
         msg += '```'
 
@@ -89,12 +101,14 @@ module Bot
           @up = if id.zero?
                   nil
                 else
-                  caracs[id - 1]
+                  attributes_pattern.key(main_att[id - 1])
                 end
 
           if @up.nil?
-            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. Tape ` !ajuster ` à nouveau, ou continue avec tes **Points de Vie Max** avec la commande ` !pvmax `.'
+            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. "\
+            "Tape ` !ajuster ` à nouveau, ou continue avec tes **Points de Vie Max** avec la commande ` !pvmax `.'
           else
+            puts @up
             choice.message.delete
           end
           true

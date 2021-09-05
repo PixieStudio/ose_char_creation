@@ -34,7 +34,7 @@ module Bot
         end
         best = attributes.sort_by { |_k, v| v }.reverse.first(2)
 
-        best_msg = 'Les deux meilleures caractéristiques de ton personnage sont : '\
+        best_msg = 'Tes deux meilleures caractéristiques sont : '\
         "**#{best[0][0]} (#{best[0][1]})** et **#{best[1][0]} (#{best[1][1]})**"
 
         classes = Database::Classe.where(Sequel.~(cle: /^base/))\
