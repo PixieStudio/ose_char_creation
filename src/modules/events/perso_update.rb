@@ -16,12 +16,23 @@ module Bot
           next
         end
 
-        charsheet = Database::Character.find_sheet(event.user.id)
-        next if charsheet.nil?
+        if event.user.owner?
+          charsheets = Database::Character.where(server_id: event.server.id).all
 
-        msg = "#{event.user.mention} Ta fiche personnage a été mise à jour."
+          msg = 'Toutes les fiches personnages ont été mises à jour.'
 
-        charsheet.update_message!
+          charsheets.each do |c|
+            c.update_message!
+          end
+
+        else
+          charsheet = Database::Character.find_sheet(event.user.id)
+          next if charsheet.nil?
+
+          msg = "#{event.user.mention} Ta fiche personnage a été mise à jour."
+
+          charsheet.update_message!
+        end
 
         event.respond msg
       end

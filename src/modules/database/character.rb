@@ -74,6 +74,7 @@ module Bot
 
         saves = "MP ` #{char.classe.save_mp} ` "\
         "B ` #{char.classe.save_b} ` "\
+        "PP ` #{char.classe.save_pp} ` "\
         "S ` #{char.classe.save_s} ` "\
         "SSB ` #{char.classe.save_ssb} `"\
 
