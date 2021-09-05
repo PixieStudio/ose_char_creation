@@ -5,8 +5,8 @@ Sequel.migration do
       Bignum :user_discord_id
       Bignum :server_id
       String :message_id, unique: true
-      String :char_name, default: 'A définir'
-      String :genre, default: 'A définir'
+      String :char_name, default: '!nom'
+      String :genre, default: '!pronoms'
       foreign_key :classe_id, :classes, on_delete: :cascade
       Integer :dexterite, default: 0
       Integer :force, default: 0
@@ -15,11 +15,14 @@ Sequel.migration do
       Integer :constitution, default: 0
       Integer :charisme, default: 0
       Integer :pv_max, default: 0
-      String :personnalite, default: 'A définir'
-      String :apparence, default: 'A définir'
-      String :histoire, text: true, default: 'A définir'
-      Integer :participation, default: 0
+      Integer :gold, default: 0
       Integer :ca, default: 0
+      String :alignement, default: '!alignement'
+      String :rumeur, default: '` !rumeur `'
+      String :personnalite, default: '` !personnalite `'
+      String :apparence, default: '` !apparence `'
+      String :histoire, text: true, default: '` !histoire `'
+      Integer :participation, default: 0
       TrueClass :editable, default: true
     end
   end

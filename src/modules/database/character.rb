@@ -56,28 +56,46 @@ module Bot
         perso = "Nom ` #{char.char_name} ` \n"\
         "Pronoms : ` #{char.genre} ` \n"\
         "Classe : ` #{char.classe.name} ` \n"\
-        "Rumeur : ` A définir ` \n"\
-        "Apparence : #{char.apparence}\n"\
-        "Personnalité : #{char.personnalite}\n"\
-        "Histoire : #{char.histoire}"
+        "Alignement : ` #{char.alignement} ` \n"\
+        "Langues connues : ` #{char.classe.languages} `\n"\
+        "Rumeur : #{char.rumeur} "
 
         stats = "FOR  ` #{char.force} `  "\
         "INT  ` #{char.intelligence} `"\
         "SAG  ` #{char.sagesse} `  "\
         "DEX  ` #{char.dexterite} `  "\
         "CON  ` #{char.constitution} `  "\
-        "CHA  ` #{char.charisme} `  \n"
+        "CHA  ` #{char.charisme} `  "
 
-        sante = "DV ` #{char.classe.dv} ` "\
-        "PV Max ` #{char.pv_max} ` "
+        sante = "Niveau Max ` #{char.classe.max_lvl} ` "\
+        "DV ` #{char.classe.dv} ` "\
+        "PV Max ` #{char.pv_max} ` "\
+        "Or ` #{char.gold} `"
+
+        saves = "MP ` #{char.classe.save_mp} ` "\
+        "B ` #{char.classe.save_b} ` "\
+        "S ` #{char.classe.save_s} ` "\
+        "SSB ` #{char.classe.save_ssb} `"\
+
+        stuff = "Armes ` #{char.classe.weapon} ` \n"\
+        "Armures ` #{char.classe.armors} ` \n"\
+
+        stuff += "Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
+
+        perso_back = "__Apparence :__ #{char.apparence}\n\n"\
+        "__Personnalité :__ #{char.personnalite}\n\n"\
+        # "__Histoire :__ #{char.histoire}"
 
         embed = Discordrb::Webhooks::Embed.new
         embed.title = 'Fiche Personnage'
         embed.color = 44_783
         embed.description = "Joueur.euse : **#{BOT.user(char.user_discord_id).username}**"
+        embed.add_field name: '**Personnage :** ', value: perso
         embed.add_field name: '**Statistiques :** ', value: stats
         embed.add_field name: '**Santé :** ', value: sante
-        embed.add_field name: '**Personnage :** ', value: perso
+        embed.add_field name: '**Sauvegardes :** ', value: saves
+        embed.add_field name: '**Equipement et Sorts :** ', value: stuff
+        embed.add_field name: '**Informations :** ', value: perso_back
         embed
       end
     end

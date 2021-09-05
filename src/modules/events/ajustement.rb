@@ -11,6 +11,7 @@ module Bot
         next unless event.channel.id == settings.creation_channel_id
 
         charsheet = Database::Character.find_sheet(event.user.id)
+        next if charsheet.nil?
 
         caracs_drop = %w[force intelligence sagesse]
         caracs = %w[force intelligence sagesse dexterite constitution charisme]

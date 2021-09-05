@@ -8,7 +8,28 @@ module Bot
         event.message.delete
 
         settings = Database::Settings.where(server_id: event.server.id)&.first
-        next unless event.channel.id == settings.creation_channel_id
+        if settings.nil?
+          msg = "Le propriétaire du serveur doit d'abord configurer le Bot à l'aide de la commande ` !settings `"
+
+          event.respond msg
+          next
+        end
+
+        unless event.channel.id == settings.creation_channel_id
+          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
+          "#{BOT.channel(settings.creation_channel_id).mention}"
+
+          event.respond msg
+          next
+        end
+
+        rumeurs = Database::Rumeur.all(settings.server_id)
+        if rumeurs.empty?
+          msg = "Le propriétaire du serveur doit d'abord ajouter des rumeurs. Commande ` !add rumeurs `"
+
+          event.respond msg
+          next
+        end
 
         msg = event.respond 'Création du personnage'
 

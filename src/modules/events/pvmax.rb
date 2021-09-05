@@ -11,7 +11,7 @@ module Bot
         next unless event.channel.id == settings.creation_channel_id
 
         charsheet = Database::Character.find_sheet(event.user.id)
-
+        next if charsheet.nil?
         next unless charsheet[:pv_max].zero?
 
         mod = charsheet.const_mod
@@ -21,6 +21,8 @@ module Bot
         pv = rand(1..dice)
 
         pvmax = pv + mod
+
+        pvmax = 1 if pvmax < 1
 
         msg = event.user.mention
         msg += "Tes points de vie maximum s'élèvent à....... **#{pvmax}** ! Bonne chance !"
@@ -33,7 +35,8 @@ module Bot
         msg += '+' if mod.positive? || mod.zero?
         msg += mod.to_s
         msg += "\nRésultat : #{pvmax}\n"
-        msg += '```'
+        msg += "```\n\n"
+        msg += "Pour découvrir le nombre de pièce d'or que tu possèdes, tape la commande ` !gold `"
 
         charsheet.update(pv_max: pvmax)
         charsheet.update_message!

@@ -45,6 +45,7 @@ module Bot
           next unless event.channel.id == settings.creation_channel_id
 
           charsheet = Database::Character.find_sheet(event.user.id)
+          next if charsheet.nil?
 
           unless charsheet[c[:column].to_sym].zero?
             event.message.delete
