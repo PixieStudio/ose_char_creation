@@ -25,7 +25,7 @@ armors: "Toutes, boucliers compris"
 
 weapon: "Toutes"
 
-spells: "1 sort de clerc ou de magicien"
+spells: "1 sort de clerc ou de magicien - Classic Fantasy p.62-63"
 
 languages: "Langue d'alignement, commu, elfique, gnoll, hobgobelin, orque"
 
@@ -38,3 +38,5 @@ save_pp: 13
 save_s: 15
 
 save_ssb: 15
+
+page: "OSE Classic Fantasy p.24"

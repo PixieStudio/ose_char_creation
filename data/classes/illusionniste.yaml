@@ -25,7 +25,7 @@ armors: "Aucune"
 
 weapon: "Dague"
 
-spells: "1 sort d'illusionniste"
+spells: "1 sort d'illusionniste N.1 - Advanced Fantasy p.5"
 
 languages: "Langue d'alignement, commun"
 
@@ -38,3 +38,5 @@ save_pp: 13
 save_s: 16
 
 save_ssb: 15
+
+page: "OSE Advanced Fantasy p.24"

@@ -25,7 +25,7 @@ armors: "Cuir, boucliers en bois"
 
 weapon: "Bâton, dague, épieu, gourdin, fronde"
 
-spells: "1 sort de druide"
+spells: "1 sort de druide N.1 - Advanced Fantasy p.4"
 
 languages: "Langue d'alignement, commun"
 
@@ -38,3 +38,5 @@ save_pp: 14
 save_s: 16
 
 save_ssb: 15
+
+page: "OSE Advanced Fantasy p.18"

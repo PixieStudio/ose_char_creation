@@ -55,6 +55,7 @@ module Bot
         classes.each.with_index(1) do |c, index|
           main_att = c[:main_attributes].split('|').join(' ')
           msg += "#{index}. #{c[:name]} : #{main_att}\n"
+          msg += "*#{c[:page]}*\n\n"
         end
         msg += '```'
 

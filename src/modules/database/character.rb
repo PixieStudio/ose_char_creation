@@ -55,7 +55,7 @@ module Bot
 
         perso = "Nom ` #{char.char_name} ` \n"\
         "Pronoms : ` #{char.genre} ` \n"\
-        "Classe : ` #{char.classe.name} ` \n"\
+        "Classe : ` #{char.classe.name} ` *#{char.classe.page}*\n"\
         "Alignement : ` #{char.alignement} ` \n"\
         "Langues connues : ` #{char.classe.languages} `\n"\
         "Rumeur : #{char.rumeur} "

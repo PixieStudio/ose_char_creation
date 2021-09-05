@@ -22,6 +22,7 @@ Sequel.migration do
       Integer :save_pp, default: 0
       Integer :save_s, default: 0
       Integer :save_ssb, default: 0
+      String :page, default: 'p.1'
     end
   end
 end

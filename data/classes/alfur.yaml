@@ -25,7 +25,7 @@ armors: "Toutes celles adaptées à sa taille, boucliers compris"
 
 weapon: "Petites ou normales uniquement"
 
-spells: "1 sort de druide"
+spells: "1 sort de druide N.1 - Advanced Fantasy p.4"
 
 languages: "Langue d'alignement, commun, sylvanien, alfur"
 
@@ -38,3 +38,5 @@ save_pp: 14
 save_s: 16
 
 save_ssb: 15
+
+page: "Ziterman Mondial Exclu!"

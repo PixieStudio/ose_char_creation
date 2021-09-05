@@ -25,7 +25,7 @@ armors: "Cuir, bouclier"
 
 weapon: "Toute arme adaptée à la taille"
 
-spells: "1 sort d'illusionniste"
+spells: "1 sort d'illusionniste N.1 - Advanced Fantasy p.5"
 
 languages: "Langue d'alignement, commun, gnome, kobold, nain, le langage secret des mammifères fouisseurs"
 
@@ -38,3 +38,5 @@ save_pp: 10
 save_s: 14
 
 save_ssb: 11
+
+page: "OSE Advanced Fantasy p.22"

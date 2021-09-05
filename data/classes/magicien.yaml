@@ -25,7 +25,7 @@ armors: "Aucune"
 
 weapon: "Dagues"
 
-spells: "1 sort de magicien"
+spells: "1 sort de magicien - Classic Fantasy p.62-63"
 
 languages: "Langue d'alignement, commun"
 
@@ -38,3 +38,5 @@ save_pp: 13
 save_s: 16
 
 save_ssb: 15
+
+page: "OSE Classic Fantasy p.28"
