@@ -31,9 +31,15 @@ module Bot
           next
         end
 
-        msg = event.respond 'Création du personnage'
-
         classe = Database::Classe.find(cle: 'base')
+        if classe.nil?
+          msg = "Le propriétaire du serveur doit d'abord synchroniser les classes : ` !sync_classes `"
+
+          event.respond msg
+          next
+        end
+
+        msg = event.respond 'Création du personnage'
 
         new_player = Database::Character.create(
           user_discord_id: event.user.id,

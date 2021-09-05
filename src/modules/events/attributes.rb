@@ -42,7 +42,13 @@ module Bot
           event.message.delete
 
           settings = Database::Settings.where(server_id: event.server.id)&.first
-          next unless event.channel.id == settings.creation_channel_id
+          unless event.channel.id == settings.creation_channel_id
+            msg = "L'édition de ton personnage doit être réalisée dans le salon "\
+            "#{BOT.channel(settings.creation_channel_id).mention}"
+
+            event.respond msg
+            next
+          end
 
           charsheet = Database::Character.find_sheet(event.user.id)
           next if charsheet.nil?

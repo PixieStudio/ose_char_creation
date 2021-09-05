@@ -8,7 +8,13 @@ module Bot
         event.message.delete
 
         settings = Database::Settings.where(server_id: event.server.id)&.first
-        next unless event.channel.id == settings.creation_channel_id
+        unless event.channel.id == settings.creation_channel_id
+          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
+          "#{BOT.channel(settings.creation_channel_id).mention}"
+
+          event.respond msg
+          next
+        end
 
         charsheet = Database::Character.find_sheet(event.user.id)
         next if charsheet.nil?
@@ -67,9 +73,10 @@ module Bot
             msg = event.respond 'Aucune classe ne correspond à ce chiffre. Tape `!classes` à nouveau.'
           else
             choice.message.delete
-            true
           end
+          true
         end
+        next if @classe.nil?
 
         charsheet.update(classe: @classe)
         charsheet.update_message!
@@ -77,7 +84,7 @@ module Bot
 
         msg = event.user.mention
         msg += "\nTu as choisis la classe **#{@classe.name}**. Ta fiche a été mise à jour\n"
-        msg += "A présent, tu peux tirer tes **Points de Vie** maximum à l'aide de la commande `!pvmax`"
+        msg += "Tu peux ajuster tes caractéristiques à l'aide de la commande `!ajuster`"
 
         event.respond msg
       end

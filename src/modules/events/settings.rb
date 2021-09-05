@@ -23,24 +23,23 @@ module Bot
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
 
-          creation_channel = if id.zero?
-                               nil
-                             else
-                               channels[id - 1].id
-                             end
+          @creation_channel = if id.zero?
+                                nil
+                              else
+                                channels[id - 1].id
+                              end
 
-          if creation_channel.nil?
+          if @creation_channel.nil?
             msg = event.respond "Aucun salon n'a été trouvé."
-            sleep 3
-            msg.delete
           else
-            @creation = creation_channel
+            @creation = @creation_channel
 
             res.delete
             choice.message.delete
-            true
           end
+          true
         end
+        next if @creation_channel.nil?
 
         msg = ':bookmark: Dans quel salon les fiches doivent-elles être publiées ? :bookmark:'
         msg += "```md\n"
@@ -57,24 +56,23 @@ module Bot
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
 
-          sheet_channel = if id.zero?
-                            nil
-                          else
-                            channels[id - 1].id
-                          end
+          @sheet_channel = if id.zero?
+                             nil
+                           else
+                             channels[id - 1].id
+                           end
 
-          if sheet_channel.nil?
+          if @sheet_channel.nil?
             msg = event.respond "Aucun salon n'a été trouvé."
-            sleep 3
-            msg.delete
           else
-            @sheet = sheet_channel
+            @sheet = @sheet_channel
 
             res.delete
             choice.message.delete
-            true
           end
+          true
         end
+        next if @sheet_channel.nil?
 
         server_id = event.server.id
 

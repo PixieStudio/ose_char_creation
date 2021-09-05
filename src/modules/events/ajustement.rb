@@ -8,7 +8,13 @@ module Bot
         event.message.delete
 
         settings = Database::Settings.where(server_id: event.server.id)&.first
-        next unless event.channel.id == settings.creation_channel_id
+        unless event.channel.id == settings.creation_channel_id
+          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
+          "#{BOT.channel(settings.creation_channel_id).mention}"
+
+          event.respond msg
+          next
+        end
 
         charsheet = Database::Character.find_sheet(event.user.id)
         next if charsheet.nil?
@@ -53,12 +59,14 @@ module Bot
                   end
 
           if @drop.nil?
-            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. Tape ` !ajuster ` à nouveau.'
+            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. Tape ` !ajuster ` à nouveau, ou continue avec tes **Points de Vie Max** avec la commande ` !pvmax `.'
           else
             choice.message.delete
-            true
           end
+          true
         end
+
+        next if @drop.nil?
 
         res.delete
         msg = "#{event.user.mention} Tu as choisi de diminuer ta caractéristique **#{@drop}** de 2 points."
@@ -85,12 +93,13 @@ module Bot
                 end
 
           if @up.nil?
-            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. Tape ` !ajuster ` à nouveau.'
+            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. Tape ` !ajuster ` à nouveau, ou continue avec tes **Points de Vie Max** avec la commande ` !pvmax `.'
           else
             choice.message.delete
-            true
           end
+          true
         end
+        next if @up.nil?
 
         res.delete
         msg = "#{event.user.mention} Tu as choisi de diminuer ta caractéristique **#{@up}** de 1 point."
@@ -101,7 +110,10 @@ module Bot
         charsheet.update(@up.to_sym => charsheet[@up.to_sym] + 1)
         charsheet.update_message!
 
-        event.respond "#{event.user.mention} La fiche de ton personnage a été mise à jour !"
+        msg = "#{event.user.mention} La fiche de ton personnage a été mise à jour !\n"
+        msg += "Tu peux continuer les ajustement avec ` !ajuster ` ou \n"
+        msg += 'découvrir tes **Points de Vie Max** avec la commande ` !pvmax `'
+        event.respond msg
       end
     end
   end

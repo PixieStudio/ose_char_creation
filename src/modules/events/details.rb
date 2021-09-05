@@ -58,7 +58,13 @@ module Bot
           event.message.delete
 
           settings = Database::Settings.where(server_id: event.server.id)&.first
-          next unless event.channel.id == settings.creation_channel_id
+          unless event.channel.id == settings.creation_channel_id
+            msg = "L'édition de ton personnage doit être réalisée dans le salon "\
+            "#{BOT.channel(settings.creation_channel_id).mention}"
+
+            event.respond msg
+            next
+          end
 
           charsheet = Database::Character.find_sheet(event.user.id)
           next if charsheet.nil?
@@ -71,7 +77,6 @@ module Bot
                 false
               else
                 charsheet.update(c[:column].to_sym => guess_event.message.content)
-                puts guess_event.message.content
                 guess_event.message.delete
                 msg.delete
                 true
@@ -79,11 +84,12 @@ module Bot
             end
           else
             charsheet.update(c[:column].to_sym => args)
-            puts args
           end
           charsheet.update_message!
 
-          msg = "#{event.user.mention} Ta fiche personnage a été mise à jour."
+          msg = "#{event.user.mention} *Ta fiche personnage a été mise à jour.*\n\n"
+          msg += "Tu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
+          msg += '` !nom ` ` !pronoms ` ` !apparence ` ` !personnalite `'
 
           event.respond msg
         end
