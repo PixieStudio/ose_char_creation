@@ -19,20 +19,20 @@ module Bot
           error: 'Pronoms trop courts !',
           column: 'genre'
         },
-        {
-          cmd: '!apparence',
-          question: "A quoi ressemble ton personnage ?\n",
-          min_length: 3,
-          error: 'Ton apparence est trop courte !',
-          column: 'apparence'
-        },
-        {
-          cmd: '!personnalite',
-          question: "Quelle est la personnalité de ton personnage ?\n",
-          min_length: 3,
-          error: 'Ta personnalite est trop courte !',
-          column: 'personnalite'
-        },
+        # {
+        #   cmd: '!apparence',
+        #   question: "A quoi ressemble ton personnage ?\n",
+        #   min_length: 3,
+        #   error: 'Ton apparence est trop courte !',
+        #   column: 'apparence'
+        # },
+        # {
+        #   cmd: '!personnalite',
+        #   question: "Quelle est la personnalité de ton personnage ?\n",
+        #   min_length: 3,
+        #   error: 'Ta personnalite est trop courte !',
+        #   column: 'personnalite'
+        # },
         # {
         #   cmd: '!histoire',
         #   question: "Raconte-nous l'histoire de ton personnage ! \n"\
@@ -89,7 +89,8 @@ module Bot
 
           msg = "#{event.user.mention} *Ta fiche personnage a été mise à jour.*\n\n"
           msg += "Tu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
-          msg += '` !nom ` ` !pronoms ` ` !apparence ` ` !personnalite `'
+          # msg += '` !nom ` ` !pronoms ` ` !apparence ` ` !personnalite `'
+          msg += '` !nom ` ` !pronoms `'
 
           event.respond msg
         end

@@ -82,8 +82,8 @@ module Bot
 
         stuff += "Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
 
-        perso_back = "__Apparence :__ #{char.apparence}\n\n"\
-        "__Personnalité :__ #{char.personnalite}\n\n"\
+        # perso_back = "__Apparence :__ #{char.apparence}\n\n"\
+        # "__Personnalité :__ #{char.personnalite}\n\n"\
         # "__Histoire :__ #{char.histoire}"
 
         embed = Discordrb::Webhooks::Embed.new
@@ -95,7 +95,7 @@ module Bot
         embed.add_field name: '**Santé :** ', value: sante
         embed.add_field name: '**Sauvegardes :** ', value: saves
         embed.add_field name: '**Equipement et Sorts :** ', value: stuff
-        embed.add_field name: '**Informations :** ', value: perso_back
+        # embed.add_field name: '**Informations :** ', value: perso_back
         embed
       end
     end
