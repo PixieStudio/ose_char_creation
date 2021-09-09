@@ -20,7 +20,6 @@ module Bot
         next if charsheet.nil?
 
         caracs_drop = %w[force intelligence sagesse]
-        caracs = %w[force intelligence sagesse dexterite constitution charisme]
 
         final_drop = []
 

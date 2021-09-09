@@ -37,7 +37,6 @@ module Bot
             name: data['name'],
             rank: data['rank']
           )
-          # new_merchant.save
         end
 
         # Import Merchants Store
@@ -54,7 +53,6 @@ module Bot
               price: data['price'][index],
               merchant: merchant
             )
-            # new_item.save
             new_item.update(weight: data['weight'][index]) if data['weight']
           end
         end
