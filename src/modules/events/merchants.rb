@@ -7,14 +7,14 @@ module Bot
       message(content: /^!marchands$/) do |event|
         event.message.delete
 
-        # settings = Database::Settings.where(server_id: event.server.id)&.first
-        # unless event.channel.id == settings.creation_channel_id
-        #   msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-        #   "#{BOT.channel(settings.creation_channel_id).mention}"
+        settings = Database::Settings.where(server_id: event.server.id)&.first
+        unless event.channel.id == settings.merchants_channel_id
+          msg = "Le commerce s'effecture dans le salon "\
+          "#{BOT.channel(settings.merchants_channel_id).mention}"
 
-        #   event.respond msg
-        #   next
-        # end
+          event.respond msg
+          next
+        end
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?

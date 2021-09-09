@@ -76,6 +76,39 @@ module Bot
         end
         next if @sheet_channel.nil?
 
+        msg = ':moneybag: Quel salon est réservé au commerce ? :moneybag:'
+        msg += "```md\n"
+        msg += "Liste des salons textuels\n"
+        msg += "-------\n"
+        channels.each.with_index(1) do |c, index|
+          msg += "#{index}. #{c.name}\n"
+        end
+        msg += '```'
+        msg += '*Veuillez taper le numéro correspondant au salon désiré*'
+
+        res = event.respond msg
+
+        event.user.await!(timeout: 300) do |choice|
+          id = choice.message.content.to_i
+
+          @merchant_channel = if id.zero?
+                                nil
+                              else
+                                channels[id - 1].id
+                              end
+
+          if @merchant_channel.nil?
+            msg = event.respond "Aucun salon n'a été trouvé."
+          else
+            @merchant = @merchant_channel
+
+            res.delete
+            choice.message.delete
+          end
+          true
+        end
+        next if @merchant_channel.nil?
+
         server_id = event.server.id
 
         server = Database::Settings.find(server_id: server_id)
@@ -83,19 +116,23 @@ module Bot
           new_server = Database::Settings.create(
             server_id: server_id,
             creation_channel_id: @creation,
-            sheet_channel_id: @sheet
+            sheet_channel_id: @sheet,
+            merchants_channel_id: @merchant
           )
 
           new_server.save
         else
           server.update(creation_channel_id: @creation,
-                        sheet_channel_id: @sheet)
+                        sheet_channel_id: @sheet,
+                        merchants_channel_id: @merchant)
         end
 
         msg = 'Le salon de création est à présent : '
         msg += "#{BOT.channel(@creation).mention}\n"
         msg += 'Le salon des fiches publiées est à présent : '
         msg += "#{BOT.channel(@sheet).mention}\n"
+        msg += 'Le salon réservé au commerce est à présent : '
+        msg += "#{BOT.channel(@merchant).mention}\n"
 
         event.respond msg
       end
