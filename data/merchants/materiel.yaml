@@ -1,0 +1,61 @@
+cle: materiel
+
+name: "Matériel d'Aventurier"
+
+rank: 1
+
+store:
+  - "Ail"
+  - "Briquet à Silex"
+  - "Corde (15m)"
+  - "Eau bénite (fiole)"
+  - "Grappin"
+  - "Herbe au loup (bouquet)"
+  - "Huile (flasque)"
+  - "Lanterne"
+  - "Marteau (petit)"
+  - "Miroir à main (acier)"
+  - "Outils de voleur"
+  - "Outre"
+  - "Perche (3m, bois)"
+  - "Pied-de-biche"
+  - "Pieux (3) et maillet"
+  - "Pointes de fer (12)"
+  - "Rations (conserves, 7 jours)"
+  - "Rations (normales, 7 jours)"
+  - "Sac (grand)"
+  - "Sac (petit)"
+  - "Sac à dos"
+  - "Symbole sacré"
+  - "Tourches (6)"
+  - "Vin (1 litre)"
+  - "Petit couteau"
+  - "Craie"
+
+price:
+  - 5
+  - 3
+  - 1
+  - 25
+  - 25
+  - 10
+  - 2
+  - 10
+  - 2
+  - 5
+  - 25
+  - 1
+  - 1
+  - 10
+  - 3
+  - 1
+  - 15
+  - 5
+  - 2
+  - 1
+  - 5
+  - 25
+  - 1
+  - 1
+  - 2
+  - 1

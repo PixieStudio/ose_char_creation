@@ -1,0 +1,23 @@
+cle: armors
+
+name: "Armures"
+
+rank: 4
+
+store:
+  - "Cuir CA[12]"
+  - "Cotte de mailles CA[14]"
+  - "Armure de plates CA[16]"
+  - "Bouclier CA+1"
+
+price:
+  - 20
+  - 40
+  - 60
+  - 10
+
+weight:
+  - 200
+  - 400
+  - 500
+  - 100

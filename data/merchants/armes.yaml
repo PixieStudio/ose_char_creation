@@ -1,0 +1,68 @@
+cle: weapons
+
+name: "Armes"
+
+rank: 2
+
+store:
+  - "Arbalète 1d6\n*Distance (1,5-24/25-48/49-72), lente, rechargement, deux mains*"
+  - "Arc court 1d6\n*Distance (1,5-15/16-30/31-45), deux mains*"
+  - "Arc long 1d6\n*Distance (1,5-21/22-42/43-64), deux mains*"
+  - "Arme d'hast 1d10\n*Mêlée, lente, réception de charge, deux mains*"
+  - "Bâton 1d4\n*Mêlée, contondante, lente, deux mains*"
+  - "Dague 1d4\n*Mêlée, distance (1,5-3/4-6/7-9)*"
+  - "Dague, argent 1d4\n*Mêlée, distance (1,5-3/4-6/7-9)*"
+  - "Épée 1d8\n*Mêlée*"
+  - "Épée à deux mains 1d10\n*Mêlée, lente, deux mains*"
+  - "Épée courte 1d6\n*Mêlée*"
+  - "Épieu 1d6\n*Mêlée, reception de charge, distance (1,5-6/7-12/13-18)*"
+  - "Fronde 1d4\n*Distance (1,5-12/13-24/25-48), contondante*"
+  - "Gourdin 1d4\n*Mêlée, contondante*"
+  - "Hache de bataille 1d8\n*Mêlée, lente, deux mains*"
+  - "Hache ordinaire 1d6\n*Mêlée, distance (1,5-3/4-6/7-9)*"
+  - "Javelot 1d4\n*Distance (1,5-9/10-18/19-27)*"
+  - "Lance 1d6\n*Mêlée, charge*"
+  - "Marteau de guerre 1d6\n*Mêlée, contondante*"
+  - "Masse 1d6\n*Mêlée, contondante*"
+
+price:
+  - 30
+  - 25
+  - 40
+  - 7
+  - 2
+  - 3
+  - 30
+  - 10
+  - 15
+  - 7
+  - 4
+  - 2
+  - 3
+  - 7
+  - 4
+  - 1
+  - 5
+  - 5
+  - 5
+
+weight:
+  - 50
+  - 30
+  - 30
+  - 150
+  - 40
+  - 10
+  - 10
+  - 60
+  - 150
+  - 30
+  - 30
+  - 20
+  - 50
+  - 50
+  - 30
+  - 20
+  - 120
+  - 30
+  - 30

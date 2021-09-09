@@ -7,6 +7,7 @@ module Bot
       charsheet = [
         {
           cmd: '!nom',
+          name: 'Nom',
           question: 'Quel est le nom de ton personnage ?',
           min_length: 2,
           error: 'Ton nom est trop court !',
@@ -14,39 +15,27 @@ module Bot
         },
         {
           cmd: '!pronoms',
+          name: 'Pronoms',
           question: 'Quels sont les pronoms de ton personnage ?',
           min_length: 1,
           error: 'Pronoms trop courts !',
           column: 'genre'
         },
-        # {
-        #   cmd: '!apparence',
-        #   question: "A quoi ressemble ton personnage ?\n",
-        #   min_length: 3,
-        #   error: 'Ton apparence est trop courte !',
-        #   column: 'apparence'
-        # },
-        # {
-        #   cmd: '!personnalite',
-        #   question: "Quelle est la personnalité de ton personnage ?\n",
-        #   min_length: 3,
-        #   error: 'Ta personnalite est trop courte !',
-        #   column: 'personnalite'
-        # },
-        # {
-        #   cmd: '!histoire',
-        #   question: "Raconte-nous l'histoire de ton personnage ! \n"\
-        #   '*Max 1500 caractères*',
-        #   min_length: 3,
-        #   error: 'Ton histoire est trop courte !',
-        #   column: 'histoire'
-        # },
+        {
+          cmd: '!richesses',
+          name: "Pièces d'Or",
+          question: "A combien s'élèvent tes pièces d'or ?\n",
+          min_length: 1,
+          error: 'Tu dois taper au moins un chiffre !',
+          column: 'gold'
+        },
         {
           cmd: '!alignement',
+          name: 'Alignement',
           question: "Choisis un alignement : \n"\
           '` Loyal `, ` Neutre ` ou ` Chaotique `',
           min_length: 3,
-          error: 'Ton histoire est trop courte !',
+          error: 'Ta réponse est trop courte !',
           column: 'alignement'
         }
       ]
@@ -76,6 +65,7 @@ module Bot
                 guess_event.respond c[:error]
                 false
               else
+                @content = guess_event.message.content
                 charsheet.update(c[:column].to_sym => guess_event.message.content)
                 guess_event.message.delete
                 msg.delete
@@ -83,14 +73,18 @@ module Bot
               end
             end
           else
+            @content = args
             charsheet.update(c[:column].to_sym => args)
           end
           charsheet.update_message!
 
-          msg = "#{event.user.mention} *Ta fiche personnage a été mise à jour.*\n\n"
-          msg += "Tu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
-          # msg += '` !nom ` ` !pronoms ` ` !apparence ` ` !personnalite `'
-          msg += '` !nom ` ` !pronoms `'
+          msg = "#{event.user.mention} a modifié **#{c[:name]}** : **#{@content}**\n"
+          msg += "*Ta fiche personnage a été mise à jour.*\n"
+          if c[:cmd] == '!nom' || c[:cmd] == '!pronoms'
+            msg += "\nTu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
+          end
+          msg += '` !nom `' if c[:cmd] == '!pronoms'
+          msg += '` !pronoms `' if c[:cmd] == '!nom'
 
           event.respond msg
         end

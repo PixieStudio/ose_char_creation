@@ -6,6 +6,7 @@ module Bot
       ready do |event|
         event.bot.game = CONFIG.game
 
+        # Import Classes
         Dir.glob('data/classes/*.yaml').each do |f|
           data = YAML.load_file(f)
 
@@ -22,6 +23,40 @@ module Bot
             new_class[k] = data[k]
           end
           new_class.save
+        end
+
+        # Import Merchants
+        Dir.glob('data/merchants/*.yaml').each do |f|
+          data = YAML.load_file(f)
+
+          find_cle = Database::Merchant.find(cle: data['cle'])
+          next unless find_cle.nil?
+
+          Database::Merchant.create(
+            cle: data['cle'],
+            name: data['name'],
+            rank: data['rank']
+          )
+          # new_merchant.save
+        end
+
+        # Import Merchants Store
+        Dir.glob('data/merchants/*.yaml').each do |f|
+          data = YAML.load_file(f)
+          merchant = Database::Merchant.find(cle: data['cle'])
+
+          data['store'].each.with_index(0) do |store, index|
+            item = Database::MerchantsItem.find(name: store)
+            next unless item.nil?
+
+            new_item = Database::MerchantsItem.create(
+              name: store,
+              price: data['price'][index],
+              merchant: merchant
+            )
+            # new_item.save
+            new_item.update(weight: data['weight'][index]) if data['weight']
+          end
         end
 
         puts 'Synchronisation des classes terminées.'

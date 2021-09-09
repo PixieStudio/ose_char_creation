@@ -1,0 +1,15 @@
+cle: harnachement
+
+name: "Harnachement"
+
+rank: 6
+
+store:
+  - "Caparaçon.\n*Armure en cuir et plaques de métal pesant 600 pièces. Confère à l'animal CA[14]*"
+  - "Fontes.\n*Sacoches de selle d'une capacité de 300 pièces.*"
+  - "Selle et bride"
+
+price:
+  - 150
+  - 5
+  - 25

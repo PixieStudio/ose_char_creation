@@ -1,0 +1,17 @@
+cle: ammunitions
+
+name: "Projectiles"
+
+rank: 3
+
+store:
+  - "Carreaux d'arbalète (carquois de 30)"
+  - "Flèches (carquois de 20)"
+  - "Flèches à pointe d'argent (1)"
+  - "Pierres de fronde"
+
+price:
+  - 10
+  - 5
+  - 5
+  - 0

@@ -1,0 +1,13 @@
+cle: vehiculesterrestres
+
+name: "Véchicultes Terrestres"
+
+rank: 7
+
+store:
+  - "Charette 18km/j DP 18m(6m)\n*Min. : 1 cheval de trait ou 2 mules. Charge max. 4.000 pièces.*"
+  - "Chariot 18km/j DP 18m(6m)\n*Min. : 2 chevaux de trait ou 4 mules. Charge max. 15.000 pièces.*"
+
+price:
+  - 100
+  - 200

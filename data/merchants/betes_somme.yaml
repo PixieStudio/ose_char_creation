@@ -1,0 +1,19 @@
+cle: betesomme
+
+name: "Bêtes de somme"
+
+rank: 5
+
+store:
+  - "Chameau 45km/jo DP 45m(15m)\n*Charge max. 3.000 pièces.*"
+  - "Cheval de guerre 36km/j DP 36m(12m)\n*Charge max. 4.000 pièces.*"
+  - "Cheval de selle 72km/j DP 72m(24m)\n*Charge max. 3.000 pièces*"
+  - "Cheval de trait 27km/j DP 27m(9m)\n*Charge max. 4.500 pièces.*"
+  - "Mule 36km/j DP 36m(12m)\n*Charge max. 2.000 pièces.*"
+
+price:
+  - 100
+  - 250
+  - 75
+  - 40
+  - 30
