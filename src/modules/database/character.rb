@@ -9,8 +9,8 @@ module Bot
         BOT.user(user_discord_id)
       end
 
-      def self.find_sheet(id)
-        where(user_discord_id: id).order(:id).reverse.first
+      def self.find_sheet(id, server_id)
+        where(user_discord_id: id).where(server_id: server_id).order(:id).reverse.first
       end
 
       def self.search(id)

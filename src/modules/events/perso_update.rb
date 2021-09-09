@@ -26,7 +26,7 @@ module Bot
           end
 
         else
-          charsheet = Database::Character.find_sheet(event.user.id)
+          charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
           next if charsheet.nil?
 
           msg = "#{event.user.mention} Ta fiche personnage a été mise à jour."

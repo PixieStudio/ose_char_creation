@@ -16,7 +16,7 @@ module Bot
           next
         end
 
-        charsheet = Database::Character.find_sheet(event.user.id)
+        charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
         attributes_pattern = {
