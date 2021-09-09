@@ -55,7 +55,7 @@ module Bot
 
         items = @merchant.merchants_items
 
-        msg = event.user.mention
+        msg = "#{event.user.mention} possède **#{charsheet.gold} PO**"
         msg += "```md\n"
         msg += "Étal du marchand : #{@merchant.name}\n"
         msg += "------\n"
@@ -94,11 +94,12 @@ module Bot
           next
         end
 
+        old_gold = charsheet.gold
         new_gold = charsheet.gold - @item.price
         charsheet.update(gold: new_gold)
         charsheet.update_message!
 
-        event.respond "#{event.user.mention} a acheté **#{@item.name.gsub(/\n\*.*$/i, '')}**. Or restant : **#{charsheet.gold} PO**."
+        event.respond "#{event.user.mention} possédait **#{old_gold} PO** et a acheté **#{@item.name.gsub(/\n\*.*$/i, '')}** pour **#{@item.price} PO** chez le marchand **#{@merchant.name}**. Or restant : **#{charsheet.gold} PO**."
       end
     end
   end

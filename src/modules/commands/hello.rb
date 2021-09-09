@@ -7,8 +7,8 @@ module Bot
       end
 
       command :help do |event|
-        tutorial = event.send_message CONFIG.tutorial.join("\n")
-        tutorial.pin
+        event.send_message CONFIG.tutorial.join("\n")
+        # tutorial.pin
       end
     end
   end

@@ -80,11 +80,15 @@ module Bot
 
           msg = "#{event.user.mention} a modifié **#{c[:name]}** : **#{@content}**\n"
           msg += "*Ta fiche personnage a été mise à jour.*\n"
-          if c[:cmd] == '!nom' || c[:cmd] == '!pronoms'
+
+          if c[:cmd] == '!pronoms' && charsheet.char_name == '!nom'
             msg += "\nTu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
+            msg += '` !nom `'
           end
-          msg += '` !nom `' if c[:cmd] == '!pronoms'
-          msg += '` !pronoms `' if c[:cmd] == '!nom'
+          if c[:cmd] == '!nom' && charsheet.genre == '!pronoms'
+            msg += "\nTu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
+            msg += '` !pronoms `'
+          end
 
           event.respond msg
         end
