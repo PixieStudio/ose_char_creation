@@ -49,16 +49,8 @@ module Bot
         end
       end
 
-      # Generates an embedded charsheet
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
-
-        perso = "Nom ` #{char.char_name} ` \n"\
-        "Pronoms : ` #{char.genre} ` \n"\
-        "Classe : ` #{char.classe.name} ` *#{char.classe.page}*\n"\
-        "Alignement : ` #{char.alignement} ` \n"\
-        "Langues connues : ` #{char.classe.languages} `\n"\
-        "Rumeur : #{char.rumeur} "
 
         stats = "FOR  ` #{char.force} `  "\
         "INT  ` #{char.intelligence} `"\
@@ -67,36 +59,42 @@ module Bot
         "CON  ` #{char.constitution} `  "\
         "CHA  ` #{char.charisme} `  "
 
-        sante = "Niveau Max ` #{char.classe.max_lvl} ` "\
-        "DV ` #{char.classe.dv} ` "\
-        "PV Max ` #{char.pv_max} ` "\
-        "Or ` #{char.gold} `"
-
         saves = "MP ` #{char.classe.save_mp} ` "\
         "B ` #{char.classe.save_b} ` "\
         "PP ` #{char.classe.save_pp} ` "\
         "S ` #{char.classe.save_s} ` "\
         "SSB ` #{char.classe.save_ssb} `"\
 
-        stuff = "Armes ` #{char.classe.weapon} ` \n"\
-        "Armures ` #{char.classe.armors} ` \n"\
+        stuff = ":crossed_swords: Armes ` #{char.classe.weapon} ` \n"\
+        ":shield: Armures ` #{char.classe.armors} ` \n"\
 
-        stuff += "Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
-
-        # perso_back = "__Apparence :__ #{char.apparence}\n\n"\
-        # "__Personnalité :__ #{char.personnalite}\n\n"\
-        # "__Histoire :__ #{char.histoire}"
+        stuff += ":scroll: Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
 
         embed = Discordrb::Webhooks::Embed.new
-        embed.title = 'Fiche Personnage'
-        embed.color = 44_783
-        embed.description = "Joueur.euse : **#{BOT.user(char.user_discord_id).username}**"
-        embed.add_field name: '**Personnage :** ', value: perso
-        embed.add_field name: '**Statistiques :** ', value: stats
-        embed.add_field name: '**Santé :** ', value: sante
-        embed.add_field name: '**Sauvegardes :** ', value: saves
-        embed.add_field name: '**Equipement et Sorts :** ', value: stuff
-        # embed.add_field name: '**Informations :** ', value: perso_back
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(
+          name: "#{BOT.user(char.user_discord_id).username} - Feuille de Personnage",
+          icon_url: BOT.user(char.user_discord_id).avatar_url
+        )
+        embed.color = '#9932CC'
+        embed.add_field name: ':diamond_shape_with_a_dot_inside: **Nom**', value: char.char_name, inline: true
+        embed.add_field name: ':diamond_shape_with_a_dot_inside: **Pronoms**', value: char.genre, inline: true
+        embed.add_field name: ':diamond_shape_with_a_dot_inside: **Classe**', value: char.classe.name, inline: true
+        embed.add_field name: ':trident: **Alignement**', value: char.alignement, inline: true
+        embed.add_field name: ':game_die: **DV**', value: char.classe.dv, inline: true
+        embed.add_field name: ':heart: **PV Max**', value: char.pv_max, inline: true
+        embed.add_field name: ':star: **Niv. max.**', value: char.classe.max_lvl, inline: true
+        embed.add_field name: ":moneybag: **Pièces d'or**", value: char.gold, inline: true
+        embed.add_field name: ':compass: **PP**', value: char.participation, inline: true
+        embed.add_field name: ':dna: **Caractéristiques** ', value: stats
+        embed.add_field name: ':revolving_hearts: **Sauvegardes** ', value: saves
+        embed.add_field name: '**Equipement et Sorts** ', value: stuff
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(
+          url: char.avatar_url
+        )
+        embed.add_field name: ':speaking_head: **Langues connues**', value: char.classe.languages
+        embed.add_field name: ':ear: **Rumeur**', value: char.rumeur
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: '💡 Tape !commande pour modifier ta feuille.')
+        embed.timestamp = Time.now
         embed
       end
     end

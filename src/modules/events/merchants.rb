@@ -59,7 +59,8 @@ module Bot
         msg += "```md\n"
         msg += "Étal du marchand : #{@merchant.name}\n"
         msg += "------\n"
-        items.each.with_index(1) do |item, index|
+        msg += "1. Achat libre - Le nom et le prix vous seront demandés.\n"
+        items.each.with_index(2) do |item, index|
           msg += "#{index}. [#{item.price} PO]"
           msg += " [Poids : #{item.weight}]" if item.weight.positive?
           msg += " #{item.name}\n\n"
@@ -75,7 +76,7 @@ module Bot
           @item = if id.zero?
                     nil
                   else
-                    items[id - 1]
+                    items[id - 2]
                   end
 
           if @item.nil?
