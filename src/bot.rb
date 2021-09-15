@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Gems
 require 'bundler/setup'
 require 'discordrb'
@@ -7,6 +9,9 @@ require 'yaml'
 module Bot
   # Load non-Discordrb modules
   Dir['src/modules/*.rb'].each { |mod| load mod }
+
+  # Characters modules
+  Dir['src/modules/character/*.rb'].each { |mod| load mod }
 
   # Bot configuration
   CONFIG = Config.new

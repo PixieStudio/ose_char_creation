@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bot
   module DiscordEvents
     # Feuille de Perso
@@ -6,7 +8,7 @@ module Bot
       @dice_reg = /!(?<number>\d{1,3})d(?<dice>\d{1,3})(?<mod>[+-]?\d{0,3})/i
       message(start_with: @dice_reg) do |event|
         msg = event.message.content
-        user = event.user.nickname
+        user = event.user.nickname || event.user.username
         number = msg.match(@dice_reg)[:number].to_i
         dice = msg.match(@dice_reg)[:dice].to_i
         mod = msg.match(@dice_reg)[:mod].to_i
