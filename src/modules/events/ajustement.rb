@@ -9,14 +9,8 @@ module Bot
       message(content: /^!ajuster$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.creation_channel_id
-          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-          "#{BOT.channel(settings.creation_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.all(event)
+        next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
@@ -30,25 +24,25 @@ module Bot
         end
 
         if final_drop.length.zero?
-          msg = event.user.mention
-          msg += "\nTa FORce, ton INTelligence et ta SAG sont **trop bas** pour être diminués.\n"
+          msg = "Ta FORce, ton INTelligence et ta SAG sont **trop bas** pour être diminués.\n\n"
           msg += "Tu peux continuer la création de ton personnage en tirant ses PV Maximum à l'aide de la commande ` !pvmax `"
 
-          event.respond msg
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          event.channel.send_message('', false, embed)
 
           next
         end
 
-        msg = event.user.mention
-        msg += "\nQuelle caractéristique souhaites-tu réduire de 2 points ?\n"
-        msg += "*Seules les caractéristiques supérieures à 11 seront proprosées.*\n"
-        msg += "```md\n"
+        msg = "Quelle caractéristique souhaites-tu réduire de 2 points ?\n\n"
         final_drop.each.with_index(1) do |c, index|
-          msg += "#{index}. #{c} (#{charsheet[c.to_sym]} -> #{charsheet[c.to_sym] - 2})\n"
+          msg += "#{index} :small_orange_diamond: #{c} (#{charsheet[c.to_sym]} -> #{charsheet[c.to_sym] - 2})\n"
         end
-        msg += '```'
+        msg += "\n*Seules les caractéristiques supérieures à 11 sont proprosées.*\n"
 
-        res = event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
@@ -59,20 +53,23 @@ module Bot
                     final_drop[id - 1]
                   end
 
-          if @drop.nil?
-            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. Tape ` !ajuster ` à nouveau, ou continue avec tes **Points de Vie Max** avec la commande ` !pvmax `.'
-          else
-            choice.message.delete
-          end
+          choice.message.delete
           true
         end
 
-        next if @drop.nil?
+        if @drop.nil?
+          event.channel.message(res.id).delete
+          msg = "Aucune caractéristique ne correspond à ce chiffre ou temps écoulé.\n\n"
+          msg += ":small_blue_diamond: `!ajuster` Continue d'ajuster tes caractéristiques\n"
+          msg += ':small_blue_diamond: `!pvmax` Découvre tes **Points de Vie** maximum'
 
-        res.delete
-        msg = "#{event.user.mention} Tu as choisi de diminuer ta caractéristique **#{@drop}** de 2 points."
+          embed = Character::Embed.char_message(charsheet, msg)
 
-        event.respond msg
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        event.channel.message(res.id).delete
 
         attributes_pattern = {
           force: 'FOR',
@@ -85,16 +82,20 @@ module Bot
 
         main_att = charsheet.classe.main_attributes.split('|')
 
-        msg = event.user.mention
-        msg = "\nQuelle caractéristique souhaites-tu augmenter de 1 point ?\n"
-        msg += "```md\n"
-        main_att.each.with_index(1) do |c, index|
-          msg += "#{index}. #{c} "\
-          "(#{charsheet[attributes_pattern.key(c).to_sym]} -> #{charsheet[attributes_pattern.key(c).to_sym] + 1})\n"
-        end
-        msg += '```'
+        msg_drop = "Tu as choisi de diminuer ta caractéristique **#{@drop}** de 2 points.\n"
+        msg = msg_drop
+        msg += "\nQuelle caractéristique souhaites-tu augmenter de 1 point ?\n"
 
-        res = event.respond msg
+        main_att.each.with_index(1) do |c, index|
+          mod = c == @drop ? 0 : -2
+
+          msg += "#{index} :small_orange_diamond: #{c} "\
+          "(#{charsheet[attributes_pattern.key(c).to_sym] + mod} -> #{charsheet[attributes_pattern.key(c).to_sym] + mod + 1})\n"
+        end
+
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
@@ -105,30 +106,39 @@ module Bot
                   attributes_pattern.key(main_att[id - 1])
                 end
 
-          if @up.nil?
-            msg = event.respond 'Aucune caractéristique ne correspond à ce chiffre. "\
-            "Tape ` !ajuster ` à nouveau, ou continue avec tes **Points de Vie Max** avec la commande ` !pvmax `.'
-          else
-            puts @up
-            choice.message.delete
-          end
+          choice.message.delete
           true
         end
-        next if @up.nil?
+        if @up.nil?
+          event.channel.message(res.id).delete
+          msg = "Aucune caractéristique ne correspond à ce chiffre ou temps écoulé.\n\n"
+          msg += ":small_blue_diamond: `!ajuster` Continue d'ajuster tes caractéristiques\n"
+          msg += ':small_blue_diamond: `!pvmax` Découvre tes **Points de Vie** maximum'
 
-        res.delete
-        msg = "#{event.user.mention} Tu as choisi de diminuer ta caractéristique **#{@up}** de 1 point."
+          embed = Character::Embed.char_message(charsheet, msg)
 
-        event.respond msg
+          event.channel.send_message('', false, embed)
+
+          next
+        end
+
+        event.channel.message(res.id).delete
+
+        msg_up = "Tu as choisi d'augmenter ta caractéristique **#{@up}** de 1 point.\n"
 
         charsheet.update(@drop.to_sym => charsheet[@drop.to_sym] - 2)
         charsheet.update(@up.to_sym => charsheet[@up.to_sym] + 1)
         charsheet.update_message!
 
-        msg = "#{event.user.mention} La fiche de ton personnage a été mise à jour !\n"
-        msg += "Tu peux continuer les ajustement avec ` !ajuster ` ou \n"
-        msg += 'découvrir tes **Points de Vie Max** avec la commande ` !pvmax `'
-        event.respond msg
+        msg = msg_drop
+        msg += msg_up
+        msg += "\nLa fiche de ton personnage a été mise à jour !\n\n"
+        msg += ":small_blue_diamond: `!ajuster` Continue d'ajuster tes caractéristiques\n"
+        msg += ':small_blue_diamond: `!pvmax` Découvre tes **Points de Vie** maximum'
+
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        event.channel.send_message('', false, embed)
       end
     end
   end
