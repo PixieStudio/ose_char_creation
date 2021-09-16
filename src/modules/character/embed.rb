@@ -21,13 +21,14 @@ module Bot
           icon_url: BOT.user(char.user_discord_id).avatar_url
         )
         embed.color = '#9932CC'
-        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: char.avatar_url)
+        embed.footer = footer_char
         embed.timestamp = Time.now
         embed
       end
 
-      def self.create_sheet(char, stats, saves, stuff)
+      def self.create_sheet(char, stats, saves, stuff, lang)
         embed = new_sheet(char)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: char.avatar_url)
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Nom**', value: char.char_name, inline: true
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Pronoms**', value: char.genre, inline: true
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Classe**', value: char.classe.name, inline: true
@@ -40,15 +41,31 @@ module Bot
         embed.add_field name: ':dna: **Caractéristiques** ', value: stats
         embed.add_field name: ':revolving_hearts: **Sauvegardes** ', value: saves
         embed.add_field name: '**Equipement et Sorts** ', value: stuff
-        embed.add_field name: ':speaking_head: **Langues connues**', value: char.classe.languages
+        embed.add_field name: ':speaking_head: **Langues connues**', value: lang
         embed.add_field name: ':ear: **Rumeur**', value: char.rumeur
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: '💡 Tape !commande pour modifier ta feuille.')
 
         embed
       end
 
       def self.cancel
         Discordrb::Webhooks::EmbedFooter.new(text: 'Tape 0 pour annuler.')
+      end
+
+      def self.footer_char
+        Discordrb::Webhooks::EmbedFooter.new(text: '💡 Tape !commande pour modifier ta feuille.')
+      end
+
+      def self.event_message(event, msg, footer = nil)
+        embed = new_event(event)
+        embed.description = msg
+        embed.footer = footer if footer
+        embed
+      end
+
+      def self.char_message(char, msg)
+        embed = new_sheet(char)
+        embed.description = msg
+        embed
       end
     end
   end

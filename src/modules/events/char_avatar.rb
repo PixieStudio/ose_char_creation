@@ -15,7 +15,6 @@ module Bot
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
-        # OK
         embed = Character::Embed.new_event(event)
         embed.description = "Pour ajouter l'avatar de ton personnage à sa feuille, écrit l'URL de celle-ci.\n"\
         "*Exemple : https://i.imgur.com/Q7B91HT.png .*\n"
@@ -46,7 +45,6 @@ module Bot
 
         embed = Character::Embed.new_event(event)
         embed.description = "L'avatar de ton personnage a été ajouté à sa feuille !"
-        embed.timestamp = Time.now
 
         event.channel.send_message('', false, embed)
       end

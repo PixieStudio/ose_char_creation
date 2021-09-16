@@ -27,6 +27,17 @@ module Bot
           new_class.save
         end
 
+        # Import Languages
+        Dir.glob('data/languages/*.yaml').each do |f|
+          data = YAML.load_file(f)
+
+          data['name'].each do |n|
+            entrie = Database::Language.find(name: n)
+
+            Database::Language.create(name: n) if entrie.nil?
+          end
+        end
+
         # Import Merchants
         Dir.glob('data/merchants/*.yaml').each do |f|
           data = YAML.load_file(f)
@@ -59,7 +70,7 @@ module Bot
           end
         end
 
-        puts 'Synchronisation des classes terminées.'
+        puts 'Synchronisation terminées.'
       end
     end
   end

@@ -43,21 +43,43 @@ module Bot
         message(content: /^#{c[:cmd]}$/) do |event|
           event.message.delete
 
-          settings = Database::Settings.where(server_id: event.server.id)&.first
-          unless event.channel.id == settings.creation_channel_id
-            msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-            "#{BOT.channel(settings.creation_channel_id).mention}"
-
-            event.respond msg
-            next
-          end
+          settings = Character::Check.all(event)
+          next if settings == false
 
           charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
           next if charsheet.nil?
 
+          attributes_pattern = {
+            force: 'FOR',
+            intelligence: 'INT',
+            dexterite: 'DEX',
+            sagesse: 'SAG',
+            constitution: 'CON',
+            charisme: 'CHA'
+          }
+
+          @att_remain = []
+
           unless charsheet[c[:column].to_sym].zero?
-            event.message.delete
-            event.respond "Tu as déjà tiré la caractéristique **#{c[:column]}**"
+
+            attributes_pattern.keys.each do |k|
+              @att_remain << attributes_pattern[k] if (charsheet[k.to_sym]).zero?
+            end
+
+            msg = "Tu as déjà tiré la caractéristique **#{c[:column].upcase} (#{charsheet[c[:column].to_sym]})**\n\n"
+            if @att_remain.length.zero?
+              msg += "Lance la commande `!classes` pour choisir la classe de ton personnage. \n"
+              msg += '*Seules les classes qui te sont accessibles seront proposées.*'
+            else
+              msg += "Tu peux continuer à tirer tes caractéristiques restantes :\n"
+              @att_remain.each do |att|
+                msg += " ` !#{att} ` "
+              end
+            end
+
+            embed = Character::Embed.char_message(charsheet, msg)
+
+            event.channel.send_message('', false, embed)
             next
           end
 
@@ -72,39 +94,26 @@ module Bot
           charsheet.update(c[:column].to_sym => attribute)
           charsheet.update_message!
 
-          attributes_pattern = {
-            force: 'FOR',
-            intelligence: 'INT',
-            dexterite: 'DEX',
-            sagesse: 'SAG',
-            constitution: 'CON',
-            charisme: 'CHA'
-          }
-
-          att_remain = []
-
           attributes_pattern.keys.each do |k|
-            att_remain << attributes_pattern[k] if (charsheet[k.to_sym]).zero?
+            @att_remain << attributes_pattern[k] if (charsheet[k.to_sym]).zero?
           end
 
-          msg = event.user.mention
-          msg += "```md\n"
-          msg += "#{c[:message]}#{attribute}\n"
-          msg += "------\n"
-          msg += "Dés : #{roll_dice}\n"
-          msg += "Résultat : #{attribute}"
-          msg += "```\n"
-          if att_remain.length.zero?
+          msg = "#{c[:message]} **#{attribute}**\n\n"
+          msg += ":game_die: Dés : #{roll_dice}\n"
+          msg += ":diamond_shape_with_a_dot_inside: Résultat : #{attribute}\n\n"
+          if @att_remain.length.zero?
             msg += "Lance la commande `!classes` pour choisir la classe de ton personnage. \n"
             msg += '*Seules les classes qui te sont accessibles seront proposées.*'
           else
             msg += "Tu peux continuer à tirer tes caractéristiques restantes :\n"
-            att_remain.each do |att|
+            @att_remain.each do |att|
               msg += " ` !#{att} ` "
             end
           end
 
-          event.respond msg
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          event.channel.send_message('', false, embed)
         end
       end
     end

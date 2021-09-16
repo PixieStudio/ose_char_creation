@@ -11,13 +11,16 @@ module Bot
 
         next unless event.user.owner?
 
-        msg = 'Les rumeurs sont uniques. Une fois attribuée à un joueur, la rumeur deviendra indisponible.'
-        msg += 'Tape les rumeurs à ajouter au serveur. 1 ligne = 1 rumeur'
+        msg = "Les rumeurs sont uniques. Une fois attribuée à un joueur, la rumeur deviendra indisponible.\n"\
+        'Tape les rumeurs à ajouter au serveur. 1 ligne = 1 rumeur'
 
-        res = event.respond msg
+        embed = Character::Embed.event_message(event, msg)
+
+        res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |guess_event|
           @rumeurs = guess_event.message.content.split("\n")
+          guess_event.message.delete
           true
         end
 
@@ -29,12 +32,17 @@ module Bot
           rumeur.save
         end
 
-        res.delete
+        event.channel.message(res.id).delete
 
-        msg = "#{@rumeurs.length} rumeurs ont été ajoutées à la base de données."
-        msg += "Tu peux ajouter de nouvelles rumeurs à l'aide de la commande ` !add rumeurs `"
+        msg = "#{@rumeurs.length} rumeurs ont été ajoutées à la base de données.\n"
+        @rumeurs.each do |r|
+          msg += "- #{r}\n"
+        end
+        msg += "\nTu peux ajouter de nouvelles rumeurs à l'aide de la commande ` !add rumeurs `"
 
-        event.respond msg
+        embed = Character::Embed.event_message(event, msg)
+
+        event.channel.send_message('', false, embed)
       end
     end
   end

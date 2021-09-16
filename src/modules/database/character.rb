@@ -51,28 +51,46 @@ module Bot
         end
       end
 
-      def generate_embed(char_id)
-        char = Database::Character.search(char_id)
-
-        stats = "FOR  ` #{char.force} `  "\
+      def stats(char)
+        "FOR  ` #{char.force} `  "\
         "INT  ` #{char.intelligence} `"\
         "SAG  ` #{char.sagesse} `  "\
         "DEX  ` #{char.dexterite} `  "\
         "CON  ` #{char.constitution} `  "\
         "CHA  ` #{char.charisme} `  "
+      end
 
-        saves = "MP ` #{char.classe.save_mp} ` "\
+      def saves(char)
+        "MP ` #{char.classe.save_mp} ` "\
         "B ` #{char.classe.save_b} ` "\
         "PP ` #{char.classe.save_pp} ` "\
         "S ` #{char.classe.save_s} ` "\
         "SSB ` #{char.classe.save_ssb} `"\
+      end
 
-        stuff = ":crossed_swords: Armes ` #{char.classe.weapon} ` \n"\
+      def stuff(char)
+        str = ":crossed_swords: Armes ` #{char.classe.weapon} ` \n"\
         ":shield: Armures ` #{char.classe.armors} ` \n"\
 
-        stuff += ":scroll: Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
+        str += ":scroll: Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
+        str
+      end
 
-        embed = Bot::Character::Embed.create_sheet(char, stats, saves, stuff)
+      def lang(char)
+        str = char.classe.languages
+        return str if char.languages == ''
+
+        char_lang = char.languages.split(', ')
+        char_lang.each do |l|
+          str += ", #{l}"
+        end
+        str
+      end
+
+      def generate_embed(char_id)
+        char = Database::Character.search(char_id)
+
+        embed = Bot::Character::Embed.create_sheet(char, stats(char), saves(char), stuff(char), lang(char))
         embed
       end
     end

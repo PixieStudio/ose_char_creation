@@ -9,17 +9,12 @@ module Bot
       message(content: /^!update perso$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.creation_channel_id
-          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-          "#{BOT.channel(settings.creation_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.all(event)
+        next if settings == false
 
         if event.user.owner?
           charsheets = Database::Character.where(server_id: event.server.id).all
+          return if charsheets.nil?
 
           msg = 'Toutes les fiches personnages ont été mises à jour.'
 
