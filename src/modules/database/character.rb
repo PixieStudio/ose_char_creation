@@ -87,10 +87,14 @@ module Bot
         str
       end
 
+      def rumor(char)
+        char.rumeur.split('|').join("\n")
+      end
+
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
 
-        embed = Bot::Character::Embed.create_sheet(char, stats(char), saves(char), stuff(char), lang(char))
+        embed = Bot::Character::Embed.create_sheet(char, stats(char), saves(char), stuff(char), lang(char), rumor(char))
         embed
       end
     end

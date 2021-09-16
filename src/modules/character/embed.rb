@@ -26,7 +26,7 @@ module Bot
         embed
       end
 
-      def self.create_sheet(char, stats, saves, stuff, lang)
+      def self.create_sheet(char, stats, saves, stuff, lang, rumor)
         embed = new_sheet(char)
         embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: char.avatar_url)
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Nom**', value: char.char_name, inline: true
@@ -42,7 +42,7 @@ module Bot
         embed.add_field name: ':revolving_hearts: **Sauvegardes** ', value: saves
         embed.add_field name: '**Equipement et Sorts** ', value: stuff
         embed.add_field name: ':speaking_head: **Langues connues**', value: lang
-        embed.add_field name: ':ear: **Rumeur**', value: char.rumeur
+        embed.add_field name: ':ear: **Rumeur**', value: rumor
 
         embed
       end

@@ -9,34 +9,33 @@ module Bot
       message(content: /^!rumeur$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.creation_channel_id
-          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-          "#{BOT.channel(settings.creation_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.all(event)
+        next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
-        next unless charsheet.rumeur == '` !rumeur `'
+
+        # next unless charsheet.rumeur == '` !rumeur `'
 
         rumeurs = Database::Rumeur.all(settings.server_id)
 
         rumeur = rumeurs[rand(0..rumeurs.length - 1)]
 
         rumeur.update(available: false)
-        charsheet.update(rumeur: rumeur.content)
+
+        rumor = charsheet.rumeur == '` !rumeur `' ? rumeur.content : "#{charsheet.rumeur}|#{rumeur.content}"
+
+        charsheet.update(rumeur: rumor)
         charsheet.update_message!
 
-        msg = event.user.mention
-        msg += "\nTu as entendu la rumeur suivante :\n"
-        msg += "**#{rumeur.content}**"
-        msg += "\n\n*La fiche de ton personnage a été mise à jour !*\n\n"
-        msg += 'Il reste encore à définir ton ` !alignement `'
+        msg = "**Rumeur**\n\n"
+        msg += "#{rumeur.content}\n\n"
+        msg += "*La fiche de ton personnage a été mise à jour !*\n\n"
+        msg += "` !alignement ` Choisis l'alignement de ton personnage" if charsheet.alignement == '` !alignement `'
 
-        event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        event.channel.send_message('', false, embed)
       end
     end
   end
