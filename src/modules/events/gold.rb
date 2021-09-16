@@ -9,14 +9,8 @@ module Bot
       message(content: /^!gold$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.creation_channel_id
-          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-          "#{BOT.channel(settings.creation_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.all(event)
+        next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
@@ -33,17 +27,16 @@ module Bot
         charsheet.update(gold: gold)
         charsheet.update_message!
 
-        msg = event.user.mention
-        msg += "```md\n"
-        msg += "Pièces d'or de départ\n"
-        msg += "------\n"
-        msg += "Dés : ( #{roll_dice} ) x 10\n"
-        msg += "Résultat : #{gold}"
-        msg += "```\n"
-        msg += "La fiche de ton personnage a été mise à jour. \n\n"
-        msg += 'Découvre, à présent, la rumeur que tu as entendu grâce à la commande ` !rumeur `'
+        msg = "**Pièces d'or de départ**\n\n"
+        msg += ":game_die:  Dés : ( #{roll_dice.join(' + ')} ) x 10\n\n"
+        msg += ":diamond_shape_with_a_dot_inside:  Résultat : #{gold}\n\n"
+        msg += "Ton personnage commence avec **#{gold}** Pièces d'Or !\n\n"
+        msg += "*La fiche de ton personnage a été mise à jour.* \n\n"
+        msg += '` !rumeur ` Découvre la rumeur que tu as entendue.'
 
-        event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        event.channel.send_message('', false, embed)
       end
     end
   end
