@@ -31,7 +31,7 @@ module Bot
 
   # Discord events
   module DiscordEvents; end
-  Dir['src/modules/events/*.rb'].each { |mod| load mod }
+  Dir['src/modules/events/*/*.rb'].each { |mod| load mod }
   DiscordEvents.constants.each do |mod|
     BOT.include! DiscordEvents.const_get mod
   end
