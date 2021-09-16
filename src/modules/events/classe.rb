@@ -9,14 +9,8 @@ module Bot
       message(content: /^!classes$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.creation_channel_id
-          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-          "#{BOT.channel(settings.creation_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.all(event)
+        next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
@@ -49,19 +43,18 @@ module Bot
                                   .order(:main_attributes)\
                                   .all
 
-        msg = event.user.mention
-        msg += "\n#{best_msg}\n"
-        msg += "```md\n"
-        msg += "Classes accessibles\n"
-        msg += "------\n"
+        msg = "#{best_msg}\n\n"
+        msg += "__Classes accessibles__\n\n"
         classes.each.with_index(1) do |c, index|
           main_att = c[:main_attributes].split('|').join(' ')
-          msg += "#{index}. #{c[:name]} : #{main_att}\n"
+          msg += "#{index} :small_orange_diamond: #{c[:name]} :small_blue_diamond: #{main_att}\n"
           msg += "*#{c[:page]}*\n\n"
         end
-        msg += '```'
+        msg += '*Tape le numéro correspondant à la classe désirée ou `0` pour annuler.*'
 
-        res = event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
@@ -72,24 +65,30 @@ module Bot
                       classes[id - 1]
                     end
 
-          if @classe.nil?
-            msg = event.respond 'Aucune classe ne correspond à ce chiffre. Tape `!classes` à nouveau.'
-          else
-            choice.message.delete
-          end
+          choice.message.delete
           true
         end
-        next if @classe.nil?
+        if @classe.nil?
+          event.channel.message(res.id).delete
+          msg = "Aucune classe ne correspond à ce chiffre ou temps écoulé.\n\n"
+          msg += 'Tape `!classes` à nouveau.'
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          event.channel.send_message('', false, embed)
+          next
+        end
 
         charsheet.update(classe: @classe)
         charsheet.update_message!
-        res.delete
+        event.channel.message(res.id).delete
 
-        msg = event.user.mention
-        msg += "\nTu as choisis la classe **#{@classe.name}**. Ta fiche a été mise à jour\n"
+        msg = "\nTu as choisis la classe **#{@classe.name}**.\n"
+        msg += "Ta fiche a été mise à jour\n"
         msg += "Tu peux ajuster tes caractéristiques à l'aide de la commande `!ajuster`"
 
-        event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        event.channel.send_message('', false, embed)
       end
     end
   end
