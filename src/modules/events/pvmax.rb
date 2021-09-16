@@ -9,14 +9,8 @@ module Bot
       message(content: /^!pvmax$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.creation_channel_id
-          msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-          "#{BOT.channel(settings.creation_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.all(event)
+        next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
@@ -32,24 +26,23 @@ module Bot
 
         pvmax = 1 if pvmax < 1
 
-        msg = event.user.mention
-        msg += "Tes points de vie maximum s'élèvent à....... **#{pvmax}** ! Bonne chance !"
-        msg += "```md\n"
-        msg += "PV Max - Jet de dés !\n"
-        msg += "------\n"
-        msg += "DV : #{charsheet.classe.dv}\n"
-        msg += "Jet de dés : #{pv}\n"
-        msg += 'Modificateur de CONstitution : '
+        msg = "**PV Max - Jet de dés !**\n\n"
+        msg += ":heart: DV : #{charsheet.classe.dv}\n"
+        msg += ":game_die: Jet de dés : #{pv}\n"
+        msg += ':ox: Modificateur de CONstitution : '
         msg += '+' if mod.positive? || mod.zero?
         msg += mod.to_s
-        msg += "\nRésultat : #{pvmax}\n"
-        msg += "```\n\n"
-        msg += "Pour découvrir le nombre de pièce d'or que tu possèdes, tape la commande ` !gold `"
+        msg += "\n:diamond_shape_with_a_dot_inside: Résultat : #{pvmax}\n\n"
+        msg += "Tes points de vie maximum s'élèvent à..... **#{pvmax}** !\n"
+        msg += "Bonne chance !\n\n"
+        msg += ":small_blue_diamond: ` !gold ` Découvre le nombre de pièces d'or que tu possèdes"
 
         charsheet.update(pv_max: pvmax)
         charsheet.update_message!
 
-        event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        event.channel.send_message('', false, embed)
       end
     end
   end
