@@ -15,8 +15,6 @@ module Bot
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
-        # next unless charsheet.rumeur == '` !rumeur `'
-
         rumeurs = Database::Rumeur.all(settings.server_id)
 
         rumeur = rumeurs[rand(0..rumeurs.length - 1)]
@@ -31,7 +29,7 @@ module Bot
         msg = "**Rumeur**\n\n"
         msg += "#{rumeur.content}\n\n"
         msg += "*La fiche de ton personnage a été mise à jour !*\n\n"
-        msg += "` !alignement ` Choisis l'alignement de ton personnage" if charsheet.alignement == '` !alignement `'
+        msg += "` !alignement ` Choisis l'alignement de ton personnage" if charsheet.alignement == '!alignement'
 
         embed = Character::Embed.char_message(charsheet, msg)
 

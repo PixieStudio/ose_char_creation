@@ -37,7 +37,9 @@ module Bot
           question: "Choisis un alignement : \n"\
           '` Loyal `, ` Neutre ` ou ` Chaotique `',
           min_length: 3,
-          error: 'Ta réponse est trop courte !',
+          error: "Ta réponse est trop courte !\n"\
+          "Tu dois répondre par un des mots suivants :\n"\
+          '` Loyal `, ` Neutre ` ou ` Chaotique `',
           column: 'alignement'
         }
       ]
@@ -48,51 +50,56 @@ module Bot
 
           event.message.delete
 
-          settings = Database::Settings.where(server_id: event.server.id)&.first
-          unless event.channel.id == settings.creation_channel_id
-            msg = "L'édition de ton personnage doit être réalisée dans le salon "\
-            "#{BOT.channel(settings.creation_channel_id).mention}"
-
-            event.respond msg
-            next
-          end
+          settings = Character::Check.all(event)
+          next if settings == false
 
           charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
           next if charsheet.nil?
 
           if args == c[:cmd] || args.length < c[:min_length]
-            msg = event.respond "#{event.user.mention} #{c[:question]}"
+            msg = (c[:question]).to_s
+
+            embed = Character::Embed.char_message(charsheet, msg)
+
+            res = event.channel.send_message('', false, embed)
+
             event.user.await!(timeout: 300) do |guess_event|
               if guess_event.message.content.length < c[:min_length]
-                guess_event.respond c[:error]
+                guess_event.message.delete
+                embed = Character::Embed.char_message(charsheet, c[:error])
+
+                event.channel.send_message('', false, embed)
                 false
               else
+                @old_content = charsheet[c[:column].to_sym]
                 @content = guess_event.message.content
                 charsheet.update(c[:column].to_sym => guess_event.message.content)
                 guess_event.message.delete
-                msg.delete
+
+                event.channel.message(res.id).delete
+                # msg.delete
                 true
               end
             end
           else
+            @old_content = charsheet[c[:column].to_sym]
             @content = args
             charsheet.update(c[:column].to_sym => args)
           end
           charsheet.update_message!
 
-          msg = "#{event.user.mention} a modifié **#{c[:name]}** : **#{@content}**\n"
-          msg += "*Ta fiche personnage a été mise à jour.*\n"
+          msg = "**#{c[:name]}** modifié :\n"
+          msg += "#{@old_content}  :arrow_right:  #{@content}\n\n"
+          msg += "*Ta fiche personnage a été mise à jour.*\n\n"
 
-          if c[:cmd] == '!pronoms' && charsheet.char_name == '!nom'
-            msg += "\nTu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
-            msg += '` !nom `'
-          end
+          msg += '` !nom ` Donne un nom à ton personnage.' if c[:cmd] == '!pronoms' && charsheet.char_name == '!nom'
           if c[:cmd] == '!nom' && charsheet.genre == '!pronoms'
-            msg += "\nTu peux continuer la personnalisation de ton personnage à l'aide des commandes :\n"
-            msg += '` !pronoms `'
+            msg += '` !pronoms ` Indique quel(s) pronom(s) doivent être utilisés pour ton personnage.'
           end
 
-          event.respond msg
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          event.channel.send_message('', false, embed)
         end
       end
     end
