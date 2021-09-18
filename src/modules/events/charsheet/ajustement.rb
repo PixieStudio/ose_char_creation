@@ -14,6 +14,7 @@ module Bot
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
+        next if charsheet.ajuster_protection
 
         caracs_drop = %w[force intelligence sagesse]
 
@@ -25,7 +26,7 @@ module Bot
 
         if final_drop.length.zero?
           msg = "Ta FORce, ton INTelligence et ta SAG sont **trop bas** pour être diminués.\n\n"
-          msg += "Tu peux continuer la création de ton personnage en tirant ses PV Maximum à l'aide de la commande ` !pvmax `"
+          msg += ":small_blue_diamond: Tu peux continuer la création de ton personnage en tirant ses PV Maximum à l'aide de la commande ` !pvmax `"
 
           embed = Character::Embed.char_message(charsheet, msg)
 
@@ -87,7 +88,7 @@ module Bot
         msg += "\nQuelle caractéristique souhaites-tu augmenter de 1 point ?\n"
 
         main_att.each.with_index(1) do |c, index|
-          mod = c == @drop ? 0 : -2
+          mod = attributes_pattern.key(c).to_s == @drop.to_s ? -2 : 0
 
           msg += "#{index} :small_orange_diamond: #{c} "\
           "(#{charsheet[attributes_pattern.key(c).to_sym] + mod} -> #{charsheet[attributes_pattern.key(c).to_sym] + mod + 1})\n"

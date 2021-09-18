@@ -37,7 +37,7 @@ module Bot
         msg += "Bonne chance !\n\n"
         msg += ":small_blue_diamond: ` !gold ` Découvre le nombre de pièces d'or que tu possèdes"
 
-        charsheet.update(pv_max: pvmax)
+        charsheet.update(pv_max: pvmax, ajuster_protection: true)
         charsheet.update_message!
 
         embed = Character::Embed.char_message(charsheet, msg)

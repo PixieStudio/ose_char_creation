@@ -2,15 +2,11 @@
 
 module Bot
   module DiscordCommands
-    module Hello
+    # Show Tutorial
+    module Tutorial
       extend Discordrb::Commands::CommandContainer
-      command :hello do |event|
-        'Hello ' + event.user.username
-      end
-
-      command :help do |event|
+      command :tutorial do |event|
         event.send_message CONFIG.tutorial.join("\n")
-        # tutorial.pin
       end
     end
   end

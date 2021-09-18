@@ -14,7 +14,14 @@ module Bot
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
-        next unless charsheet.gold.zero?
+
+        if charsheet.gold_protection
+          msg = "#{charsheet.char_name} possède **#{charsheet.gold}** Pièces d'or."
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          event.channel.send_message('', false, embed)
+          next
+        end
 
         roll_dice = []
 
@@ -24,7 +31,7 @@ module Bot
 
         gold = roll_dice.sum * 10
 
-        charsheet.update(gold: gold)
+        charsheet.update(gold: gold, gold_protection: true)
         charsheet.update_message!
 
         msg = "**Pièces d'or de départ**\n\n"

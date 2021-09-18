@@ -22,6 +22,7 @@ module Bot
                                             prefix: CONFIG.prefix,
                                             help_command: false)
 
+  ATTRIBUTES = YAML.load_file("#{Dir.pwd}/data/charsheet/attributes.yaml")
   # Discord commands
   module DiscordCommands; end
   Dir['src/modules/commands/*.rb'].each { |mod| load mod }

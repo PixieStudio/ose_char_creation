@@ -52,7 +52,7 @@ module Bot
       end
 
       def self.footer_char
-        Discordrb::Webhooks::EmbedFooter.new(text: '💡 Tape !commande pour modifier ta feuille.')
+        Discordrb::Webhooks::EmbedFooter.new(text: '💡 Tape !help si tu es perdu.e.')
       end
 
       def self.event_message(event, msg, footer = nil)
@@ -65,6 +65,14 @@ module Bot
       def self.char_message(char, msg)
         embed = new_sheet(char)
         embed.description = msg
+        embed
+      end
+
+      def self.help_message(event)
+        embed = new_event(event)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: 'https://i.imgur.com/71mgY85.png')
+        embed.title = "A l'aide !"
+        embed.footer = footer_char
         embed
       end
     end

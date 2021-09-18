@@ -5,138 +5,23 @@ module Bot
     # This event is processed each time the bot succesfully connects to discord.
     module Settings
       extend Discordrb::EventContainer
-      message(content: /^!settings.*$/i) do |event|
+      message(content: /^!settings$/i) do |event|
         event.message.delete
 
         next unless event.user.owner?
 
-        channels =  event.server.text_channels
+        msg = "**:tools: Définir les salons**\n"
+        msg += "`!set channel creation`\n"
+        msg += "Où les joueurs créent leur personnage.\n\n"
+        msg += "`!set channel charsheet`\n"
+        msg += "Où les feuilles de personnages seront postées.\n\n"
+        msg += "`!set channel merchants`\n"
+        msg += "Dédié au commerce avec les marchands.\n\n"
 
-        msg = ':pen_ballpoint: Dans quel salon les joueurs doivent-ils créer leur fiche ? :pen_ballpoint:'
-        msg += "```md\n"
-        msg += "Liste des salons textuels\n"
-        msg += "-------\n"
-        channels.each.with_index(1) do |c, index|
-          msg += "#{index}. #{c.name}\n"
-        end
-        msg += '```'
-        msg += '*Veuillez taper le numéro correspondant au salon désiré*'
+        embed = Character::Embed.event_message(event, msg)
+        embed.title = 'Commandes de configuration'
 
-        res = event.respond msg
-
-        event.user.await!(timeout: 300) do |choice|
-          id = choice.message.content.to_i
-
-          @creation_channel = if id.zero?
-                                nil
-                              else
-                                channels[id - 1].id
-                              end
-
-          if @creation_channel.nil?
-            msg = event.respond "Aucun salon n'a été trouvé."
-          else
-            @creation = @creation_channel
-
-            res.delete
-            choice.message.delete
-          end
-          true
-        end
-        next if @creation_channel.nil?
-
-        msg = ':bookmark: Dans quel salon les fiches doivent-elles être publiées ? :bookmark:'
-        msg += "```md\n"
-        msg += "Liste des salons textuels\n"
-        msg += "-------\n"
-        channels.each.with_index(1) do |c, index|
-          msg += "#{index}. #{c.name}\n"
-        end
-        msg += '```'
-        msg += '*Veuillez taper le numéro correspondant au salon désiré*'
-
-        res = event.respond msg
-
-        event.user.await!(timeout: 300) do |choice|
-          id = choice.message.content.to_i
-
-          @sheet_channel = if id.zero?
-                             nil
-                           else
-                             channels[id - 1].id
-                           end
-
-          if @sheet_channel.nil?
-            msg = event.respond "Aucun salon n'a été trouvé."
-          else
-            @sheet = @sheet_channel
-
-            res.delete
-            choice.message.delete
-          end
-          true
-        end
-        next if @sheet_channel.nil?
-
-        msg = ':moneybag: Quel salon est réservé au commerce ? :moneybag:'
-        msg += "```md\n"
-        msg += "Liste des salons textuels\n"
-        msg += "-------\n"
-        channels.each.with_index(1) do |c, index|
-          msg += "#{index}. #{c.name}\n"
-        end
-        msg += '```'
-        msg += '*Veuillez taper le numéro correspondant au salon désiré*'
-
-        res = event.respond msg
-
-        event.user.await!(timeout: 300) do |choice|
-          id = choice.message.content.to_i
-
-          @merchant_channel = if id.zero?
-                                nil
-                              else
-                                channels[id - 1].id
-                              end
-
-          if @merchant_channel.nil?
-            msg = event.respond "Aucun salon n'a été trouvé."
-          else
-            @merchant = @merchant_channel
-
-            res.delete
-            choice.message.delete
-          end
-          true
-        end
-        next if @merchant_channel.nil?
-
-        server_id = event.server.id
-
-        server = Database::Settings.find(server_id: server_id)
-        if server.nil?
-          new_server = Database::Settings.create(
-            server_id: server_id,
-            creation_channel_id: @creation,
-            sheet_channel_id: @sheet,
-            merchants_channel_id: @merchant
-          )
-
-          new_server.save
-        else
-          server.update(creation_channel_id: @creation,
-                        sheet_channel_id: @sheet,
-                        merchants_channel_id: @merchant)
-        end
-
-        msg = 'Le salon de création est à présent : '
-        msg += "#{BOT.channel(@creation).mention}\n"
-        msg += 'Le salon des fiches publiées est à présent : '
-        msg += "#{BOT.channel(@sheet).mention}\n"
-        msg += 'Le salon réservé au commerce est à présent : '
-        msg += "#{BOT.channel(@merchant).mention}\n"
-
-        event.respond msg
+        event.channel.send_message('', false, embed)
       end
     end
   end

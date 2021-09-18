@@ -1,0 +1,35 @@
+:force:
+  :cmd: "!FOR"
+  :column: :force
+  :actual: "La FORce de ton personnage est de : "
+  :define: "Tu peux lancer les dés pour définir ta FORce `!FOR`"
+
+:intelligence:
+  :cmd: "!INT"
+  :column: :intelligence
+  :actual: "L'INTelligence de ton personnage est de : "
+  :define: "Tu peux lancer les dés pour définir ton INTelligence `!INT`"
+
+:sagesse:
+  :cmd: "!SAG"
+  :column: :sagesse
+  :actual: "La SAGesse de ton personnage est de : "
+  :define: "Tu peux lancer les dés pour définir ta SAGesse `!SAG`"
+
+:dexterite:
+  :cmd: "!DEX"
+  :column: :dexterite
+  :actual: "La DEXtérité de ton personnage est de : "
+  :define: "Tu peux lancer les dés pour définir ta DEXtérité `!DEX`"
+
+:constitution:
+  :cmd: "!CON"
+  :column: :constitution
+  :actual: "La CONstitution de ton personnage est de : "
+  :define: "Tu peux lancer les dés pour définir ta CONstitution `!CON`"
+
+:charisme:
+  :cmd: "!CHA"
+  :column: :charisme
+  :actual: "Le CHArisme de ton personnage est de : "
+  :define: "Tu peux lancer les dés pour définir ton CHArisme `!CHA`"
