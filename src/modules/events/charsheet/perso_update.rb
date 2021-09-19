@@ -13,7 +13,7 @@ module Bot
         next if settings == false
 
         if event.user.owner?
-          charsheets = Database::Character.where(server_id: event.server.id).all
+          charsheets = Database::Character.where(server_id: event.server.id).where(death: false).all
           return if charsheets.nil?
 
           msg = 'Toutes les fiches personnages ont été mises à jour.'

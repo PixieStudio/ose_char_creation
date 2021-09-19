@@ -1,7 +1,7 @@
 ---
 cle: base
 
-name: "Choisir une classe : !classes"
+name: "!classes"
 
 main_attributes: ATT1|ATT2
 # force: 0

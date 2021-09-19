@@ -56,7 +56,7 @@ module Bot
 
         res = event.channel.send_message('', false, embed)
 
-        event.user.await!(timeout: 300) do |choice|
+        event.user.await!(timeout: 3000) do |choice|
           id = choice.message.content.to_i
 
           @classe = if id.zero?
