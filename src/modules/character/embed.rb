@@ -26,6 +26,17 @@ module Bot
         embed
       end
 
+      def self.new_merchant(char)
+        embed = Discordrb::Webhooks::Embed.new
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(
+          name: "#{BOT.user(char.user_discord_id).username} - Commerce",
+          icon_url: BOT.user(char.user_discord_id).avatar_url
+        )
+        embed.color = '#9932CC'
+        embed.timestamp = Time.now
+        embed
+      end
+
       def self.create_sheet(char, stats, saves, stuff, lang, rumor)
         embed = new_sheet(char)
         embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: char.avatar_url)
@@ -66,6 +77,13 @@ module Bot
       def self.char_message(char, msg)
         embed = new_sheet(char)
         embed.description = msg
+        embed
+      end
+
+      def self.merchant_message(char, msg, footer = nil)
+        embed = new_merchant(char)
+        embed.description = msg
+        embed.footer = footer.nil? ? Discordrb::Webhooks::EmbedFooter.new(text: 'Tape 0 pour quitter') : footer
         embed
       end
 

@@ -18,13 +18,13 @@ module Bot
         merchants = Database::Merchant.order(:rank).all
 
         msg = "Tu possèdes **#{charsheet.gold} PO**\n"
-        msg += "*Tapez le numéro correspondant au marchand. `0` pour quitter.*\n\n"
+        msg += "*Tape le numéro correspondant au marchand.*\n\n"
         msg += "__LISTE DES MARCHANDS__\n\n"
         merchants.each.with_index(1) do |m, index|
           msg += "#{index} :small_blue_diamond: #{m[:name]}\n"
         end
 
-        embed = Character::Embed.char_message(charsheet, msg)
+        embed = Character::Embed.merchant_message(charsheet, msg)
 
         res = event.channel.send_message('', false, embed)
 
@@ -39,7 +39,7 @@ module Bot
 
           if @merchant.nil?
             event.channel.message(res.id).delete
-            msg = event.respond ':small_orange_diamond: Vous quittez le marché.'
+            msg = event.respond ":small_orange_diamond: #{event.user.nickname || event.user.username} quitte le marché."
           end
           choice.message.delete
           true
@@ -51,7 +51,7 @@ module Bot
         items = @merchant.merchants_items
 
         msg = "Tu possèdes **#{charsheet.gold} PO**\n"
-        msg += "*Tapez le numéro correspondant à l'objet. `0` pour quitter.*\n\n"
+        msg += "*Tape le numéro correspondant à l'objet. `0` pour quitter.*\n\n"
         msg += "__ÉTAL DU MARCHAND #{@merchant.name.upcase}__\n\n"
         msg += "1 :small_blue_diamond: Achat libre - Le nom et le prix vous seront demandés.\n\n"
         items.each.with_index(2) do |item, index|
@@ -60,7 +60,7 @@ module Bot
           msg += " #{item.name}\n\n"
         end
 
-        embed = Character::Embed.char_message(charsheet, msg)
+        embed = Character::Embed.merchant_message(charsheet, msg)
 
         res = event.channel.send_message('', false, embed)
 
@@ -77,7 +77,7 @@ module Bot
 
           if @item.nil?
             event.channel.message(res.id).delete
-            msg = event.respond ':small_orange_diamond: Vous quittez le marché.'
+            msg = event.respond ":small_orange_diamond: #{event.user.nickname || event.user.username} quitte le marché."
           end
           choice.message.delete
           true
@@ -89,10 +89,10 @@ module Bot
         if @item == 1000
           @item = OpenStruct.new
 
-          msg = "Quel est le **NOM** de l'objet que tu souhaites acheter ?\n\n"\
-          '*Répond avec le nom uniquement*'
+          msg = "Quel est le **NOM** de l'objet que tu souhaites acheter ?\n\n"
 
-          embed = Character::Embed.char_message(charsheet, msg)
+          embed = Character::Embed.merchant_message(charsheet, msg)
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Répond avec le nom uniquement')
 
           res = event.channel.send_message('', false, embed)
 
@@ -105,11 +105,10 @@ module Bot
 
           event.channel.message(res.id).delete
 
-          msg = "Quel est le **PRIX** de l'objet que tu souhaites acheter ?\n\n"\
-          '*Répond avec des chiffres uniquement.*'
+          msg = "Quel est le **PRIX** de l'objet que tu souhaites acheter ?\n\n"
 
-          embed = Character::Embed.char_message(charsheet, msg)
-
+          embed = Character::Embed.merchant_message(charsheet, msg)
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Répond avec des chiffres uniquement.')
           res = event.channel.send_message('', false, embed)
 
           event.user.await!(timeout: 300) do |choice|
@@ -122,7 +121,7 @@ module Bot
         end
 
         if @item.price > charsheet.gold
-          event.respond ":small_orange_diamond: Vous n'avez pas assez d'or et quittez le marché !"
+          event.respond ":small_orange_diamond: #{event.user.nickname || event.user.username} n'a pas assez d'or et quitte le marché !"
           next
         end
 
@@ -136,7 +135,7 @@ module Bot
         "chez le marchand **#{@merchant.name}**.\n\n"\
         "Il te reste **#{charsheet.gold} PO**."
 
-        embed = Character::Embed.char_message(charsheet, msg)
+        embed = Character::Embed.merchant_message(charsheet, msg)
         embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: '!marchands pour faire un nouvel achat')
 
         event.channel.send_message('', false, embed)
