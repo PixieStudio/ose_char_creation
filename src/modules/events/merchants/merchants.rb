@@ -69,6 +69,8 @@ module Bot
 
           @item = if id.zero?
                     nil
+                  elsif id == 1
+                    @item = 1000
                   else
                     items[id - 2]
                   end
@@ -83,6 +85,41 @@ module Bot
         next if @item.nil?
 
         event.channel.message(res.id).delete
+
+        if @item == 1000
+          @item = OpenStruct.new
+
+          msg = "Quel est le **NOM** de l'objet que tu souhaites acheter ?\n\n"\
+          '*Répond avec le nom uniquement*'
+
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          res = event.channel.send_message('', false, embed)
+
+          event.user.await!(timeout: 300) do |choice|
+            @item.name = choice.message.content
+
+            choice.message.delete
+            true
+          end
+
+          event.channel.message(res.id).delete
+
+          msg = "Quel est le **PRIX** de l'objet que tu souhaites acheter ?\n\n"\
+          '*Répond avec des chiffres uniquement.*'
+
+          embed = Character::Embed.char_message(charsheet, msg)
+
+          res = event.channel.send_message('', false, embed)
+
+          event.user.await!(timeout: 300) do |choice|
+            @item.price = choice.message.content.to_i
+
+            choice.message.delete
+            true
+          end
+
+        end
 
         if @item.price > charsheet.gold
           event.respond ":small_orange_diamond: Vous n'avez pas assez d'or et quittez le marché !"
