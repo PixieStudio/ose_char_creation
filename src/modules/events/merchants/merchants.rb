@@ -9,31 +9,24 @@ module Bot
       message(content: /^!marchands$/) do |event|
         event.message.delete
 
-        settings = Database::Settings.where(server_id: event.server.id)&.first
-        unless event.channel.id == settings.merchants_channel_id
-          msg = "Le commerce s'effecture dans le salon "\
-          "#{BOT.channel(settings.merchants_channel_id).mention}"
-
-          event.respond msg
-          next
-        end
+        settings = Character::Check.merchants?(event)
+        next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
         merchants = Database::Merchant.order(:rank).all
 
-        msg = "#{event.user.mention} possède **#{charsheet.gold} PO**"
-        msg += "```md\n"
-        msg += "Liste des Marchands\n"
-        msg += "------\n"
+        msg = "Tu possèdes **#{charsheet.gold} PO**\n"
+        msg += "*Tapez le numéro correspondant au marchand. `0` pour quitter.*\n\n"
+        msg += "__LISTE DES MARCHANDS__\n\n"
         merchants.each.with_index(1) do |m, index|
-          msg += "#{index}. #{m[:name]}\n"
+          msg += "#{index} :small_blue_diamond: #{m[:name]}\n"
         end
-        msg += '```'
-        msg += '*Tapez le numéro correspondant au marchand. `0` pour quitter.*'
 
-        res = event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
@@ -45,32 +38,31 @@ module Bot
                       end
 
           if @merchant.nil?
-            res.delete
-            msg = event.respond '*Vous quittez le marché.*'
+            event.channel.message(res.id).delete
+            msg = event.respond ':small_orange_diamond: Vous quittez le marché.'
           end
           choice.message.delete
           true
         end
         next if @merchant.nil?
 
-        res.delete
+        event.channel.message(res.id).delete
 
         items = @merchant.merchants_items
 
-        msg = "#{event.user.mention} possède **#{charsheet.gold} PO**"
-        msg += "```md\n"
-        msg += "Étal du marchand : #{@merchant.name}\n"
-        msg += "------\n"
-        msg += "1. Achat libre - Le nom et le prix vous seront demandés.\n"
+        msg = "Tu possèdes **#{charsheet.gold} PO**\n"
+        msg += "*Tapez le numéro correspondant à l'objet. `0` pour quitter.*\n\n"
+        msg += "__ÉTAL DU MARCHAND #{@merchant.name.upcase}__\n\n"
+        msg += "1 :small_blue_diamond: Achat libre - Le nom et le prix vous seront demandés.\n\n"
         items.each.with_index(2) do |item, index|
-          msg += "#{index}. [#{item.price} PO]"
+          msg += "#{index} :small_blue_diamond: [#{item.price} PO]"
           msg += " [Poids : #{item.weight}]" if item.weight.positive?
           msg += " #{item.name}\n\n"
         end
-        msg += '```'
-        msg += '*Tapez le numéro correspondant au marchand. `0` pour quitter.*'
 
-        res = event.respond msg
+        embed = Character::Embed.char_message(charsheet, msg)
+
+        res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
@@ -82,18 +74,18 @@ module Bot
                   end
 
           if @item.nil?
-            res.delete
-            msg = event.respond '*Vous quittez le marché.*'
+            event.channel.message(res.id).delete
+            msg = event.respond ':small_orange_diamond: Vous quittez le marché.'
           end
           choice.message.delete
           true
         end
         next if @item.nil?
 
-        res.delete
+        event.channel.message(res.id).delete
 
         if @item.price > charsheet.gold
-          event.respond "Vous n'avez pas assez d'or et quittez le marché !"
+          event.respond ":small_orange_diamond: Vous n'avez pas assez d'or et quittez le marché !"
           next
         end
 
@@ -102,7 +94,15 @@ module Bot
         charsheet.update(gold: new_gold)
         charsheet.update_message!
 
-        event.respond "#{event.user.mention} possédait **#{old_gold} PO** et a acheté **#{@item.name.gsub(/\n\*.*$/i, '')}** pour **#{@item.price} PO** chez le marchand **#{@merchant.name}**. Or restant : **#{charsheet.gold} PO**."
+        msg = "Tu possédais **#{old_gold} PO** et tu as acheté :\n"\
+        "**#{@item.name.gsub(/\n\*.*$/i, '')}** pour **#{@item.price} PO** "\
+        "chez le marchand **#{@merchant.name}**.\n\n"\
+        "Il te reste **#{charsheet.gold} PO**."
+
+        embed = Character::Embed.char_message(charsheet, msg)
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: '!marchands pour faire un nouvel achat')
+
+        event.channel.send_message('', false, embed)
       end
     end
   end

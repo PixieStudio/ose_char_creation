@@ -58,6 +58,22 @@ module Bot
 
         settings
       end
+
+      def self.merchants?(event)
+        settings = settings(event)
+
+        return false if settings.merchants_channel_id.nil?
+
+        return settings if event.channel.id == settings.merchants_channel_id
+
+        msg = "Le commerce s'effectue dans le salon "\
+        "#{BOT.channel(settings.merchants_channel_id).mention}"
+
+        embed = Character::Embed.event_message(event, msg)
+
+        event.channel.send_message('', false, embed)
+        false
+      end
     end
   end
 end
