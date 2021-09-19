@@ -92,9 +92,12 @@ module Bot
           msg += "#{@old_content}  :arrow_right:  #{@content}\n\n"
           msg += "*Ta fiche personnage a été mise à jour.*\n\n"
 
-          msg += '` !nom ` Donne un nom à ton personnage.' if c[:cmd] == '!pronoms' && charsheet.char_name == '!nom'
-          if c[:cmd] == '!nom' && charsheet.genre == '!pronoms'
-            msg += '` !pronoms ` Indique quel(s) pronom(s) doivent être utilisés pour ton personnage.'
+          msg += "` !nom ` Donne un nom à ton personnage.\n" if charsheet.char_name == '!nom'
+          if charsheet.genre == '!pronoms'
+            msg += "` !pronoms ` Indique quel(s) pronom(s) doivent être utilisés pour ton personnage.\n"
+          end
+          if charsheet.avatar_url == 'https://i.imgur.com/Q7B91HT.png'
+            msg += '` !avatar ` Ajoute un portrait à ton personnage.'
           end
 
           embed = Character::Embed.char_message(charsheet, msg)

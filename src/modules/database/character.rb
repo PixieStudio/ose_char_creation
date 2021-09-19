@@ -12,7 +12,7 @@ module Bot
       end
 
       def self.find_sheet(id, server_id)
-        where(user_discord_id: id).where(server_id: server_id).order(:id).reverse.first
+        where(user_discord_id: id).where(server_id: server_id).where(death: false).order(:id).reverse.first
       end
 
       def self.search(id)
@@ -25,12 +25,22 @@ module Bot
         BOT.channel(settings.sheet_channel_id)
       end
 
+      def graveyard_channel
+        settings = Database::Settings.find(server_id: server_id)
+
+        BOT.channel(settings.graveyard_channel_id)
+      end
+
       def message
         sheet_channel.message(message_id)
       end
 
       def update_message!
         message.edit('', generate_embed(id))
+      end
+
+      def kill_char!
+        message.delete
       end
 
       def const_mod

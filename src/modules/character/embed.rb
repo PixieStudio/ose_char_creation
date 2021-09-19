@@ -29,6 +29,7 @@ module Bot
       def self.create_sheet(char, stats, saves, stuff, lang, rumor)
         embed = new_sheet(char)
         embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: char.avatar_url)
+        embed.description = ":headstone: **Mort.e :** #{char.death_reason}" if char.death
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Nom**', value: char.char_name, inline: true
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Pronoms**', value: char.genre, inline: true
         embed.add_field name: ':diamond_shape_with_a_dot_inside: **Classe**', value: char.classe.name, inline: true

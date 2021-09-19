@@ -3,10 +3,10 @@
 module Bot
   module DiscordEvents
     # This event is processed each time the bot succesfully connects to discord.
-    module Participation
+    module Mort
       extend Discordrb::EventContainer
 
-      message(content: /^!pp$/) do |event|
+      message(content: /^!mort$/) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -15,7 +15,7 @@ module Bot
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
-        msg = "Voulez-vous ajouter un **Point de Participation** ?\n\n"
+        msg = "Ton personnage est mort ?\n\n"
         msg += "1 :small_blue_diamond: Oui\n"
         msg += "2 :small_blue_diamond: Non\n\n"
 
@@ -27,29 +27,48 @@ module Bot
         event.user.await!(timeout: 300) do |choice|
           id = choice.message.content.to_i
           if id.zero? || id > 1
-            @pp = nil
+            @death = nil
             event.channel.message(res.id).delete
-            msg = 'Ajout de **PP** annulé.'
+            msg = 'Mort du personnage annulée.'
             embed = Character::Embed.char_message(charsheet, msg)
             event.channel.send_message('', false, embed)
           else
-            @pp = id
+            @death = id
           end
 
           choice.message.delete
           true
         end
-        next if @pp.nil?
+        next if @death.nil?
 
         event.channel.message(res.id).delete
 
-        char_pp = charsheet.participation + 1
+        msg = "Comment ton personnage est-il mort ?\n\n"
+        msg += '*Répond par une phrase courte de quelques mots.*'
 
-        charsheet.update(participation: char_pp)
-        charsheet.update_message!
+        embed = Character::Embed.char_message(charsheet, msg)
 
-        msg = "**Points de Participation (PP)**\n\n"
-        msg += "1 point de participation a  été ajouté à ta feuille de personnage\n\n"
+        res = event.channel.send_message('', false, embed)
+
+        event.user.await!(timeout: 300) do |choice|
+          @reason = choice.message.content
+
+          choice.message.delete
+          true
+        end
+
+        event.channel.message(res.id).delete
+
+        charsheet.update(death: true, death_reason: @reason)
+        # charsheet.update_message!
+
+        # BOT.channel(settings.sheet_channel_id).message(charsheet.message_id).delete
+        charsheet.kill_char!
+
+        graveyard = BOT.channel(settings.graveyard_channel_id)
+        graveyard.send_message('', false, charsheet.generate_embed(charsheet.id))
+
+        msg = "Ton personnage a été envoyé au #{graveyard.mention}"
 
         embed = Character::Embed.char_message(charsheet, msg)
 

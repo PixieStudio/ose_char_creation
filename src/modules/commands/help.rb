@@ -54,7 +54,59 @@ module Bot
           next
         end
 
-        puts 'OK'
+        learned = charsheet.languages.split(', ').count
+
+        if (charsheet.intelligence.between?(13, 15) && learned.zero?) ||
+           (charsheet.intelligence.between?(16, 17) && learned < 2) ||
+           (charsheet.intelligence == 18 && learned < 3)
+          embed.description = 'Tu peux choisir des langues supplémentaires `!langues`'
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        if charsheet.rumeur == '` !rumeur `'
+          embed.description = 'Tu peux tirer une rumeur `!rumeur`'
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        if charsheet.alignement == '!alignement'
+          embed.description = 'Tu peux choisir ton alignement `!alignement`'
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        if charsheet.char_name == '!nom'
+          embed.description = 'Tu peux choisir ton nom `!nom`'
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        if charsheet.genre == '!pronoms'
+          embed.description = 'Tu peux choisir tes pronoms `!pronoms`'
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        if charsheet.avatar_url == 'https://i.imgur.com/Q7B91HT.png'
+          embed.description = 'Tu peux ajouter un portrait à ton personnage `!avatar`'
+          event.channel.send_message('', false, embed)
+          next
+        end
+
+        settings = Character::Check.settings(event)
+
+        creation_cmd = ":moneybag: `!richesses`\n"\
+        "Modifie tes PO\n"\
+        ":compass: `!pp`\n"\
+        "Ajoute un Point de Participation\n"\
+        ":headstone: `!mort`\n"\
+        'Ton personnage est mort'
+
+        embed.description = 'Commandes supplémentaires'
+        embed.add_field name: "##{BOT.channel(settings.merchants_channel_id).name}", value: ":convenience_store: `!marchands`\nAchète aux marchands", inline: true
+        embed.add_field name: "##{BOT.channel(settings.creation_channel_id).name}", value: creation_cmd, inline: true
+        event.channel.send_message('', false, embed)
       end
     end
   end

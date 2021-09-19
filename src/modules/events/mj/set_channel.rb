@@ -27,6 +27,13 @@ module Bot
           question: ':moneybag: Quel salon est réservé au commerce ?',
           result: 'Salon des marchands : ',
           column: 'merchants_channel_id'
+        },
+        {
+          cmd: 'graveyard',
+          title: 'Choix du salon poru le cimetière',
+          question: ':headstone: Quel salon est réservé au cimetière ?',
+          result: 'Salon du cimetière : ',
+          column: 'graveyard_channel_id'
         }
 
       ]

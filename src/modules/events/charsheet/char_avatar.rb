@@ -9,7 +9,7 @@ module Bot
       message(content: /^!avatar$/) do |event|
         event.message.delete
 
-        settings = Character::Check.channel(event)
+        settings = Character::Check.all(event)
         next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)

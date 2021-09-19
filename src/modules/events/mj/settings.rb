@@ -17,6 +17,8 @@ module Bot
         msg += "Où les feuilles de personnages seront postées.\n\n"
         msg += "`!set channel merchants`\n"
         msg += "Dédié au commerce avec les marchands.\n\n"
+        msg += "`!set channel graveyard`\n"
+        msg += "Cimetière des personnages.\n\n"
 
         embed = Character::Embed.event_message(event, msg)
         embed.title = 'Commandes de configuration'
