@@ -39,7 +39,7 @@ module Bot
         msg += ":diamond_shape_with_a_dot_inside:  Résultat : #{gold}\n\n"
         msg += "Ton personnage commence avec **#{gold}** Pièces d'Or !\n\n"
         msg += "*La fiche de ton personnage a été mise à jour.* \n\n"
-        msg += '` !rumeur ` Découvre la rumeur que tu as entendue.'
+        msg += ':small_blue_diamond: ` !rumeur ` Découvre la rumeur que tu as entendue.'
 
         embed = Character::Embed.char_message(charsheet, msg)
 

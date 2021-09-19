@@ -82,9 +82,9 @@ module Bot
         charsheet.update_message!
         event.channel.message(res.id).delete
 
-        msg = "\nTu as choisis la classe **#{@classe.name}**.\n"
-        msg += "Ta fiche a été mise à jour\n"
-        msg += "Tu peux ajuster tes caractéristiques à l'aide de la commande `!ajuster`"
+        msg = "\nTu as choisis la classe **#{@classe.name}**.\n\n"
+        msg += "*Ta fiche a été mise à jour*\n\n"
+        msg += ':small_blue_diamond: `!ajuster` pour ajuster tes caractéristiques'
 
         embed = Character::Embed.char_message(charsheet, msg)
 

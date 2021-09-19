@@ -29,7 +29,9 @@ module Bot
         msg = "**Rumeur**\n\n"
         msg += "#{rumeur.content}\n\n"
         msg += "*La fiche de ton personnage a été mise à jour !*\n\n"
-        msg += "` !alignement ` Choisis l'alignement de ton personnage" if charsheet.alignement == '!alignement'
+        if charsheet.alignement == '!alignement'
+          msg += ":small_blue_diamond: ` !alignement ` Choisis l'alignement de ton personnage"
+        end
 
         embed = Character::Embed.char_message(charsheet, msg)
 
