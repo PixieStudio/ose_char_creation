@@ -53,6 +53,26 @@ module Bot
       #     end
       #     puts 'finished'
       #   end
+      #   command :kinesiste do |event|
+      #     classe = Database::Classe.where(cle: 'kinesiste').first
+      #     settings = Bot::Character::Check.settings(event)
+
+      #     new_player = Database::Character.create(
+      #       user_discord_id: event.user.id,
+      #       server_id: event.server.id,
+      #       classe: classe,
+      #       force: 13,
+      #       dexterite: 13,
+      #       sagesse: 13,
+      #       intelligence: 13,
+      #       constitution: 13,
+      #       charisme: 13
+      #     )
+      #     fiche = BOT.channel(settings.sheet_channel_id)
+      #     fiche_msg = fiche.send_message('', false, new_player.generate_embed(new_player[:id]))
+
+      #     new_player.update(message_id: fiche_msg.id)
+      #   end
     end
   end
 end

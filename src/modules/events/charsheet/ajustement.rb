@@ -17,6 +17,7 @@ module Bot
         next if charsheet.ajuster_protection
 
         caracs_drop = %w[force intelligence sagesse]
+        caracs_drop.delete('force') if charsheet.classe.cle.match?(/^acrobate|assassin$/i)
 
         final_drop = []
 
