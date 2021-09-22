@@ -40,3 +40,7 @@ save_s: 13
 save_ssb: 12
 
 page: "OSE CF p.32"
+
+exp5: "dexterite13||force13"
+
+exp10: "dexterite16&&force16"

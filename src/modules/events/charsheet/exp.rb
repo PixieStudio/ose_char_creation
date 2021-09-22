@@ -52,7 +52,7 @@ module Bot
 
         msg = "**Expérience** gagnée : #{@exp}"
         msg += " + #{@mod_exp} (#{mod_exp}%)" unless mod_exp.zero?
-        msg += "\n\n#{@old_xp}  :arrow_right:  #{@new_xp}"
+        msg += "\n\n#{@old_xp}  :arrow_right:  #{@new_xp}\n\n"
 
         charsheet.update(exp: @new_xp)
 

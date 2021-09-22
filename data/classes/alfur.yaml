@@ -40,3 +40,7 @@ save_s: 16
 save_ssb: 15
 
 page: "Ziterman Mondial Exclu!"
+
+exp5: "constitution13||sagesse13"
+
+exp10: "constitution15&&sagesse15"

@@ -40,3 +40,8 @@ save_s: 16
 save_ssb: 15
 
 page: "Ressources Discord"
+
+exp5: "charisme15"
+
+# only 5%
+exp10: "charisme20"

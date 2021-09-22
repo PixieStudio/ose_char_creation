@@ -149,15 +149,24 @@ module Bot
         mod_exp = 0
         column = "exp#{value}".to_sym
 
-        /^(?<first_att>[a-z]+)(?<first_value>\d{2})(?<compare_or>\|{2})*(?<compare_and>\&{2})*(?<second_att>[a-z]+)*(?<second_value>\d{2})*$/i =~ classe[column]
+        classe[column].split(';').each do |c|
+          next unless mod_exp.zero?
 
-        if !compare_or.nil?
-          mod_exp = value if self[first_att.to_sym] >= first_value.to_i || self[second_att.to_sym] >= second_value.to_i
-        elsif !compare_and.nil?
-          mod_exp = value if self[first_att.to_sym] >= first_value.to_i && self[second_att.to_sym] >= second_value.to_i
-        elsif self[first_att.to_sym] >= first_value.to_i
-          mod_exp = value
+          /^(?<first_att>[a-z]+)(?<first_value>\d{2})(?<compare_or>\|{2})*(?<compare_and>\&{2})*(?<second_att>[a-z]+)*(?<second_value>\d{2})*$/i =~ c
+
+          if !compare_or.nil?
+            if self[first_att.to_sym] >= first_value.to_i || self[second_att.to_sym] >= second_value.to_i
+              mod_exp = value
+            end
+          elsif !compare_and.nil?
+            if self[first_att.to_sym] >= first_value.to_i && self[second_att.to_sym] >= second_value.to_i
+              mod_exp = value
+            end
+          elsif self[first_att.to_sym] >= first_value.to_i
+            mod_exp = value
+          end
         end
+
         mod_exp
       end
     end

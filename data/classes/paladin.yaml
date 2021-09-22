@@ -40,3 +40,7 @@ save_s: 13
 save_ssb: 14
 
 page: "OSE AF p.26"
+
+exp5: "force13||sagesse13"
+
+exp10: "force17&&sagesse17"

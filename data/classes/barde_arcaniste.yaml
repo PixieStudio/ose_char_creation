@@ -40,3 +40,7 @@ save_s: 16
 save_ssb: 15
 
 page: "Carcass_Crawler_Exclusive_Inaugural_Issue1.PDF p.6"
+
+exp5: "dexterite13&&charisme13"
+
+exp10: "dexterite16&&charisme13;charisme16&&dexterite13"

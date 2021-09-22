@@ -40,3 +40,7 @@ save_s: 15
 save_ssb: 15
 
 page: "OSE CF p.24"
+
+exp5: "intelligence13&&force13"
+
+exp10: "intelligence16&&force13"
