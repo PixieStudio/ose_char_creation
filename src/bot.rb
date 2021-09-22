@@ -2,6 +2,7 @@
 
 # Gems
 require 'bundler/setup'
+require 'csv'
 require 'discordrb'
 require 'ostruct'
 require 'yaml'

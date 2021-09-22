@@ -71,6 +71,11 @@ module Bot
         end
 
         puts 'Synchronisation terminées.'
+
+        # char = Database::Character.find(id: 6)
+        # progression = Bot::Database::Character.progression(char)
+        # xp_remain = Database::Character.xp_remain(char)
+        # puts char.next_lvl['XP']
       end
     end
   end

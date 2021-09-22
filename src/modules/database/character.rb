@@ -61,50 +61,87 @@ module Bot
         end
       end
 
-      def stats(char)
-        "FOR  ` #{char.force} `  "\
-        "INT  ` #{char.intelligence} `"\
-        "SAG  ` #{char.sagesse} `  "\
-        "DEX  ` #{char.dexterite} `  "\
-        "CON  ` #{char.constitution} `  "\
-        "CHA  ` #{char.charisme} `  "
+      def stats
+        "FOR  ` #{force} `  "\
+        "INT  ` #{intelligence} `"\
+        "SAG  ` #{sagesse} `  "\
+        "DEX  ` #{dexterite} `  "\
+        "CON  ` #{constitution} `  "\
+        "CHA  ` #{charisme} `  "
       end
 
-      def saves(char)
-        "MP ` #{char.classe.save_mp} ` "\
-        "B ` #{char.classe.save_b} ` "\
-        "PP ` #{char.classe.save_pp} ` "\
-        "S ` #{char.classe.save_s} ` "\
-        "SSB ` #{char.classe.save_ssb} `"\
+      def progression
+        classe_key = classe.cle
+        file = "#{Dir.pwd}/data/progression/#{classe_key}.csv"
+        CSV.parse(File.read(file))
       end
 
-      def stuff(char)
-        str = ":crossed_swords: Armes ` #{char.classe.weapon} ` \n"\
-        ":shield: Armures ` #{char.classe.armors} ` \n"\
+      def actual_lvl
+        keys = progression[0]
+        values = progression[level]
+        Hash[keys.zip(values)]
+      end
 
-        str += ":scroll: Sorts ` #{char.classe.spells} ` " if char.classe.spells != 'empty'
+      def next_lvl
+        keys = progression[0]
+        values = progression[level + 1]
+        Hash[keys.zip(values)]
+      end
+
+      def previous_lvl
+        keys = progression[0]
+        values = progression[level - 1]
+        Hash[keys.zip(values)]
+      end
+
+      def exp_remain
+        next_lvl['XP'].to_i - actual_lvl['XP'].to_i
+      end
+
+      def carmor
+        regex = /^\d*\[(?<ca>\+*\d*)\]/
+        actual_lvl['TAC0'].match(regex)['ca']
+      end
+
+      def dv
+        actual_lvl['DV']
+      end
+
+      def saves
+        "MP ` #{actual_lvl['MP']} ` "\
+        "B ` #{actual_lvl['B']} ` "\
+        "PP ` #{actual_lvl['PP']} ` "\
+        "S ` #{actual_lvl['S']} ` "\
+        "SSB ` #{actual_lvl['SSB']} `"\
+      end
+
+      def stuff
+        str = ":crossed_swords: Armes ` #{classe.weapon} ` \n"\
+        ":shield: Armures ` #{classe.armors} ` \n"\
+
+        str += ":scroll: Sorts ` #{classe.spells} ` " if classe.spells != 'empty'
         str
       end
 
-      def lang(char)
-        str = char.classe.languages
-        return str if char.languages == ''
+      def lang
+        str = classe.languages
+        return str if languages == ''
 
-        char_lang = char.languages.split(', ')
+        char_lang = languages.split(', ')
         char_lang.each do |l|
           str += ", #{l}"
         end
         str
       end
 
-      def rumor(char)
-        char.rumeur.split('|').join("\n")
+      def rumor
+        rumeur.split('|').join("\n")
       end
 
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
 
-        embed = Bot::Character::Embed.create_sheet(char, stats(char), saves(char), stuff(char), lang(char), rumor(char))
+        embed = Bot::Character::Embed.create_sheet(char, stats, saves, stuff, lang, rumor)
         embed
       end
     end
