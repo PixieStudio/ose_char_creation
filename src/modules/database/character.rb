@@ -95,7 +95,7 @@ module Bot
       end
 
       def exp_remain
-        next_lvl['XP'].to_i - actual_lvl['XP'].to_i
+        next_lvl['XP'].to_i - exp
       end
 
       def carmor
@@ -143,6 +143,22 @@ module Bot
 
         embed = Bot::Character::Embed.create_sheet(char, stats, saves, stuff, lang, rumor)
         embed
+      end
+
+      def mod_att?(value)
+        mod_exp = 0
+        column = "exp#{value}".to_sym
+
+        /^(?<first_att>[a-z]+)(?<first_value>\d{2})(?<compare_or>\|{2})*(?<compare_and>\&{2})*(?<second_att>[a-z]+)*(?<second_value>\d{2})*$/i =~ classe[column]
+
+        if !compare_or.nil?
+          mod_exp = value if self[first_att.to_sym] >= first_value.to_i || self[second_att.to_sym] >= second_value.to_i
+        elsif !compare_and.nil?
+          mod_exp = value if self[first_att.to_sym] >= first_value.to_i && self[second_att.to_sym] >= second_value.to_i
+        elsif self[first_att.to_sym] >= first_value.to_i
+          mod_exp = value
+        end
+        mod_exp
       end
     end
   end

@@ -47,10 +47,10 @@ module Bot
         embed.add_field name: ':shield: **CA**', value: char.carmor, inline: true
         embed.add_field name: ':game_die: **DV**', value: char.dv, inline: true
         embed.add_field name: ':heart: **PV Max**', value: char.pv_max, inline: true
-        embed.add_field name: ':trident: **Alignement**', value: char.alignement, inline: true
         embed.add_field name: ':star: **Niveau**', value: char.level, inline: true
         embed.add_field name: ':ballot_box_with_check: **EXP**', value: char.exp, inline: true
         embed.add_field name: ':arrow_right: **Niv. Suiv.**', value: char.exp_remain, inline: true
+        embed.add_field name: ':trident: **Alignement**', value: char.alignement, inline: true
         embed.add_field name: ":moneybag: **Pièces d'or**", value: char.gold, inline: true
         embed.add_field name: ':compass: **PP**', value: char.participation, inline: true
         embed.add_field name: ':dna: **Caractéristiques** ', value: stats
