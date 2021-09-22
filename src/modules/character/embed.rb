@@ -52,7 +52,7 @@ module Bot
         embed.add_field name: ':arrow_right: **Niv. Suiv.**', value: char.exp_remain, inline: true
         embed.add_field name: ':trident: **Alignement**', value: char.alignement, inline: true
         embed.add_field name: ":moneybag: **Pièces d'or**", value: char.gold, inline: true
-        embed.add_field name: ':compass: **PP**', value: char.participation, inline: true
+        embed.add_field name: ':compass: **PP**', value: char.player.participation, inline: true
         embed.add_field name: ':dna: **Caractéristiques** ', value: stats
         embed.add_field name: ':revolving_hearts: **Sauvegardes** ', value: saves
         embed.add_field name: '**Equipement et Sorts** ', value: stuff

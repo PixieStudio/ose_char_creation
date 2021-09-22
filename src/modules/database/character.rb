@@ -169,6 +169,17 @@ module Bot
 
         mod_exp
       end
+
+      def player
+        player = Database::Player.where(user_discord_id: user_discord_id).first
+        if player.nil?
+          player = Database::Player.create(
+            user_discord_id: user_discord_id,
+            server_id: server_id
+          )
+        end
+        player
+      end
     end
   end
 end

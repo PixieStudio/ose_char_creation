@@ -10,7 +10,7 @@ module Bot
         event.message.delete
 
         settings = Character::Check.all(event)
-        next if settings == false
+        next unless settings
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
@@ -43,9 +43,9 @@ module Bot
 
         event.channel.message(res.id).delete
 
-        char_pp = charsheet.participation + 1
+        char_pp = charsheet.player.participation + 1
 
-        charsheet.update(participation: char_pp)
+        charsheet.player.update(participation: char_pp)
         charsheet.update_message!
 
         msg = "**Points de Participation (PP)**\n\n"
