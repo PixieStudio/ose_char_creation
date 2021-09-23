@@ -15,7 +15,7 @@ module Bot
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
-        msg = 'Tape `!exp 555` en remplaçant `555` par la valeur que tu as reçue.'
+        msg = 'Tape `!exp 555` en remplaçant `555` par la valeur que tu as reçue **SANS** modificateur.'
 
         embed = Character::Embed.char_message(charsheet, msg)
 
