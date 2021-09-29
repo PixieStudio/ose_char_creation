@@ -94,12 +94,12 @@ module Bot
       def self.help_message(event, msg)
         settings = Character::Check.settings(event)
         manage_cmd = {
-          ":convenience_store:\u0009 !marchands": "Achète chez les #{BOT.channel(settings.merchants_channel_id).mention}",
+          ":pushpin:\u0009 !persos": 'Sélectionne un de tes personnages',
           ":coin:\u0009 !richesses": "Modifie le montant de tes Pièces d'Or",
           ":compass:\u0009 !pp": 'Ajoute 1 Point de Participation (lié au joueur)',
           ":star2:\u0009 !exp": "Ton personnage gagne de l'expérience",
           ":headstone:\u0009 !mort": 'Envoie ton personnage au cimetière',
-          "\u200B": "\u200B"
+          ":convenience_store:\u0009 !marchands": "Achète chez les #{BOT.channel(settings.merchants_channel_id).mention}"
         }
 
         embed = new_event(event)
