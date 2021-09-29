@@ -6,7 +6,7 @@ module Bot
     module Mort
       extend Discordrb::EventContainer
 
-      message(content: /^!mort$/) do |event|
+      message(content: /^!mort|!cimetiere|!cimetière$/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)

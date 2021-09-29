@@ -8,14 +8,11 @@ module Bot
       command :help do |event|
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
 
-        # embed = Character::Embed.help_message(event)
-
         status = false
 
         if charsheet.nil?
           msg = "Tu peux créer un personnage `!nouveau perso`\n"\
           'ou sélectionner un autre personnage que tu possèdes `!persos`'
-          # event.channel.send_message('', false, embed)
           Character::Embed.help_message(event, msg)
           next
         end
@@ -24,7 +21,6 @@ module Bot
           next unless charsheet[k].zero?
 
           msg = v[:define]
-          # event.channel.send_message('', false, embed)
           Character::Embed.help_message(event, msg)
           status = true
           break
@@ -97,19 +93,6 @@ module Bot
           next
         end
 
-        # settings = Character::Check.settings(event)
-
-        # creation_cmd = ":moneybag: `!richesses`\n"\
-        # "Modifie tes PO\n"\
-        # ":compass: `!pp`\n"\
-        # "Ajoute un Point de Participation\n"\
-        # ":headstone: `!mort`\n"\
-        # 'Ton personnage est mort'
-
-        # embed.description = 'Commandes supplémentaires'
-        # embed.add_field name: "##{BOT.channel(settings.merchants_channel_id).name}", value: ":convenience_store: `!marchands`\nAchète aux marchands", inline: true
-        # embed.add_field name: "##{BOT.channel(settings.creation_channel_id).name}", value: creation_cmd, inline: true
-        # event.channel.send_message('', false, embed)
         msg = ''
         Character::Embed.help_message(event, msg)
       end

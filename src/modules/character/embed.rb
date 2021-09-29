@@ -99,7 +99,6 @@ module Bot
           ":compass:\u0009 !pp": 'Ajoute 1 Point de Participation (lié au joueur)',
           ":star2:\u0009 !exp": "Ton personnage gagne de l'expérience",
           ":headstone:\u0009 !mort": 'Envoie ton personnage au cimetière',
-          # "\u200B ": "\u200B",
           "\u200B": "\u200B"
         }
 
@@ -112,7 +111,6 @@ module Bot
           embed.add_field name: k, value: v, inline: true
         end
         embed.footer = footer_char
-        # embed
         event.channel.send_message('', false, embed)
       end
     end
