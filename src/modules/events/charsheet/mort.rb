@@ -60,9 +60,7 @@ module Bot
         event.channel.message(res.id).delete
 
         charsheet.update(death: true, death_reason: @reason)
-        # charsheet.update_message!
 
-        # BOT.channel(settings.sheet_channel_id).message(charsheet.message_id).delete
         charsheet.kill_char!
 
         graveyard = BOT.channel(settings.graveyard_channel_id)

@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
+require 'httparty'
+
 module Bot
   module DiscordCommands
     # Show Tutorial
     module Seed
       extend Discordrb::Commands::CommandContainer
+      command :ping do |event|
+        event.respond 'pong'
+      end
       #   command :seed do |event|
       #     classes = Database::Classe.where(Sequel.~(cle: /^base/)).all
       #     settings = Bot::Character::Check.settings(event)
@@ -73,6 +78,21 @@ module Bot
 
       #     new_player.update(message_id: fiche_msg.id)
       #   end
+
+      # command :httparty do |event|
+      #   response = HTTParty.get('https://2fe6-90-11-78-216.eu.ngrok.io/api/v1/patrons')
+
+      #   next unless response.code == 200
+
+      #   message = JSON.parse response.body, symbolize_names: true
+
+      #   msg = []
+      #   message.each do |user|
+      #     msg << user[:discord_id].to_s if user[:discord_id] == event.user.id
+      #   end
+
+      #   event.respond msg.join("\n")
+      # end
     end
   end
 end

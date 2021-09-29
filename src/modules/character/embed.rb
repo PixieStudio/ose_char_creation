@@ -2,6 +2,7 @@
 
 module Bot
   module Character
+    # Embed module
     module Embed
       def self.new_event(event)
         embed = Discordrb::Webhooks::Embed.new
@@ -90,12 +91,29 @@ module Bot
         embed
       end
 
-      def self.help_message(event)
+      def self.help_message(event, msg)
+        settings = Character::Check.settings(event)
+        manage_cmd = {
+          ":convenience_store:\u0009 !marchands": "Achète chez les #{BOT.channel(settings.merchants_channel_id).mention}",
+          ":coin:\u0009 !richesses": "Modifie le montant de tes Pièces d'Or",
+          ":compass:\u0009 !pp": 'Ajoute 1 Point de Participation (lié au joueur)',
+          ":star2:\u0009 !exp": "Ton personnage gagne de l'expérience",
+          ":headstone:\u0009 !mort": 'Envoie ton personnage au cimetière',
+          # "\u200B ": "\u200B",
+          "\u200B": "\u200B"
+        }
+
         embed = new_event(event)
         embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: 'https://i.imgur.com/71mgY85.png')
         embed.title = "A l'aide !"
+        embed.description = msg.empty? ? '' : ":diamond_shape_with_a_dot_inside:\u0009 #{msg}\n\n"
+        embed.description += '__AUTRES COMMANDES__'
+        manage_cmd.each do |k, v|
+          embed.add_field name: k, value: v, inline: true
+        end
         embed.footer = footer_char
-        embed
+        # embed
+        event.channel.send_message('', false, embed)
       end
     end
   end

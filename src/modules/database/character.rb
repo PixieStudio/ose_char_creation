@@ -12,7 +12,28 @@ module Bot
       end
 
       def self.find_sheet(id, server_id)
-        where(user_discord_id: id).where(server_id: server_id).where(death: false).order(:id).reverse.first
+        where(user_discord_id: id)
+          .where(server_id: server_id)
+          .where(death: false)
+          .where(selected: true)
+          .order(:id).reverse.first
+      end
+
+      def self.char_owned(user_id, server_id)
+        where(user_discord_id: user_id)
+          .where(server_id: server_id)
+          .where(death: false)
+          .order(:id).all
+      end
+
+      def self.select_char(id, user_id, server_id)
+        chars = char_owned(user_id, server_id)
+        chars.each do |c|
+          c.update(selected: false) if c.selected
+        end
+
+        char = where(id: id).first
+        char.update(selected: true)
       end
 
       def self.search(id)

@@ -25,6 +25,9 @@ module Bot
 
         new_player.save
 
+        # chars = Database::Character.char_owned(event.user.id, event.server.id)
+        Database::Character.select_char(new_player.id, event.user.id, event.server.id)
+
         fiche = BOT.channel(settings.sheet_channel_id)
         fiche_msg = fiche.send_message('', false, new_player.generate_embed(new_player[:id]))
 
