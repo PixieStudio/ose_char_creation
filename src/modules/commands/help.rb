@@ -20,7 +20,7 @@ module Bot
         ATTRIBUTES.each do |k, v|
           next unless charsheet[k].zero?
 
-          msg = v[:define]
+          msg = "#{v[:define]}\n:diamond_shape_with_a_dot_inside: #{v[:caracs]}"
           Character::Embed.help_message(event, msg)
           status = true
           break

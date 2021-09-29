@@ -14,6 +14,7 @@ module Bot
       create_cmd = {
         ":new:\u0009 !nouveau perso": 'Crée un personnage',
         ":question:\u0009 !help": 'Action suivante disponible',
+        ":game_die:\u0009 !caracs": 'Lance toutes tes caractéristiques',
         ":muscle:\u0009 !FOR": 'Lance FORce',
         ":brain:\u0009 !INT": 'Lance INTelligence',
         ":owl:\u0009 !SAG": 'Lance SAGesse',
@@ -33,6 +34,7 @@ module Bot
       }
 
       manage_cmd = {
+        ":pushpin:\u0009 !persos": 'Sélectionne un de tes personnages',
         ":coin:\u0009 !richesses": "Modifie le montant de tes Pièces d'Or",
         ":compass:\u0009 !pp": 'Ajoute 1 Point de Participation (lié au joueur)',
         ":star2:\u0009 !exp": "Ton personnage gagne de l'expérience",

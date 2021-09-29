@@ -6,7 +6,7 @@ module Bot
     module SelectChar
       extend Discordrb::EventContainer
 
-      message(content: /^!persos$/) do |event|
+      message(content: /^!persos|!perso$/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)

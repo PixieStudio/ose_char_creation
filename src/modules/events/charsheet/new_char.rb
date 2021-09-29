@@ -38,7 +38,9 @@ module Bot
         embed.description = 'La fiche de ton personnage a été créée dans le salon '\
         "#{BOT.channel(settings.sheet_channel_id).mention}\n\n"\
         "Commence par tirer tes caractéristiques à l'aide de l'une des commandes suivantes\n"\
-        '` !FOR ` ` !INT ` ` !SAG ` ` !DEX ` ` !CON ` ` !CHA `'
+        "` !FOR ` ` !INT ` ` !SAG ` ` !DEX ` ` !CON ` ` !CHA `\n\n"\
+        "Tu peux tirer toutes tes caractéristiques **en une fois**\n"\
+        '` !caracs `'
         embed.footer = Character::Embed.footer_char
         event.channel.send_message('', false, embed)
       end

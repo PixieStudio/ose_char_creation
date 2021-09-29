@@ -6,41 +6,8 @@ module Bot
     module Attributes
       extend Discordrb::EventContainer
 
-      caracs = [
-        {
-          cmd: '!FOR',
-          column: 'force',
-          message: 'La FORce de ton personnage est de : '
-        },
-        {
-          cmd: '!INT',
-          column: 'intelligence',
-          message: "L'INTelligence de ton personnage est de : "
-        },
-        {
-          cmd: '!SAG',
-          column: 'sagesse',
-          message: 'La SAGesse de ton personnage est de : '
-        },
-        {
-          cmd: '!DEX',
-          column: 'dexterite',
-          message: 'La DEXtérité de ton personnage est de : '
-        },
-        {
-          cmd: '!CON',
-          column: 'constitution',
-          message: 'La CONstitution de ton personnage est de : '
-        },
-        {
-          cmd: '!CHA',
-          column: 'charisme',
-          message: 'Le CHArisme de ton personnage est de : '
-        }
-      ]
-
-      caracs.each do |c|
-        message(content: /^#{c[:cmd]}$/) do |event|
+      ATTRIBUTES.each do |_k, c|
+        message(content: /^#{c[:cmd]}$/i) do |event|
           event.message.delete
 
           settings = Character::Check.all(event)
@@ -98,7 +65,7 @@ module Bot
             @att_remain << attributes_pattern[k] if (charsheet[k.to_sym]).zero?
           end
 
-          msg = "#{c[:message]} **#{attribute}**\n\n"
+          msg = "#{c[:actual]} **#{attribute}**\n\n"
           msg += ":game_die: Dés : #{roll_dice}\n"
           msg += ":diamond_shape_with_a_dot_inside: Résultat : #{attribute}\n\n"
           if @att_remain.length.zero?
@@ -109,6 +76,7 @@ module Bot
             @att_remain.each do |att|
               msg += " ` !#{att} ` "
             end
+            msg += "\n\nTirer les caractéristiques **en une fois** :\n` !caracs `"
           end
 
           embed = Character::Embed.char_message(charsheet, msg)

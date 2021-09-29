@@ -3,6 +3,7 @@
   :column: :force
   :actual: "La FORce de ton personnage est de : "
   :define: "Tu peux lancer les dés pour définir ta FORce `!FOR`"
+  :caracs: "Tu peux lancer toutes tes caractéristiques **en une fois** `!caracs`"
   :emote: ":muscle:"
   :roll: "Lance FORce"
 
@@ -11,6 +12,7 @@
   :column: :intelligence
   :actual: "L'INTelligence de ton personnage est de : "
   :define: "Tu peux lancer les dés pour définir ton INTelligence `!INT`"
+  :caracs: "Tu peux lancer toutes tes caractéristiques **en une fois** `!caracs`"
   :emote: ":brain:"
   :roll: "Lance INTelligence"
 
@@ -19,6 +21,7 @@
   :column: :sagesse
   :actual: "La SAGesse de ton personnage est de : "
   :define: "Tu peux lancer les dés pour définir ta SAGesse `!SAG`"
+  :caracs: "Tu peux lancer toutes tes caractéristiques **en une fois** `!caracs`"
   :emote: ":owl:"
   :roll: "Lance SAGesse"
 
@@ -27,6 +30,7 @@
   :column: :dexterite
   :actual: "La DEXtérité de ton personnage est de : "
   :define: "Tu peux lancer les dés pour définir ta DEXtérité `!DEX`"
+  :caracs: "Tu peux lancer toutes tes caractéristiques **en une fois** `!caracs`"
   :emote: ":fox:"
   :roll: "Lance DEXtérité"
 
@@ -35,6 +39,7 @@
   :column: :constitution
   :actual: "La CONstitution de ton personnage est de : "
   :define: "Tu peux lancer les dés pour définir ta CONstitution `!CON`"
+  :caracs: "Tu peux lancer toutes tes caractéristiques **en une fois** `!caracs`"
   :emote: ":ox:"
   :roll: "Lance CONstitution"
 
@@ -43,5 +48,6 @@
   :column: :charisme
   :actual: "Le CHArisme de ton personnage est de : "
   :define: "Tu peux lancer les dés pour définir ton CHArisme `!CHA`"
+  :caracs: "Tu peux lancer toutes tes caractéristiques **en une fois** `!caracs`"
   :emote: ":crown:"
   :roll: "Lance CHArisme"
