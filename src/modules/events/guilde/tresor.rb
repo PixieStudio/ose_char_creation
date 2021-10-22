@@ -20,8 +20,8 @@ module Bot
 
         /^!(g|guild|guilde){1} (tresor|trésor|treasure|gold){1}+s{0,1} (?<action>add|ajouter|ajout|\+|-|remove|retirer){1}\s*(?<amount>\d+)+/i =~ event.message.content
 
-        event.respond "Vous devez indiquer un montant\n*Exemple : *`!g tresor ajout 100`" and next if amount.empty?
-        event.respond "Vous devez indiquer une action\n*Exemple : *`!g tresor ajout 100`" and next if action.empty?
+        event.respond "Vous devez indiquer un montant\n*Exemple :* `!g tresor ajout 100`" and next if amount.nil?
+        event.respond "Vous devez indiquer une action\n*Exemple :* `!g tresor ajout 100`" and next if action.nil?
 
         if action.match?(/(add|ajouter|ajout|\+)/i)
           @gold = charsheet.guild.gold + amount.to_i
