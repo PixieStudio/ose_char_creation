@@ -5,6 +5,7 @@ module Bot
     # Character Model
     class Character < Sequel::Model
       many_to_one :classe, class: '::Bot::Database::Classe'
+      many_to_one :guild, class: '::Bot::Database::Guild'
 
       # Fetches Discord user from bot cache
       def discord_user
@@ -162,8 +163,7 @@ module Bot
       def generate_embed(char_id)
         char = Database::Character.search(char_id)
 
-        embed = Bot::Character::Embed.create_sheet(char, stats, saves, stuff, lang, rumor)
-        embed
+        Bot::Character::Embed.create_sheet(char, stats, saves, stuff, lang, rumor)
       end
 
       def mod_att?(value)
@@ -173,7 +173,7 @@ module Bot
         classe[column].split(';').each do |c|
           next unless mod_exp.zero?
 
-          /^(?<first_att>[a-z]+)(?<first_value>\d{2})(?<compare_or>\|{2})*(?<compare_and>\&{2})*(?<second_att>[a-z]+)*(?<second_value>\d{2})*$/i =~ c
+          /^(?<first_att>[a-z]+)(?<first_value>\d{2})(?<compare_or>\|{2})*(?<compare_and>&{2})*(?<second_att>[a-z]+)*(?<second_value>\d{2})*$/i =~ c
 
           if !compare_or.nil?
             if self[first_att.to_sym] >= first_value.to_i || self[second_att.to_sym] >= second_value.to_i
