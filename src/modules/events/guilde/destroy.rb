@@ -2,16 +2,12 @@
 
 module Bot
   module DiscordEvents
-    # Create Guild
-    module GuildJoin
+    # Destroy Guild
+    module GuildDestroy
       extend Discordrb::EventContainer
 
-      message(start_with: /^!(g|guild|guilde){1} (join|rejoindre){1}/i) do |event|
-        settings = Character::Check.all(event)
-        next if settings == false
-
-        charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
-        next if charsheet.nil?
+      message(start_with: /^!(g|guild|guilde){1} (supp|del|destroy){1}/i) do |event|
+        next unless event.user.owner?
 
         guilds = Database::Guild.where(server_id: event.server.id).all
 
@@ -26,7 +22,7 @@ module Bot
         end
         msg += "\n*Réponds en indiquant le chiffre correspondant, ou 0 pour annuler.*"
 
-        embed = Character::Embed.char_message(charsheet, msg)
+        embed = Character::Embed.event_message(event, msg)
 
         res = event.channel.send_message('', false, embed)
 
@@ -37,7 +33,7 @@ module Bot
             event.channel.message(res.id).delete
 
             msg = "Choix d'une guilde annulé."
-            embed = Character::Embed.char_message(charsheet, msg)
+            embed = Character::Embed.event_message(event, msg)
             event.channel.send_message('', false, embed)
           else
             @guild_id = id - 1
@@ -50,12 +46,15 @@ module Bot
 
         event.channel.message(res.id).delete
 
-        charsheet.update(guild_id: guilds[@guild_id].id)
-        charsheet.update_message!
+        guild = guilds[@guild_id]
+        @guild_name = guild.name
 
-        msg = "Tu fais partie, à présent, de la guilde **#{charsheet.guild.name}**"
+        guild&.destroy
+        # set nil for all characters in this guild
 
-        embed = Character::Embed.char_message(charsheet, msg)
+        msg = "La guilde **#{@guild_name}** a été supprimée."
+
+        embed = Character::Embed.event_message(event, msg)
 
         event.channel.send_message('', false, embed)
       end

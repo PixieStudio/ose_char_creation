@@ -17,8 +17,7 @@ module Bot
 
         Database::Guild.create(
           server_id: event.server.id,
-          name: guild_name,
-          gold: 0
+          name: guild_name
         )
 
         msg = "La guilde **#{guild_name}** a été créée. Vous pouvez définir ses richesses " \

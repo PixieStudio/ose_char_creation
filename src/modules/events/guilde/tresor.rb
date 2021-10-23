@@ -2,11 +2,11 @@
 
 module Bot
   module DiscordEvents
-    # This event is processed each time the bot succesfully connects to discord.
+    # Guild Treasure Manager
     module GuildTresor
       extend Discordrb::EventContainer
 
-      message(start_with: /^!(g|guild|guilde){1} (tresor|trésor|treasure|gold){1}+s{0,1}/i) do |event|
+      message(start_with: /^!(g|guild|guilde){1} (tresor|trésor|treasure|gold){1}/i) do |event|
         settings = Character::Check.all(event)
         next if settings == false
 
