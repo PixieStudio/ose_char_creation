@@ -22,7 +22,7 @@ module Bot
         /^!(g|guild|guilde){1} (tresor|trésor|treasure|gold){1}+s{0,1} (?<action>add|ajouter|ajout|\+|-|remove|retirer){1}\s*(?<amount>\d+)+/i =~ event.message.content
 
         if amount.nil? || action.nil?
-          msg = "Vous devez indiquer une action et un montant\n*Exemple :* `!g tresor ajout 100`"
+          msg = "Tu dois indiquer une action et un montant\n*Exemple :* `!g tresor ajout 100`"
           embed = Character::Embed.event_message(event, msg)
 
           event.channel.send_message('', false, embed)
