@@ -15,12 +15,13 @@ module Bot
 
         msg = "Tu ne fais partie d'aucune guilde.\n" \
         '`!g join` pour en rejoindre une.'
+        embed = Character::Embed.event_message(event, msg)
 
-        event.respond msg and next if charsheet.guild.nil?
+        event.channel.send_message('', false, embed) and next if charsheet.guild.nil?
 
         @guild_name = charsheet.guild.name
 
-        msg = "Es-tu sûr de vouloir quitter la guilde **#{@guild_name}**.\n"
+        msg = "Es-tu sûr.e de vouloir quitter la guilde **#{@guild_name}** ?\n"
 
         msg += "\n*Réponds par **oui** pour valider, ou n'importe quoi d'autre pour annuler.*"
 
@@ -42,6 +43,7 @@ module Bot
 
         charsheet.update(guild_id: nil)
         charsheet.update_message!
+        event.message.delete
 
         msg = "Tu as quitté la guilde **#{@guild_name}**"
 

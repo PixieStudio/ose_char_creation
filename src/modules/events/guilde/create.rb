@@ -17,17 +17,20 @@ module Bot
 
         event.channel.send_message('', false, embed) and next if guild_name.nil?
 
-        # event.respond msg and next if guild_name.nil?
-
         Database::Guild.create(
           server_id: event.server.id,
           name: guild_name
         )
 
-        msg = "La guilde **#{guild_name}** a été créée. Vous pouvez définir ses richesses " \
+        event.message.delete
+
+        msg = "La guilde **#{guild_name}** a été créée.\n\n" \
+        'Tu peux définir ses richesses ' \
         '`!g gold [valeur numérique]`'
 
-        event.respond msg and next
+        embed = Character::Embed.event_message(event, msg)
+
+        event.channel.send_message('', false, embed) and next
       end
     end
   end

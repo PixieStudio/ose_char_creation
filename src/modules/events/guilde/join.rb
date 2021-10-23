@@ -18,7 +18,9 @@ module Bot
         msg = "Il n'y a pas de guilde sur ce serveur.\n" \
         '`!g new [nom de la guilde]` pour en créer une.'
 
-        event.respond msg and next if guilds.nil?
+        embed = Character::Embed.event_message(event, msg)
+
+        event.channel.send_message('', false, embed) and next if guilds.empty?
 
         msg = "__LISTE DES GUILDES__\n\n"
         guilds.each.with_index(1) do |g, index|
@@ -52,6 +54,7 @@ module Bot
 
         charsheet.update(guild_id: guilds[@guild_id].id)
         charsheet.update_message!
+        event.message.delete
 
         msg = "Tu fais partie, à présent, de la guilde **#{charsheet.guild.name}**"
 

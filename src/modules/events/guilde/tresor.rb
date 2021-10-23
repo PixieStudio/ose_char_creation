@@ -15,13 +15,19 @@ module Bot
 
         msg = "Tu ne fais partie d'aucune guilde.\n" \
        '`!g join` pour en rejoindre une.'
+        embed = Character::Embed.event_message(event, msg)
 
-        event.respond msg and next if charsheet.guild.nil?
+        event.channel.send_message('', false, embed) and next if charsheet.guild.nil?
 
         /^!(g|guild|guilde){1} (tresor|trésor|treasure|gold){1}+s{0,1} (?<action>add|ajouter|ajout|\+|-|remove|retirer){1}\s*(?<amount>\d+)+/i =~ event.message.content
 
-        event.respond "Vous devez indiquer un montant\n*Exemple :* `!g tresor ajout 100`" and next if amount.nil?
-        event.respond "Vous devez indiquer une action\n*Exemple :* `!g tresor ajout 100`" and next if action.nil?
+        if amount.nil? || action.nil?
+          msg = "Vous devez indiquer une action et un montant\n*Exemple :* `!g tresor ajout 100`"
+          embed = Character::Embed.event_message(event, msg)
+
+          event.channel.send_message('', false, embed)
+          next
+        end
 
         if action.match?(/(add|ajouter|ajout|\+)/i)
           @gold = charsheet.guild.gold + amount.to_i
@@ -33,10 +39,11 @@ module Bot
 
         @old_gold = charsheet.guild.gold
 
+        charsheet.guild.update(gold: @gold)
+        event.message.delete
+
         msg = "Trésorerie de la guilde **#{charsheet.guild.name}** modifiée : **#{@mod_gold}#{amount} PO**"
         msg += "\n#{@old_gold}  :arrow_right:  #{@gold}\n\n"
-
-        charsheet.guild.update(gold: @gold)
 
         embed = Character::Embed.event_message(event, msg)
 

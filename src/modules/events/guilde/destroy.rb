@@ -49,10 +49,18 @@ module Bot
         guild = guilds[@guild_id]
         @guild_name = guild.name
 
-        guild&.destroy
-        # set nil for all characters in this guild
+        res = event.respond 'Mise à jour des fiches, veuilles patientez...'
 
-        msg = "La guilde **#{@guild_name}** a été supprimée."
+        members = Database::Character.where(guild_id: guild.id)
+        members.each do |m|
+          m.update(guild_id: nil)
+        end
+        guild&.destroy
+
+        event.channel.message(res.id).delete
+        event.message.delete
+
+        msg = "La guilde **#{@guild_name}** a été supprimée et les fiches personnages mises à jour."
 
         embed = Character::Embed.event_message(event, msg)
 
