@@ -35,7 +35,7 @@ module Bot
         msg += "\n\n:diamond_shape_with_a_dot_inside: Résultat : #{pvmax}\n\n"
         msg += "Tes points de vie maximum s'élèvent à..... **#{pvmax}** !\n"
         msg += "Bonne chance !\n\n"
-        msg += ":small_blue_diamond: ` !gold ` Découvre le nombre de pièces d'or que tu possèdes"
+        msg += ":small_blue_diamond: ` !c po ` Découvre le nombre de pièces d'or que tu possèdes"
 
         charsheet.update(pv_max: pvmax, ajuster_protection: true)
         charsheet.update_message!

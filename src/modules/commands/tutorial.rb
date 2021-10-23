@@ -24,7 +24,7 @@ module Bot
         ":diamond_shape_with_a_dot_inside:\u0009 !classes": 'Classes disponibles',
         ":chains:\u0009 !ajuster": 'Ajuster les caractéristiques',
         ":heart:\u0009 !pvmax": 'Lancer les points de vie max.',
-        ":coin:\u0009 !gold": "Pièces d'or de départ",
+        ":coin:\u0009 !c po": "Pièces d'or de départ",
         ":speaking_head:\u0009 !langues": 'Ajouter des langues connues',
         ":ear:\u0009 !rumeur": 'Entendre une rumeur',
         ":trident:\u0009 !alignement": "Définir l'alignement",
@@ -35,7 +35,7 @@ module Bot
 
       manage_cmd = {
         ":pushpin:\u0009 !persos": 'Sélectionne un de tes personnages',
-        ":coin:\u0009 !richesses": "Modifie le montant de tes Pièces d'Or",
+        ":coin:\u0009 !c po": "Modifie le montant de tes Pièces d'Or",
         ":compass:\u0009 !pp": 'Ajoute 1 Point de Participation (lié au joueur)',
         ":star2:\u0009 !exp": "Ton personnage gagne de l'expérience",
         ":headstone:\u0009 !mort": 'Envoie ton personnage au cimetière',

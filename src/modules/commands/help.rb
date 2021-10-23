@@ -35,7 +35,7 @@ module Bot
         end
 
         unless charsheet.ajuster_protection
-          msg = "Tu peux ajuster ta ou tes caractéristiques principales `!ajuster`\n"\
+          msg = "Tu peux ajuster ta ou tes caractéristiques principales `!ajuster`\n" \
           'ou passer directement au tirage de tes Points de Vie maximum `!pvmax`'
           Character::Embed.help_message(event, msg)
           next
@@ -48,7 +48,7 @@ module Bot
         end
 
         unless charsheet.gold_protection
-          msg = "Tu peux tirer tes Pièces d'or de départ `!gold`"
+          msg = "Tu peux tirer tes Pièces d'or de départ `!c po`"
           Character::Embed.help_message(event, msg)
           next
         end
