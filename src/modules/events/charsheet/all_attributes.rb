@@ -22,9 +22,9 @@ module Bot
             msg += "__JETS DE CARACTÉRISTIQUES__\n\n"
             break
           end
-          msg = nil
+          msg = ''
         end
-        next if msg.nil?
+        next if msg.empty?
 
         ATTRIBUTES.each do |_k, c|
           next unless charsheet[c[:column]].zero?
