@@ -13,7 +13,11 @@ module Bot
         /^!(g|guild|guilde){1} (new|créer|creer|create){1} (?<guild_name>.+)/i =~ event.message.content
 
         msg = '`!g new [nom de la guilde]` pour valider la création.'
-        event.respond msg and next if guild_name.nil?
+        embed = Character::Embed.event_message(event, msg)
+
+        event.channel.send_message('', false, embed) and next if guild_name.nil?
+
+        # event.respond msg and next if guild_name.nil?
 
         Database::Guild.create(
           server_id: event.server.id,
