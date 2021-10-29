@@ -49,6 +49,15 @@ module Bot
         "\u200B": "\u200B"
       }
 
+      guild_cmd = {
+        ":new:\u0009 !g new [nom]": "Création d'une guilde",
+        ":inbox_tray: \u0009 !g join": 'Rejoindre une guilde',
+        ":outbox_tray:\u0008 !g quitter": 'Quitter une guilde',
+        ":moneybag:\u0008 !g gold": 'Richesses de la guilde',
+        ":x:\u0008 !g supprimer": "Détruire une guilde\n(Propriétaire du serveur)",
+        "\u200B": "\u200B"
+      }
+
       command :tuto do |event|
         settings = Character::Check.settings(event)
 
@@ -108,6 +117,21 @@ module Bot
                          "#{merchants_channel.nil? ? 'de création' : BOT.channel(merchants_channel).mention}*\n\n"
 
         store_cmd.each do |k, v|
+          embed.add_field name: k, value: v, inline: true
+        end
+
+        event.channel.send_message('', false, embed)
+
+        embed = Discordrb::Webhooks::Embed.new
+        embed.color = '#9932CC'
+        embed.timestamp = Time.now
+
+        embed.title = 'COMMANDES : GESTION DE GUILDE'
+        embed.description = '*Commandes disponibles pour la gestion de guilde'\
+                         ' uniquement dans le salon '\
+                         "#{creation_channel.nil? ? 'de création' : BOT.channel(creation_channel).mention}*\n\n"
+
+        guild_cmd.each do |k, v|
           embed.add_field name: k, value: v, inline: true
         end
 
