@@ -8,7 +8,11 @@ module Bot
 
       admin_cmd = {
         ":tools:\u0009 !settings": 'Configuration des salons',
-        ":ear:\u0009 !add rumeurs": 'Ajoute des rumeurs'
+        ":ear:\u0009 !add rumeurs": 'Ajoute des rumeurs',
+        "\u200B": "\u200B",
+        ":compass:\u0009 !pp remove": 'Retirer un **pp** à un joueur',
+        ":compass:\u0009 !pp ajouter": 'Ajouter un **pp** à un joueur',
+        "\u200B ": "\u200B"
       }
 
       create_cmd = {
