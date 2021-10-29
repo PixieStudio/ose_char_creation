@@ -26,7 +26,7 @@ module Bot
 
         msg = "La guilde **#{guild_name}** a été créée.\n\n" \
         'Tu peux définir ses richesses ' \
-        '`!g gold [valeur numérique]`'
+        '`!g gold [+|-][valeur numérique]`'
 
         embed = Character::Embed.event_message(event, msg)
 
