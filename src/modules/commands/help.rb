@@ -11,8 +11,8 @@ module Bot
         status = false
 
         if charsheet.nil?
-          msg = "Tu peux créer un personnage `!nouveau perso`\n"\
-          'ou sélectionner un autre personnage que tu possèdes `!persos`'
+          msg = "Tu peux créer un personnage `!c new`\n"\
+          'ou sélectionner un autre personnage que tu possèdes `!c select`'
           Character::Embed.help_message(event, msg)
           next
         end
