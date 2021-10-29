@@ -8,7 +8,7 @@ module Bot
 
       charsheet = [
         {
-          cmd: '!nom',
+          cmd: /^!(c|char|perso){1}(nnage|acter){0,1} (nom|name|fullname){1}([\p{L}\p{M}]*)\s*/i,
           name: 'Nom',
           question: 'Quel est le nom de ton personnage ?',
           min_length: 2,
@@ -16,7 +16,7 @@ module Bot
           column: 'char_name'
         },
         {
-          cmd: '!pronoms',
+          cmd: /^!(c|char|perso){1}(nnage|acter){0,1} (pronom|pronoms){1}([\p{L}\p{M}]*)\s*/i,
           name: 'Pronoms',
           question: 'Quels sont les pronoms de ton personnage ?',
           min_length: 1,
@@ -24,15 +24,7 @@ module Bot
           column: 'genre'
         },
         {
-          cmd: '!richesses',
-          name: "Pièces d'Or",
-          question: "A combien s'élèvent tes pièces d'or ?\n",
-          min_length: 1,
-          error: 'Tu dois taper au moins un chiffre !',
-          column: 'gold'
-        },
-        {
-          cmd: '!alignement',
+          cmd: /^!(c|char|perso){1}(nnage|acter){0,1} (align){1}([\p{L}\p{M}]*)\s*/i,
           name: 'Alignement',
           question: "Choisis un alignement : \n"\
           '` Loyal `, ` Neutre ` ou ` Chaotique `',
@@ -46,7 +38,7 @@ module Bot
 
       charsheet.each do |c|
         message(start_with: c[:cmd]) do |event|
-          args = event.message.content.sub("#{c[:cmd]} ", '')
+          args = event.message.content.sub(c[:cmd], '')
 
           event.message.delete
 
@@ -92,12 +84,12 @@ module Bot
           msg += "#{@old_content}  :arrow_right:  #{@content}\n\n"
           msg += "*Ta fiche personnage a été mise à jour.*\n\n"
 
-          msg += ":small_blue_diamond: ` !nom ` Donne un nom à ton personnage.\n" if charsheet.char_name == '!nom'
+          msg += ":small_blue_diamond: ` !c nom ` Donne un nom à ton personnage.\n" if charsheet.char_name == '!nom'
           if charsheet.genre == '!pronoms'
-            msg += ":small_blue_diamond: ` !pronoms ` Indique quel(s) pronom(s) doivent être utilisés pour ton personnage.\n"
+            msg += ":small_blue_diamond: ` !c pronoms ` Indique quel(s) pronom(s) doivent être utilisés pour ton personnage.\n"
           end
           if charsheet.avatar_url == 'https://i.imgur.com/Q7B91HT.png'
-            msg += ':small_blue_diamond: ` !avatar ` Ajoute un portrait à ton personnage.'
+            msg += ':small_blue_diamond: ` !c avatar ` Ajoute un portrait à ton personnage.'
           end
 
           embed = Character::Embed.char_message(charsheet, msg)

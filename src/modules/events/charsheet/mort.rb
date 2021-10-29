@@ -6,7 +6,7 @@ module Bot
     module Mort
       extend Discordrb::EventContainer
 
-      message(content: /^!mort|!cimetiere|!cimetière$/i) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (mort|dead|death){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -16,8 +16,7 @@ module Bot
         next if charsheet.nil?
 
         msg = "Ton personnage est mort ?\n\n"
-        msg += "1 :small_blue_diamond: Oui\n"
-        msg += "2 :small_blue_diamond: Non\n\n"
+        msg += "*Réponds par **oui** pour valider, ou n'importe quoi d'autre pour annuler.*"
 
         embed = Character::Embed.char_message(charsheet, msg)
         embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: 'Tape 0 pour annuler.')
@@ -25,21 +24,20 @@ module Bot
         res = event.channel.send_message('', false, embed)
 
         event.user.await!(timeout: 300) do |choice|
-          id = choice.message.content.to_i
-          if id.zero? || id > 1
-            @death = nil
-            event.channel.message(res.id).delete
-            msg = 'Mort du personnage annulée.'
-            embed = Character::Embed.char_message(charsheet, msg)
-            event.channel.send_message('', false, embed)
-          else
-            @death = id
-          end
+          id = choice.message.content
+          @death = id.match?(/^(oui|yes)$/i) ? nil : 1
 
           choice.message.delete
           true
         end
-        next if @death.nil?
+
+        unless @death.nil?
+          event.channel.message(res.id).delete
+          msg = 'Mort du personnage annulée.'
+          embed = Character::Embed.char_message(charsheet, msg)
+          event.channel.send_message('', false, embed)
+          next
+        end
 
         event.channel.message(res.id).delete
 

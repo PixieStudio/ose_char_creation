@@ -29,20 +29,20 @@ module Bot
         break if status
 
         if charsheet.classe.cle == 'base'
-          msg = 'Tu peux choisir une classe `!classes`'
+          msg = 'Tu peux choisir une classe `!c classes`'
           Character::Embed.help_message(event, msg)
           next
         end
 
         unless charsheet.ajuster_protection
-          msg = "Tu peux ajuster ta ou tes caractéristiques principales `!ajuster`\n" \
-          'ou passer directement au tirage de tes Points de Vie maximum `!pvmax`'
+          msg = "Tu peux ajuster ta ou tes caractéristiques principales `!c ajuster`\n" \
+          'ou passer directement au tirage de tes Points de Vie maximum `!c roll pv`'
           Character::Embed.help_message(event, msg)
           next
         end
 
         if charsheet.pv_max.zero?
-          msg = 'Tu peux tirer tes Points de Vie maximum `!pvmax`'
+          msg = 'Tu peux tirer tes Points de Vie maximum `!c roll pv`'
           Character::Embed.help_message(event, msg)
           next
         end
@@ -58,7 +58,7 @@ module Bot
         if (charsheet.intelligence.between?(13, 15) && learned.zero?) ||
            (charsheet.intelligence.between?(16, 17) && learned < 2) ||
            (charsheet.intelligence == 18 && learned < 3)
-          msg = 'Tu peux choisir des langues supplémentaires `!langues`'
+          msg = 'Tu peux choisir des langues supplémentaires `!c langues`'
           Character::Embed.help_message(event, msg)
           next
         end
@@ -70,25 +70,25 @@ module Bot
         end
 
         if charsheet.alignement == '!alignement'
-          msg = 'Tu peux choisir ton alignement `!alignement`'
+          msg = 'Tu peux choisir ton alignement `!c alignement`'
           Character::Embed.help_message(event, msg)
           next
         end
 
         if charsheet.char_name == '!nom'
-          msg = 'Tu peux choisir ton nom `!nom`'
+          msg = 'Tu peux choisir ton nom `!c nom`'
           Character::Embed.help_message(event, msg)
           next
         end
 
         if charsheet.genre == '!pronoms'
-          msg = 'Tu peux choisir tes pronoms `!pronoms`'
+          msg = 'Tu peux choisir tes pronoms `!c pronoms`'
           Character::Embed.help_message(event, msg)
           next
         end
 
         if charsheet.avatar_url == 'https://i.imgur.com/Q7B91HT.png'
-          msg = 'Tu peux ajouter un portrait à ton personnage `!avatar`'
+          msg = 'Tu peux ajouter un portrait à ton personnage `!c avatar`'
           Character::Embed.help_message(event, msg)
           next
         end

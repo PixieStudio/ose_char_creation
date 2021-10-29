@@ -6,7 +6,7 @@ module Bot
     module Classe
       extend Discordrb::EventContainer
 
-      message(content: /^!classes$/) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (class){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -84,7 +84,7 @@ module Bot
 
         msg = "\nTu as choisis la classe **#{@classe.name}**.\n\n"
         msg += "*Ta fiche a été mise à jour*\n\n"
-        msg += ':small_blue_diamond: `!ajuster` pour ajuster tes caractéristiques'
+        msg += ':small_blue_diamond: `!c ajuster` pour ajuster tes caractéristiques'
 
         embed = Character::Embed.char_message(charsheet, msg)
 

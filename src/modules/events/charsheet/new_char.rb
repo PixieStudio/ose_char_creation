@@ -6,7 +6,7 @@ module Bot
     module NewChar
       extend Discordrb::EventContainer
 
-      message(content: /^!nouveau perso.*$/i) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (new|nouv|creer|créer|create){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -40,7 +40,7 @@ module Bot
         "Commence par tirer tes caractéristiques à l'aide de l'une des commandes suivantes\n"\
         "` !FOR ` ` !INT ` ` !SAG ` ` !DEX ` ` !CON ` ` !CHA `\n\n"\
         "Tu peux tirer toutes tes caractéristiques **en une fois**\n"\
-        '` !caracs `'
+        '` !c roll caracs `'
         embed.footer = Character::Embed.footer_char
         event.channel.send_message('', false, embed)
       end

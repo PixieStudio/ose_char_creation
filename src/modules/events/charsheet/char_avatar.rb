@@ -6,7 +6,7 @@ module Bot
     module CharAvatar
       extend Discordrb::EventContainer
 
-      message(content: /^!avatar$/) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (avatar|img|image){1}([\p{L}\p{M}]*)\s*/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -29,7 +29,7 @@ module Bot
             event.channel.message(res.id).delete
             embed = Character::Embed.new_event(event)
             embed.description = "Tu as annulé l'ajout d'un avatar.\n"\
-            "Tu peux recommencer à tout moment à l'aide de la commande `!avatar`"
+            "Tu peux recommencer à tout moment à l'aide de la commande `!c avatar`"
             embed.timestamp = Time.now
 
             event.channel.send_message('', false, embed)

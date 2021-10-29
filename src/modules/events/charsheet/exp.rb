@@ -6,31 +6,20 @@ module Bot
     module LevelUp
       extend Discordrb::EventContainer
 
-      message(content: /^!exp$/) do |event|
-        event.message.delete
-
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1}\s+(xp|exp){1}([\p{L}\p{M}]*)\s*(?<exp>\d)*/i) do |event|
+        # message(content: /^!exp\s*\d*/) do |event|
         settings = Character::Check.all(event)
         next if settings == false
 
         charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
         next if charsheet.nil?
 
-        msg = 'Tape `!exp 555` en remplaçant `555` par la valeur que tu as reçue **SANS** modificateur.'
+        /^!(c|char|perso){1}(nnage|acter){0,1} (xp|exp){1}([\p{L}\p{M}]*)\s*(?<exp>\d*)/i =~ event.content
 
-        embed = Character::Embed.char_message(charsheet, msg)
+        @exp = exp.to_i
 
-        event.channel.send_message('', false, embed)
-      end
-
-      message(content: /^!exp\s*\d*/) do |event|
-        settings = Character::Check.all(event)
-        next if settings == false
-
-        charsheet = Database::Character.find_sheet(event.user.id, event.server.id)
-        next if charsheet.nil?
-
-        @exp = event.content.sub(/^!exp\s*/, '').to_i
-        msg = "Valeur d'expérience invalide."
+        msg = "Valeur d'expérience invalide.\n\n"
+        msg += 'Tape `!c exp 555` en remplaçant `555` par la valeur que tu as reçue **SANS** modificateur.'
 
         if @exp.zero?
           event.message.delete

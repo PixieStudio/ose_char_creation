@@ -20,16 +20,20 @@ module Bot
 
         # Respond message
         res_msg = []
-        res_msg << '```md'
-        res_msg << "#{user} lance #{number}d#{dice}#{mod unless mod.zero?}"
-        res_msg << '------------'
-        res_msg << "Dés : #{roll_dice}"
-        res_msg << "Modificateur : #{mod}" unless mod.zero?
-        res_msg << "Résultat : #{sumdice}"
-        res_msg << '```'
+        res_msg << ":game_die: Dés : #{roll_dice}"
+        res_msg << "\n:rocket: Modificateur : #{'+' if mod.positive?}#{mod}" unless mod.zero?
+        res_msg << "\n:diamond_shape_with_a_dot_inside: Résultat : #{sumdice}\n"
 
         event.message.delete
-        event.respond res_msg.join("\n")
+
+        embed = Character::Embed.event_message(event, res_msg.join("\n"))
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(
+          name: "#{event.user.nickname || event.user.username} lance #{number}d#{dice}#{mod unless mod.zero?}",
+          icon_url: event.user.avatar_url
+        )
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: 'https://i.imgur.com/bHs5FGB.png')
+
+        event.channel.send_message('', false, embed) and next
       end
     end
   end

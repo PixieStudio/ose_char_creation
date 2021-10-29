@@ -6,7 +6,7 @@ module Bot
     module PersoUpdate
       extend Discordrb::EventContainer
 
-      message(content: /^!update perso$/) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (update|maj|sync){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)

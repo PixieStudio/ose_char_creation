@@ -6,7 +6,7 @@ module Bot
     module Pvmax
       extend Discordrb::EventContainer
 
-      message(content: /^!pvmax$/) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} roll (pv|hp){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)

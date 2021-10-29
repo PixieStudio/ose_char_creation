@@ -6,7 +6,7 @@ module Bot
     module Ajustement
       extend Discordrb::EventContainer
 
-      message(content: /^!ajuster$/) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (ajust|adjust){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -27,7 +27,7 @@ module Bot
 
         if final_drop.length.zero?
           msg = "Ta FORce, ton INTelligence et ta SAG sont **trop bas** pour être diminués.\n\n"
-          msg += ":small_blue_diamond: Tu peux continuer la création de ton personnage en tirant ses PV Maximum à l'aide de la commande ` !pvmax `"
+          msg += ":small_blue_diamond: Tu peux continuer la création de ton personnage en tirant ses PV Maximum à l'aide de la commande ` !c roll pv `"
 
           embed = Character::Embed.char_message(charsheet, msg)
 
@@ -62,8 +62,8 @@ module Bot
         if @drop.nil?
           event.channel.message(res.id).delete
           msg = "Aucune caractéristique ne correspond à ce chiffre ou temps écoulé.\n\n"
-          msg += ":small_blue_diamond: `!ajuster` Continue d'ajuster tes caractéristiques\n"
-          msg += ':small_blue_diamond: `!pvmax` Découvre tes **Points de Vie** maximum'
+          msg += ":small_blue_diamond: `!c ajuster` Continue d'ajuster tes caractéristiques\n"
+          msg += ':small_blue_diamond: `!c roll pv` Découvre tes **Points de Vie** maximum'
 
           embed = Character::Embed.char_message(charsheet, msg)
 
@@ -114,8 +114,8 @@ module Bot
         if @up.nil?
           event.channel.message(res.id).delete
           msg = "Aucune caractéristique ne correspond à ce chiffre ou temps écoulé.\n\n"
-          msg += ":small_blue_diamond: `!ajuster` Continue d'ajuster tes caractéristiques\n"
-          msg += ':small_blue_diamond: `!pvmax` Découvre tes **Points de Vie** maximum'
+          msg += ":small_blue_diamond: `!c ajuster` Continue d'ajuster tes caractéristiques\n"
+          msg += ':small_blue_diamond: `!c roll pv` Découvre tes **Points de Vie** maximum'
 
           embed = Character::Embed.char_message(charsheet, msg)
 
@@ -135,8 +135,8 @@ module Bot
         msg = msg_drop
         msg += msg_up
         msg += "\nLa fiche de ton personnage a été mise à jour !\n\n"
-        msg += ":small_blue_diamond: `!ajuster` Continue d'ajuster tes caractéristiques\n"
-        msg += ':small_blue_diamond: `!pvmax` Découvre tes **Points de Vie** maximum'
+        msg += ":small_blue_diamond: `!c ajust` Continue d'ajuster tes caractéristiques\n"
+        msg += ':small_blue_diamond: `!c roll pv` Découvre tes **Points de Vie** maximum'
 
         embed = Character::Embed.char_message(charsheet, msg)
 

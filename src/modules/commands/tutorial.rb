@@ -12,34 +12,34 @@ module Bot
       }
 
       create_cmd = {
-        ":new:\u0009 !nouveau perso": 'Crée un personnage',
+        ":new:\u0009 !c new": 'Crée un personnage',
         ":question:\u0009 !help": 'Action suivante disponible',
-        ":game_die:\u0009 !caracs": 'Lance toutes tes caractéristiques',
+        ":game_die:\u0009 !c roll caracs": 'Lance toutes tes caractéristiques',
         ":muscle:\u0009 !FOR": 'Lance FORce',
         ":brain:\u0009 !INT": 'Lance INTelligence',
         ":owl:\u0009 !SAG": 'Lance SAGesse',
         ":fox:\u0009 !DEX": 'Lance DEXtérité',
         ":ox:\u0009 !CON": 'Lance CONstitution',
         ":crown:\u0009 !CHA": 'Lance CHARisme',
-        ":diamond_shape_with_a_dot_inside:\u0009 !classes": 'Classes disponibles',
-        ":chains:\u0009 !ajuster": 'Ajuster les caractéristiques',
-        ":heart:\u0009 !pvmax": 'Lancer les points de vie max.',
+        ":diamond_shape_with_a_dot_inside:\u0009 !c classes": 'Classes disponibles',
+        ":chains:\u0009 !c ajuster": 'Ajuster les caractéristiques',
+        ":heart:\u0009 !c roll pv": 'Lancer les points de vie max.',
         ":coin:\u0009 !c po": "Pièces d'or de départ",
-        ":speaking_head:\u0009 !langues": 'Ajouter des langues connues',
+        ":speaking_head:\u0009 !c langues": 'Ajouter des langues connues',
         ":ear:\u0009 !rumeur": 'Entendre une rumeur',
-        ":trident:\u0009 !alignement": "Définir l'alignement",
-        ":diamond_shape_with_a_dot_inside:\u0009 !nom": 'Nommer le personnage',
-        ":diamond_shape_with_a_dot_inside:\u0009 !pronoms": 'Indiquer les pronoms',
-        ":frame_photo:\u0009 !avatar": 'Illustrer le personnage'
+        ":trident:\u0009 !c alignement": "Définir l'alignement",
+        ":diamond_shape_with_a_dot_inside:\u0009 !c nom": 'Nommer le personnage',
+        ":diamond_shape_with_a_dot_inside:\u0009 !c pronoms": 'Indiquer les pronoms',
+        ":frame_photo:\u0009 !c avatar": 'Illustrer le personnage'
       }
 
       manage_cmd = {
-        ":pushpin:\u0009 !persos": 'Sélectionne un de tes personnages',
+        ":pushpin:\u0009 !c select": 'Sélectionne un de tes personnages',
         ":coin:\u0009 !c po": "Modifie le montant de tes Pièces d'Or",
         ":compass:\u0009 !pp": 'Ajoute 1 Point de Participation (lié au joueur)',
-        ":star2:\u0009 !exp": "Ton personnage gagne de l'expérience",
-        ":headstone:\u0009 !mort": 'Envoie ton personnage au cimetière',
-        "\u200B ": "\u200B",
+        ":star2:\u0009 !c exp": "Ton personnage gagne de l'expérience",
+        ":headstone:\u0009 !c mort": 'Envoie ton personnage au cimetière',
+        ":up:\u0009 !c sync": 'Synchronise ta feuille de personnage',
         "\u200B": "\u200B"
       }
 

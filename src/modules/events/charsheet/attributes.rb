@@ -69,14 +69,14 @@ module Bot
           msg += ":game_die: Dés : #{roll_dice}\n"
           msg += ":diamond_shape_with_a_dot_inside: Résultat : #{attribute}\n\n"
           if @att_remain.length.zero?
-            msg += ":small_blue_diamond: `!classes` pour choisir la classe de ton personnage.\n\n"
+            msg += ":small_blue_diamond: `!c classes` pour choisir la classe de ton personnage.\n\n"
             msg += '*Seules les classes qui te sont accessibles seront proposées.*'
           else
             msg += "Tu peux continuer à tirer tes caractéristiques restantes :\n"
             @att_remain.each do |att|
               msg += " ` !#{att} ` "
             end
-            msg += "\n\nTirer les caractéristiques **en une fois** :\n` !caracs `"
+            msg += "\n\nTirer les caractéristiques **en une fois** :\n` !c roll caracs `"
           end
 
           embed = Character::Embed.char_message(charsheet, msg)

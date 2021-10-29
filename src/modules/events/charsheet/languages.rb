@@ -6,7 +6,7 @@ module Bot
     module Language
       extend Discordrb::EventContainer
 
-      message(content: /^!langues$/) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} (lang){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -84,7 +84,7 @@ module Bot
                       end
 
           if @new_lang.nil?
-            msg = 'Aucune langue ne correspond à ce chiffre. Tape `!langues` à nouveau.'
+            msg = 'Aucune langue ne correspond à ce chiffre. Tape `!c langues` à nouveau.'
 
             embed = Character::Embed.char_message(charsheet, msg)
 

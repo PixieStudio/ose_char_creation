@@ -6,7 +6,7 @@ module Bot
     module AllAttributes
       extend Discordrb::EventContainer
 
-      message(content: /^!caracs|!carac$/i) do |event|
+      message(start_with: /^!(c|char|perso){1}(nnage|acter){0,1} roll (carac|att){1}/i) do |event|
         event.message.delete
 
         settings = Character::Check.all(event)
@@ -44,7 +44,7 @@ module Bot
 
         charsheet.update_message!
 
-        msg += "\n:small_blue_diamond: `!classes` pour choisir la classe de ton personnage.\n\n"
+        msg += "\n:small_blue_diamond: `!c classes` pour choisir la classe de ton personnage.\n\n"
         msg += '*Seules les classes qui te sont accessibles seront proposées.*'
 
         embed = Character::Embed.char_message(charsheet, msg)

@@ -6,7 +6,7 @@ module Bot
     module Merchant
       extend Discordrb::EventContainer
 
-      message(content: /^!marchands$/) do |event|
+      message(start_with: /^!(marchan|mercant){1}/) do |event|
         event.message.delete
 
         settings = Character::Check.merchants?(event)

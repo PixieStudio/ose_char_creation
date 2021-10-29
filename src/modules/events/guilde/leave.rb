@@ -34,7 +34,6 @@ module Bot
           @guild_id = id.match?(/^(oui|yes)$/i) ? nil : 1
 
           choice.message.delete
-          puts @guild_id
           true
         end
         next unless @guild_id.nil?

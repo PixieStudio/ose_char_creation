@@ -6,7 +6,7 @@ module Bot
     module AddRumeur
       extend Discordrb::EventContainer
 
-      message(content: /^!add rumeurs$/) do |event|
+      message(start_with: /^!set (rumor|rumeur){1}/i) do |event|
         event.message.delete
 
         next unless event.user.owner?
