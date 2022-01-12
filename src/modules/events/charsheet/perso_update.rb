@@ -6,14 +6,21 @@ module Bot
     module PersoUpdate
       extend Discordrb::EventContainer
 
-      message(start_with: /^!c hard update \d+/i) do |event|
+      message(start_with: /^!c hard update (all|\d+)+/i) do |event|
         char_id = event.message.content.sub(/^!c hard update /i, '')
 
         if event.user.id == 183984518414336000
-          charsheets = Database::Character.where(id: char_id.to_i).all;
-          return if charsheets.nil?
+          # charsheets = [];
 
-          msg = "La fiche #{char_id} a été mise à jour";
+          
+          if char_id == "all"
+            charsheets = Database::Character.where(server_id: event.server.id).where(death: false).all
+            msg = "Toutes les fiches (#{charsheets.count}) ont été mises à jour."
+          else
+            charsheets = Database::Character.where(id: char_id.to_i).all;
+            msg = "La fiche #{char_id} a été mise à jour.";
+          end
+          return if charsheets.nil?
 
           # tester si condition char_id = all, all char alive else id only;
 
