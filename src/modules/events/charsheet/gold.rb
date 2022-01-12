@@ -61,6 +61,7 @@ module Bot
         @old_gold = charsheet.gold
 
         charsheet.update(gold: @gold)
+        charsheet.update_message!
         event.message.delete
 
         msg = "Or modifié : **#{@mod_gold}#{amount} PO**"

@@ -15,6 +15,8 @@ module Bot
 
           msg = "La fiche #{char_id} a été mise à jour";
 
+          # tester si condition char_id = all, all char alive else id only;
+
           charsheets.each do |c|
             c.update_message!
           end
